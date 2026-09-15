@@ -1,0 +1,148 @@
+<view class="poster-page">
+  <!-- 导航栏 -->
+  <view class="poster-navbar" style="padding-top: calc(env(safe-area-inset-top) + 20rpx)">
+    <view class="nav-back" bindtap="goBack">
+      <text class="nav-arrow">←</text>
+    </view>
+    <text class="nav-title">画展一隅</text>
+    <view class="nav-right"></view>
+  </view>
+
+  <!-- 画布信息栏 -->
+  <view class="info-bar">
+    <text class="info-theme" style="font-family: {{fontFamilyMap[fontStyle]}}">{{theme || '未命名展览'}}</text>
+    <text class="info-count">{{artworks.length}} 件作品</text>
+  </view>
+
+  <!-- 自由排版画布 -->
+  <scroll-view class="canvas-scroll" scroll-y enhanced show-scrollbar="{{true}}">
+    <movable-area class="canvas-area" style="background: {{bgColor}}; width: {{canvasWidth}}px; height: {{canvasHeight}}px;">
+      <!-- 贴纸（右上角装饰） -->
+      <view class="canvas-stickers" style="color: {{isDark ? 'rgba(248,243,233,.35)' : 'rgba(154,61,47,.3)'}}">
+        <text wx:for="{{stickers}}" wx:key="*this">{{stickerIcons[item]}}</text>
+      </view>
+
+      <!-- 顶部标题区 -->
+      <view class="canvas-header" style="color: {{isDark ? '#F8F3E9' : '#1D201D'}}">
+        <text class="canvas-eyebrow">CURATE YOUR EXHIBITION</text>
+        <text class="canvas-theme" style="font-family: {{fontFamilyMap[fontStyle]}}">{{theme || '未命名展览'}}</text>
+        <view class="canvas-divider" style="background: {{isDark ? 'rgba(248,243,233,.15)' : 'rgba(29,32,29,.1)'}}"></view>
+        <text class="canvas-prologue" wx:if="{{prologue}}" style="color: {{isDark ? 'rgba(248,243,233,.6)' : '#6C6B64'}}">{{prologue}}</text>
+      </view>
+
+      <!-- 可自由拖动/缩放的作品图 -->
+      <movable-view
+        wx:for="{{artworks}}"
+        wx:key="id"
+        class="artwork-block {{activeIndex === index ? 'active' : ''}}"
+        style="width: {{item.w}}px; height: {{item.h}}px;"
+        x="{{item.x}}"
+        y="{{item.y}}"
+        direction="all"
+        scale
+        scale-min="0.5"
+        scale-max="2"
+        scale-value="{{item.scale || 1}}"
+        bindchange="onArtworkMove"
+        bindscale="onArtworkScale"
+        bindtap="onArtworkTap"
+        data-index="{{index}}"
+      >
+        <image class="artwork-img" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="artwork-label" style="color: {{isDark ? 'rgba(248,243,233,.6)' : '#85827A'}}">
+          <text class="artwork-title">{{item.title}}</text>
+          <text class="artwork-artist">— {{item.artist}}</text>
+        </view>
+        <!-- 选中框 -->
+        <view class="artwork-select-ring" wx:if="{{activeIndex === index}}"></view>
+      </movable-view>
+
+      <!-- 底部署名区 -->
+      <view class="canvas-footer" style="color: {{isDark ? 'rgba(248,243,233,.5)' : '#85827A'}}; border-top-color: {{isDark ? 'rgba(248,243,233,.12)' : 'rgba(29,32,29,.1)'}};">
+        <text>{{signPrefix}} {{curatorName}} 策</text>
+        <text class="canvas-brand">北京画院 · 画展一隅</text>
+      </view>
+    </movable-area>
+  </scroll-view>
+
+  <!-- 隐藏画布（用于导出保存） -->
+  <canvas type="2d" id="posterCanvas" style="position:fixed;left:-9999px;top:-9999px;width:690px;height:{{canvasHeight}}px"></canvas>
+
+  <!-- 底部工具栏 -->
+  <view class="toolbar" style="padding-bottom: calc(env(safe-area-inset-bottom) + 12rpx)">
+    <view class="tool-row">
+      <view class="tool-btn" bindtap="openFontPanel">
+        <text class="tool-icon">A</text>
+        <text class="tool-label">字体</text>
+      </view>
+      <view class="tool-btn" bindtap="openStickerPanel">
+        <text class="tool-icon">✿</text>
+        <text class="tool-label">贴纸</text>
+      </view>
+      <view class="tool-btn" bindtap="openBgPanel">
+        <text class="tool-icon">◼</text>
+        <text class="tool-label">底色</text>
+      </view>
+      <view class="tool-btn" bindtap="openSignPanel">
+        <text class="tool-icon">▣</text>
+        <text class="tool-label">署名</text>
+      </view>
+      <view class="tool-btn tool-btn-share" open-type="share">
+        <text class="tool-icon">↗</text>
+        <text class="tool-label">分享</text>
+      </view>
+    </view>
+    <button class="bottom-save-btn" bindtap="savePoster" disabled="{{saving}}">
+      {{saving ? '正在生成海报...' : '保存海报'}}
+    </button>
+  </view>
+
+  <!-- 字体面板 -->
+  <view class="panel-mask" wx:if="{{showFontPanel}}" bindtap="closePanel"></view>
+  <view class="panel {{showFontPanel ? 'panel-show' : ''}}" wx:if="{{showFontPanel}}">
+    <text class="panel-title">选择标题字体</text>
+    <view class="font-list">
+      <view class="font-item {{fontStyle === item.value ? 'active' : ''}}" wx:for="{{fontOptions}}" wx:key="value" bindtap="pickFont" data-value="{{item.value}}">
+        <text class="font-name" style="font-family: {{item.family}}">{{item.label}}</text>
+        <text class="font-sample" style="font-family: {{item.family}}">永字八法</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 贴纸面板 -->
+  <view class="panel-mask" wx:if="{{showStickerPanel}}" bindtap="closePanel"></view>
+  <view class="panel {{showStickerPanel ? 'panel-show' : ''}}" wx:if="{{showStickerPanel}}">
+    <text class="panel-title">国风贴纸 (最多3个)</text>
+    <view class="sticker-list">
+      <view class="sticker-item {{item.selected ? 'active' : ''}}" wx:for="{{stickerOptions}}" wx:key="value" bindtap="toggleSticker" data-value="{{item.value}}">
+        <text class="sticker-icon">{{item.icon}}</text>
+        <text class="sticker-name">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底色面板 -->
+  <view class="panel-mask" wx:if="{{showBgPanel}}" bindtap="closePanel"></view>
+  <view class="panel {{showBgPanel ? 'panel-show' : ''}}" wx:if="{{showBgPanel}}">
+    <text class="panel-title">背景纸色</text>
+    <view class="color-list">
+      <view class="color-item {{bgColor === item.value ? 'active' : ''}}" wx:for="{{bgColorOptions}}" wx:key="value" bindtap="pickBgColor" data-value="{{item.value}}" style="background: {{item.value}}; {{item.value === '#1D201D' ? 'border-color: rgba(255,255,255,.2)' : ''}}">
+        <text class="color-name" style="color: {{item.value === '#1D201D' ? '#F8F3E9' : '#1D201D'}}">{{item.label}}</text>
+        <text class="color-check" wx:if="{{bgColor === item.value}}">✓</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 署名面板 -->
+  <view class="panel-mask" wx:if="{{showSignPanel}}" bindtap="closePanel"></view>
+  <view class="panel {{showSignPanel ? 'panel-show' : ''}}" wx:if="{{showSignPanel}}">
+    <text class="panel-title">策展人署名</text>
+    <input class="sign-input" placeholder="输入你的名字" value="{{curatorName}}" bindinput="onNameInput" maxlength="12" />
+    <view class="sign-style-list">
+      <view class="sign-item {{signStyle === item.value ? 'active' : ''}}" wx:for="{{signStyleOptions}}" wx:key="value" bindtap="pickSignStyle" data-value="{{item.value}}">
+        <text class="sign-sample">{{item.sample}}</text>
+        <text class="sign-name">{{item.label}}</text>
+      </view>
+    </view>
+  </view>
+</view>

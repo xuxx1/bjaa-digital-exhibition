@@ -1,0 +1,91 @@
+.poster-page { height: 100vh; overflow: hidden; background: #F2EFE8; display: flex; flex-direction: column; }
+
+/* 导航栏 */
+.poster-navbar { display: flex; align-items: center; justify-content: space-between; padding-right: 24rpx; padding-left: 34rpx; padding-bottom: 16rpx; background: #F2EFE8; position: sticky; top: 0; z-index: 20; }
+.nav-back { width: 64rpx; height: 64rpx; display: flex; align-items: center; justify-content: center; }
+.nav-right { width: 64rpx; height: 64rpx; }
+.nav-arrow { font-size: 36rpx; color: #1D201D; }
+.nav-title { font-family: "Songti SC", serif; font-size: 34rpx; color: #1D201D; font-weight: 600; }
+
+/* 信息栏 */
+.info-bar { display: flex; align-items: baseline; justify-content: space-between; padding: 0 36rpx 16rpx; }
+.info-theme { font-family: "Songti SC", serif; font-size: 24rpx; color: #1D201D; }
+.info-count { font-size: 18rpx; color: #9A978F; }
+
+/* 画布滚动区 */
+.canvas-scroll { flex: 1; width: 100%; min-height: 0; }
+
+/* 画布区域 */
+.canvas-area { position: relative; margin: 0 auto; border-radius: 8rpx; overflow: hidden; box-shadow: 0 8rpx 30rpx rgba(29,32,29,.08); }
+
+/* 贴纸 */
+.canvas-stickers { position: absolute; top: 24rpx; right: 24rpx; font-size: 32rpx; letter-spacing: 6rpx; z-index: 5; }
+
+/* 标题区 */
+.canvas-header { position: relative; z-index: 2; padding: 36rpx 32rpx 0; }
+.canvas-eyebrow { display: block; font-size: 12px; letter-spacing: 3px; opacity: .4; }
+.canvas-theme { display: block; margin-top: 12rpx; font-size: 36rpx; font-weight: 600; line-height: 1.3; }
+.canvas-divider { height: 1rpx; margin: 24rpx 0; }
+.canvas-prologue { display: block; font-size: 22rpx; line-height: 1.7; }
+
+/* 作品块 */
+.artwork-block { position: relative; z-index: 3; overflow: visible !important; }
+.artwork-img { width: 100%; height: 100%; border-radius: 4rpx; display: block; }
+.artwork-label { position: absolute; bottom: -32rpx; left: 0; right: 0; font-size: 16rpx; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none; }
+.artwork-title { font-family: "Songti SC", serif; }
+.artwork-artist { font-size: 14rpx; opacity: .7; }
+.artwork-select-ring { position: absolute; inset: -4rpx; border: 2rpx dashed #9A3D2F; border-radius: 6rpx; pointer-events: none; }
+.artwork-block.active { z-index: 10; }
+
+/* 底部署名 */
+.canvas-footer { position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 24rpx 32rpx; font-size: 18rpx; border-top: 1rpx solid rgba(29,32,29,.08); z-index: 4; }
+.canvas-brand { opacity: .35; font-size: 14rpx; }
+
+/* 底部工具栏 */
+.toolbar { background: #F2EFE8; border-top: 1rpx solid rgba(29,32,29,.06); padding-top: 12rpx; z-index: 20; }
+.tool-row { display: flex; justify-content: space-around; padding: 0 16rpx; }
+.tool-btn { display: flex; flex-direction: column; align-items: center; padding: 8rpx 24rpx; }
+.tool-icon { font-size: 32rpx; color: #1D201D; line-height: 1; }
+.tool-label { font-size: 16rpx; color: #85827A; margin-top: 4rpx; }
+.tool-btn:active { opacity: .6; }
+.tool-btn-share { background: none; border: none; padding: 8rpx 24rpx; margin: 0; line-height: inherit; }
+.bottom-save-btn { display: flex; align-items: center; justify-content: center; width: calc(100% - 48rpx); height: 76rpx; margin: 12rpx 24rpx 0; padding: 0; border: 0; border-radius: 38rpx; background: #9A3D2F; color: #F8F3E9; font-family: "Songti SC", serif; font-size: 25rpx; letter-spacing: 2rpx; line-height: 76rpx; }
+.bottom-save-btn::after { border: 0; }
+.bottom-save-btn[disabled] { opacity: .55; }
+
+/* 面板遮罩 */
+.panel-mask { position: fixed; inset: 0; background: rgba(29,32,29,.3); z-index: 50; }
+
+/* 面板 */
+.panel { position: fixed; left: 0; right: 0; bottom: 0; background: #FFFDF8; border-radius: 24rpx 24rpx 0 0; padding: 36rpx 32rpx calc(env(safe-area-inset-bottom) + 36rpx); z-index: 60; transform: translateY(100%); transition: transform .3s cubic-bezier(.4,0,.2,1); }
+.panel-show { transform: translateY(0); }
+.panel-title { display: block; font-family: "Songti SC", serif; font-size: 30rpx; color: #1D201D; margin-bottom: 24rpx; }
+
+/* 字体列表 */
+.font-list { display: flex; flex-wrap: wrap; gap: 12rpx; }
+.font-item { padding: 16rpx 28rpx; border: 1rpx solid rgba(29,32,29,.12); border-radius: 8rpx; }
+.font-item.active { border-color: #9A3D2F; background: rgba(154,61,47,.05); }
+.font-name { display: block; font-size: 22rpx; color: #1D201D; }
+.font-sample { display: block; font-size: 28rpx; color: #6C6B64; margin-top: 6rpx; }
+
+/* 贴纸列表 */
+.sticker-list { display: flex; flex-wrap: wrap; gap: 12rpx; }
+.sticker-item { display: flex; flex-direction: column; align-items: center; width: calc(25% - 9rpx); padding: 20rpx 0; border: 1rpx solid rgba(29,32,29,.1); border-radius: 8rpx; }
+.sticker-item.active { border-color: #9A3D2F; background: rgba(154,61,47,.05); }
+.sticker-icon { font-size: 36rpx; line-height: 1; }
+.sticker-name { font-size: 16rpx; color: #85827A; margin-top: 8rpx; }
+
+/* 底色列表 */
+.color-list { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.color-item { width: calc(33.33% - 11rpx); padding: 20rpx; border-radius: 8rpx; border: 1rpx solid rgba(29,32,29,.08); text-align: center; position: relative; }
+.color-item.active { border-color: #9A3D2F; border-width: 2rpx; }
+.color-name { font-size: 20rpx; }
+.color-check { position: absolute; top: 6rpx; right: 8rpx; font-size: 16rpx; color: #9A3D2F; }
+
+/* 署名面板 */
+.sign-input { width: 100%; height: 80rpx; padding: 0 24rpx; border: 1rpx solid rgba(29,32,29,.16); border-radius: 8rpx; background: #F2EFE8; font-size: 28rpx; color: #1D201D; box-sizing: border-box; margin-bottom: 20rpx; }
+.sign-style-list { display: flex; gap: 12rpx; }
+.sign-item { flex: 1; padding: 16rpx; border: 1rpx solid rgba(29,32,29,.1); border-radius: 8rpx; text-align: center; }
+.sign-item.active { border-color: #9A3D2F; background: rgba(154,61,47,.05); }
+.sign-sample { display: block; font-family: "Songti SC", serif; font-size: 22rpx; color: #1D201D; }
+.sign-name { display: block; font-size: 14rpx; color: #9A978F; margin-top: 4rpx; }

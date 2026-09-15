@@ -1,0 +1,6 @@
+content.db
+backups/
+exports/
+__pycache__/
+*.pyc
+.pnpm-store/

@@ -1,0 +1,36 @@
+.ss-scroll { height: 100vh; background: #F2EFE8; }
+.ss-page { min-height: 100vh; padding-bottom: 80rpx; }
+.ss-head { padding: 60rpx 36rpx 30rpx; }
+.ss-title { display: block; margin-top: 14rpx; font-family: "Songti SC", serif; font-size: 55rpx; }
+.ss-lead { display: block; width: 560rpx; margin-top: 19rpx; color: #7E7C74; font-family: "Songti SC", serif; font-size: 21rpx; line-height: 1.8; }
+
+.ss-form { padding: 0 36rpx; }
+.ss-field { margin-bottom: 34rpx; }
+.ss-label { display: block; margin-bottom: 14rpx; color: #4A4B44; font-family: "Songti SC", serif; font-size: 23rpx; }
+.ss-required { color: #A34133; }
+.ss-input { width: 100%; padding: 20rpx 24rpx; border: 1rpx solid rgba(29,32,29,.16); border-radius: 6rpx; background: rgba(255,255,255,.6); font-size: 24rpx; color: #1D201D; }
+.ss-textarea { width: 100%; min-height: 160rpx; padding: 20rpx 24rpx; border: 1rpx solid rgba(29,32,29,.16); border-radius: 6rpx; background: rgba(255,255,255,.6); font-size: 24rpx; color: #1D201D; line-height: 1.6; }
+.ss-placeholder { color: #B5B1A8; }
+
+/* 上传区域 */
+.ss-upload { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 260rpx; border: 2rpx dashed #C9C2B4; border-radius: 8rpx; background: rgba(255,255,255,.4); }
+.ss-upload-glyph { color: #9A8F7C; font-size: 56rpx; line-height: 1; }
+.ss-upload-text { margin-top: 16rpx; color: #7E7B74; font-size: 22rpx; }
+.ss-upload-hint { margin-top: 10rpx; color: #B0ACA2; font-size: 17rpx; }
+.ss-upload-preview { position: relative; height: 360rpx; border-radius: 8rpx; overflow: hidden; }
+.ss-preview-img { width: 100%; height: 100%; }
+.ss-remove { position: absolute; top: 14rpx; right: 14rpx; display: flex; align-items: center; justify-content: center; width: 48rpx; height: 48rpx; border-radius: 50%; background: rgba(20,20,18,.62); color: white; font-size: 30rpx; }
+
+/* 提交按钮 */
+.ss-submit-row { padding: 10rpx 36rpx 0; }
+.ss-submit { display: flex; align-items: center; justify-content: center; width: 100%; height: 88rpx; box-sizing: border-box; border-radius: 6rpx; background: #9A3D2F; color: white; font-family: "Songti SC", serif; font-size: 28rpx; letter-spacing: 4rpx; line-height: 1; text-align: center; }
+.ss-submit::after { border: none; }
+.ss-submit:active { opacity: .88; }
+.ss-submit[disabled] { opacity: .5; }
+
+/* 投稿须知 */
+.ss-note { display: flex; flex-direction: column; margin: 44rpx 36rpx 0; padding: 24rpx 26rpx; border-left: 4rpx solid #C9A98C; background: rgba(255,255,255,.45); }
+.ss-note text:first-child { color: #6B4A3A; font-family: "Songti SC", serif; font-size: 21rpx; letter-spacing: 1rpx; }
+.ss-note text:last-child { margin-top: 10rpx; color: #8B867C; font-size: 17rpx; line-height: 1.7; }
+
+.ss-footer { display: flex; flex-direction: column; margin: 70rpx 36rpx 0; padding: 25rpx 0; border-top: 1rpx solid rgba(29,32,29,.13); color: #99968E; font-size: 14rpx; line-height: 1.9; letter-spacing: 1rpx; }

@@ -1,0 +1,49 @@
+<scroll-view class="sub-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="sub-page">
+    <custom-navbar title="线上征集" theme="light" rightType="logo" borderBottom />
+
+    <view class="sub-head">
+      <text class="eyebrow">CALL FOR ART</text>
+      <text class="sub-title">线上征集</text>
+      <text class="sub-lead">大众书画投稿 · 以笔墨记录生活之美，优秀作品将在线上展厅展示。</text>
+    </view>
+
+    <!-- 投稿入口 -->
+    <view class="sub-cta" bindtap="goSubmit">
+      <view class="sub-cta-copy">
+        <text class="sub-cta-eyebrow">SUBMIT YOUR WORK</text>
+        <text class="sub-cta-title">我要投稿</text>
+        <text class="sub-cta-desc">提交你的书画作品，作者、作品名称、简介、作品图像</text>
+      </view>
+      <view class="sub-cta-arrow">→</view>
+    </view>
+
+    <!-- 征集作品列表 -->
+    <view class="sub-section-head"><text>已展示作品</text><text>{{submissions.length}} WORKS</text></view>
+
+    <view class="sub-grid" wx:if="{{submissions.length > 0}}">
+      <view class="sub-card" wx:for="{{submissions}}" wx:key="id" bindtap="previewImage" data-url="{{item.image}}">
+        <view class="sub-visual">
+          <image wx:if="{{item.image}}" class="sub-image" src="{{item.image}}" mode="aspectFill" lazy-load></image>
+          <view wx:else class="sub-placeholder"><text>墨</text></view>
+        </view>
+        <view class="sub-info">
+          <text class="sub-work-title">{{item.title}}</text>
+          <text class="sub-author">{{item.author}}</text>
+          <text class="sub-intro" wx:if="{{item.intro}}">{{item.intro}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="sub-empty" wx:else>
+      <text class="sub-empty-glyph">▤</text>
+      <text class="sub-empty-title">暂无展示作品</text>
+      <text class="sub-empty-hint">投稿作品经审核后将在此展示</text>
+    </view>
+
+    <view class="sub-footer">
+      <text>BEIJING FINE ART ACADEMY</text>
+      <text>线上征集 · 大众书画投稿</text>
+    </view>
+  </view>
+</scroll-view>

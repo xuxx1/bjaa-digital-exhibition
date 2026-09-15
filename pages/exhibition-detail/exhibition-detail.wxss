@@ -1,0 +1,37 @@
+.detail-scroll { height: 100vh; background: #F2EFE8; }
+.detail-page { min-height: 100vh; }
+.detail-hero { position: relative; height: 610rpx; overflow: hidden; background: #D5D0C6; }
+.detail-hero > image { width: 100%; height: 100%; }.hero-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(25,26,23,.06), transparent 52%, rgba(25,26,23,.55)); }
+.history-badge { position: absolute; top: 25rpx; left: 27rpx; display: flex; align-items: center; padding: 11rpx 17rpx; border-radius: 40rpx; background: rgba(246,241,231,.92); color: #4E805A; font-size: 17rpx; letter-spacing: 2rpx; }.history-badge view { width: 9rpx; height: 9rpx; margin-right: 9rpx; border-radius: 50%; background: #61A170; }
+.image-tip { position: absolute; right: 27rpx; bottom: 24rpx; color: rgba(255,255,255,.8); font-size: 17rpx; letter-spacing: 1rpx; }
+.detail-content { padding: 55rpx 36rpx 85rpx; }.detail-title { display: block; margin-top: 16rpx; font-family: "Songti SC", serif; font-size: 51rpx; line-height: 1.4; }
+.type-line { display: flex; margin-top: 20rpx; color: #9D4134; font-size: 16rpx; letter-spacing: 3rpx; }.type-line text:last-child { margin-left: 20rpx; color: #578161; }
+.detail-metadata { margin-top: 43rpx; border-top: 1rpx solid rgba(29,32,29,.14); }.metadata-row { display: flex; padding: 21rpx 0; border-bottom: 1rpx solid rgba(29,32,29,.11); font-size: 20rpx; line-height: 1.65; }.metadata-row text:first-child { flex: none; width: 85rpx; color: #A44234; }.metadata-row text:last-child { flex: 1; color: #555750; }
+.intro-section { margin-top: 55rpx; }.section-heading { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 23rpx; }.section-heading text:first-child { font-family: "Songti SC", serif; font-size: 30rpx; }.section-heading text:last-child { color: #A09D95; font-size: 14rpx; letter-spacing: 3rpx; }.intro-text { color: #5D5E58; font-family: "Songti SC", serif; font-size: 23rpx; line-height: 2; text-align: justify; }
+.visited-note { display: flex; align-items: center; box-sizing: border-box; margin-top: 46rpx; padding: 23rpx 24rpx; border-radius: 6rpx; background: #E1E7DE; }.visited-icon { display: flex; flex: none; align-items: center; justify-content: center; width: 51rpx; height: 51rpx; margin-right: 17rpx; border-radius: 50%; background: #558461; color: white; font-size: 24rpx; line-height: 1; text-align: center; }.visited-note > view:last-child { display: flex; min-width: 0; flex: 1; flex-direction: column; justify-content: center; }.visited-note > view:last-child text:first-child { font-family: "Songti SC", serif; font-size: 22rpx; line-height: 1.35; }.visited-note > view:last-child text:last-child { margin-top: 6rpx; color: #7A8379; font-size: 16rpx; line-height: 1.45; }
+.artworks-section { margin-top: 55rpx; padding-top: 34rpx; border-top: 1rpx solid rgba(29,32,29,.13); }.artworks-grid { display: flex; flex-wrap: wrap; justify-content: space-between; }.artwork-card { width: 48.5%; margin-bottom: 31rpx; }.artwork-card image { width: 100%; height: 340rpx; border-radius: 4rpx; background: #D7D2C8; }.artwork-title { display: block; margin-top: 14rpx; overflow: hidden; font-family: "Songti SC", serif; font-size: 24rpx; text-overflow: ellipsis; white-space: nowrap; }.artwork-artist, .artwork-meta { display: block; margin-top: 7rpx; overflow: hidden; color: #85827A; font-size: 15rpx; text-overflow: ellipsis; white-space: nowrap; }.artwork-meta { color: #A09D95; }
+.artworks-empty { display: flex; flex-direction: column; margin-top: 46rpx; padding: 25rpx; border-radius: 5rpx; background: #E7E2D8; }.artworks-empty text:first-child { font-family: "Songti SC", serif; font-size: 26rpx; }.artworks-empty text:last-child { margin-top: 10rpx; color: #918E86; font-size: 17rpx; }
+.favorite-button { display: flex; align-items: center; justify-content: center; box-sizing: border-box; height: 91rpx; margin-top: 38rpx; padding: 0; border: 1rpx solid #252824; border-radius: 5rpx; background: transparent; color: #252824; font-size: 22rpx; line-height: 1; letter-spacing: 3rpx; text-align: center; }.favorite-button.liked { border-color: #A64234; background: #A64234; color: white; }
+.archive-footer { display: flex; flex-direction: column; margin-top: 58rpx; padding-top: 25rpx; border-top: 1rpx solid rgba(29,32,29,.13); color: #99968E; font-size: 14rpx; line-height: 1.9; letter-spacing: 2rpx; }
+
+/* 观展日记 */
+.diary-section { margin-top: 55rpx; padding-top: 34rpx; border-top: 1rpx solid rgba(29,32,29,.13); }
+.diary-textarea { box-sizing: border-box; width: 100%; min-height: 200rpx; padding: 24rpx; border: 1rpx solid rgba(29,32,29,.18); border-radius: 6rpx; background: #FAFAF6; font-family: "Songti SC", serif; font-size: 24rpx; line-height: 1.85; color: #272A26; }
+.diary-placeholder { color: #B5B1A8; }
+.diary-photo-grid { display: flex; flex-wrap: wrap; gap: 16rpx; margin-top: 20rpx; }
+.diary-photo-item { position: relative; width: 200rpx; height: 200rpx; border-radius: 6rpx; overflow: hidden; background: #D7D2C8; }
+.diary-photo-item image { width: 100%; height: 100%; }
+.diary-photo-remove { position: absolute; top: 8rpx; right: 8rpx; display: flex; align-items: center; justify-content: center; width: 40rpx; height: 40rpx; border-radius: 50%; background: rgba(0,0,0,.55); color: white; font-size: 24rpx; line-height: 1; }
+.diary-photo-add { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 200rpx; height: 200rpx; border: 1rpx dashed rgba(29,32,29,.28); border-radius: 6rpx; background: #FAFAF6; color: #9D9A92; }
+.diary-photo-add-icon { font-size: 48rpx; line-height: 1; color: #B5B1A8; }
+.diary-photo-add-text { margin-top: 8rpx; font-size: 18rpx; letter-spacing: 1rpx; }
+.diary-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 22rpx; }
+.diary-photo-count { color: #A09D95; font-size: 18rpx; letter-spacing: 1rpx; }
+.diary-save-btn { padding: 0 44rpx; height: 68rpx; border: none; border-radius: 5rpx; background: #1D201D; color: #F2EFE8; font-size: 22rpx; line-height: 68rpx; letter-spacing: 2rpx; }
+.diary-empty { display: flex; flex-direction: column; align-items: center; padding: 48rpx 0; border: 1rpx dashed rgba(29,32,29,.18); border-radius: 6rpx; background: #FAFAF6; }
+.diary-empty-icon { font-size: 56rpx; color: #C5C1B8; }
+.diary-empty-text { margin-top: 16rpx; color: #9D9A92; font-size: 22rpx; }
+.diary-start-btn { margin-top: 28rpx; padding: 0 52rpx; height: 68rpx; border: 1rpx solid #1D201D; border-radius: 5rpx; background: transparent; color: #1D201D; font-size: 22rpx; line-height: 68rpx; letter-spacing: 2rpx; }
+.diary-text { display: block; font-family: "Songti SC", serif; font-size: 24rpx; line-height: 1.85; color: #3D3F3B; }
+.diary-photo-item-static { border: 1rpx solid rgba(29,32,29,.08); }
+.diary-edit-btn { margin-top: 24rpx; padding: 0 40rpx; height: 64rpx; border: 1rpx solid rgba(29,32,29,.22); border-radius: 5rpx; background: transparent; color: #555750; font-size: 20rpx; line-height: 64rpx; letter-spacing: 1rpx; }

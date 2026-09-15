@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "我要投稿",
+  "usingComponents": {
+    "custom-navbar": "/components/custom-navbar/custom-navbar"
+  }
+}

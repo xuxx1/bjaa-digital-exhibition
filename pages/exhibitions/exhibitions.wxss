@@ -1,0 +1,334 @@
+.page-scroll { height: 100vh; }
+.exhibitions-page { padding-bottom: 76rpx; }
+.masthead { display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; }
+.brand-logo { display: block; width: 52rpx; height: 52rpx; margin-right: 14rpx; }
+.brand-name { font-size: 24rpx; font-weight: 600; letter-spacing: 4rpx; }
+.date-chip { padding: 13rpx 18rpx; border: 1rpx solid rgba(29,32,29,.2); border-radius: 40rpx; font-size: 16rpx; letter-spacing: 2rpx; }
+.intro { margin: 88rpx 0 46rpx; }
+.intro-copy { display: block; width: 570rpx; margin-top: 24rpx; color: #686862; font-family: "Songti SC", serif; font-size: 25rpx; line-height: 1.8; }
+.current-card { overflow: hidden; border-radius: 7rpx; background: #E7E1D6; }
+.current-swiper { height: 1160rpx; }
+.current-swiper swiper-item { height: 1160rpx; overflow: auto; }
+.current-indicators { display: flex; justify-content: center; gap: 12rpx; margin-top: 20rpx; }
+.current-indicator { width: 12rpx; height: 12rpx; border-radius: 50%; background: rgba(29,32,29,.2); transition: all .3s; }
+.current-indicator.active { width: 32rpx; border-radius: 6rpx; background: #9A3D2F; }
+.current-image-wrap { position: relative; height: 610rpx; overflow: hidden; background: #CFC8BB; }
+.current-image { width: 100%; height: 100%; }
+.image-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,20,18,.08), transparent 45%, rgba(20,20,18,.5)); }
+.status-badge { position: absolute; top: 27rpx; left: 27rpx; display: flex; align-items: center; padding: 12rpx 18rpx; border-radius: 40rpx; background: rgba(245,240,231,.9); color: #343630; font-size: 18rpx; letter-spacing: 2rpx; }
+.status-dot { width: 11rpx; height: 11rpx; margin-right: 11rpx; border-radius: 50%; background: #A94234; box-shadow: 0 0 0 6rpx rgba(169,66,52,.14); }
+.image-caption { position: absolute; right: 27rpx; bottom: 25rpx; left: 27rpx; display: flex; justify-content: space-between; color: rgba(255,255,255,.84); font-size: 17rpx; letter-spacing: 2rpx; }
+.current-content { padding: 36rpx 30rpx 30rpx; }
+.current-title { display: block; font-family: "Songti SC", serif; font-size: 43rpx; font-weight: 600; line-height: 1.4; }
+.current-intro { display: block; margin-top: 20rpx; color: #6C6B64; font-family: "Songti SC", serif; font-size: 22rpx; line-height: 1.8; text-align: justify; }
+.info-table { margin-top: 30rpx; border-top: 1rpx solid rgba(29,32,29,.13); }
+.info-row { display: flex; padding: 19rpx 0; border-bottom: 1rpx solid rgba(29,32,29,.1); font-size: 20rpx; line-height: 1.55; }
+.info-label { flex: none; width: 76rpx; color: #9A3D2F; }
+.info-value { flex: 1; color: #555750; }
+.operations-panel { margin-top: 28rpx; padding: 31rpx 28rpx 27rpx; border-radius: 7rpx; background: #242722; color: #F3EDE2; }
+.operations-panel:active { transform: scale(.994); opacity: .96; }
+.operations-head { display: flex; align-items: flex-start; justify-content: space-between; padding-bottom: 25rpx; border-bottom: 1rpx solid rgba(255,255,255,.13); }
+.operations-kicker { display: block; color: #C17A67; font-size: 14rpx; letter-spacing: 3rpx; }
+.operations-title { display: block; margin-top: 10rpx; font-family: "Songti SC", serif; font-size: 32rpx; }
+.live-status { display: flex; align-items: center; padding-top: 4rpx; color: rgba(255,255,255,.56); font-size: 15rpx; }
+.live-status view { width: 10rpx; height: 10rpx; margin-right: 10rpx; border-radius: 50%; background: #63B078; box-shadow: 0 0 0 6rpx rgba(99,176,120,.13); }
+.operations-action { display: flex; flex-direction: column; align-items: flex-end; }
+.operations-link { margin-top: 13rpx; color: rgba(255,255,255,.78); font-size: 16rpx; letter-spacing: 1rpx; }
+.operations-metrics { display: flex; justify-content: space-between; margin-top: 25rpx; }
+.metric-card { width: 48.5%; box-sizing: border-box; padding: 22rpx 20rpx; border: 1rpx solid rgba(255,255,255,.12); border-radius: 5rpx; background: rgba(255,255,255,.035); }
+.metric-label { display: block; color: rgba(255,255,255,.55); font-size: 16rpx; }
+.metric-value-row { display: flex; align-items: baseline; margin-top: 15rpx; }
+.metric-value { font-family: Georgia, serif; font-size: 42rpx; line-height: 1; }
+.metric-unit { margin-left: 8rpx; color: rgba(255,255,255,.42); font-size: 14rpx; }
+.trend-row { display: flex; justify-content: space-between; margin-top: 12rpx; color: rgba(255,255,255,.35); font-size: 13rpx; }
+.trend-up { color: #72B984; }
+.mini-bars { display: flex; align-items: flex-end; justify-content: space-between; height: 64rpx; margin-top: 18rpx; border-bottom: 1rpx solid rgba(255,255,255,.12); }
+.mini-bars view { width: 8%; min-height: 5rpx; border-radius: 2rpx 2rpx 0 0; background: rgba(255,255,255,.25); }
+.mini-bars .current-bar { background: #B85B48; }
+.heat-value { display: flex; align-items: baseline; margin-top: 14rpx; font-family: Georgia, serif; }
+.heat-value text:first-child { font-size: 50rpx; line-height: 1; }
+.heat-value text:last-child { margin-left: 3rpx; color: rgba(255,255,255,.45); font-size: 18rpx; }
+.heat-track { height: 10rpx; margin-top: 23rpx; overflow: hidden; border-radius: 10rpx; background: rgba(255,255,255,.12); }
+.heat-track view { height: 100%; border-radius: 10rpx; background: linear-gradient(90deg, #798F79, #C15743); }
+.heat-scale { display: flex; justify-content: space-between; margin-top: 10rpx; color: rgba(255,255,255,.34); font-size: 12rpx; }
+.heat-scale text:nth-child(2) { color: #C98978; }
+.device-section { margin-top: 25rpx; padding-top: 24rpx; border-top: 1rpx solid rgba(255,255,255,.13); }
+.device-heading { display: flex; justify-content: space-between; margin-bottom: 15rpx; font-size: 18rpx; }
+.device-heading text:last-child { color: #75B585; font-size: 14rpx; }
+.device-list { display: flex; justify-content: space-between; }
+.device-row { display: flex; align-items: center; width: 48.5%; box-sizing: border-box; padding: 17rpx 15rpx; border-radius: 4rpx; background: rgba(255,255,255,.055); }
+.device-icon { display: flex; align-items: center; justify-content: center; width: 46rpx; height: 46rpx; margin-right: 13rpx; border: 1rpx solid rgba(255,255,255,.16); border-radius: 50%; }
+.device-symbol { color: #D8B16D; font-size: 25rpx; }
+.climate-icon .device-symbol { color: #79A9B1; }
+.device-copy { display: flex; min-width: 0; flex: 1; flex-direction: column; }
+.device-code { color: rgba(255,255,255,.3); font-size: 10rpx; letter-spacing: 1rpx; }
+.device-name { margin-top: 4rpx; font-size: 17rpx; }
+.device-ok { display: flex; align-items: center; color: #79B88A; font-size: 14rpx; }
+.device-ok view { width: 8rpx; height: 8rpx; margin-right: 7rpx; border-radius: 50%; background: #6FB480; }
+.digital-heading { display: flex; align-items: flex-end; justify-content: space-between; margin: 100rpx 0 30rpx; }
+.digital-title { display: block; margin-top: 12rpx; font-family: "Songti SC", serif; font-size: 48rpx; }
+.digital-count { padding-bottom: 7rpx; color: #918E86; font-size: 16rpx; letter-spacing: 2rpx; }
+.digital-card { position: relative; height: 590rpx; overflow: hidden; border-radius: 7rpx; background: #D4CFC5; box-shadow: 0 18rpx 50rpx rgba(43,42,37,.09); }
+.digital-card:active { transform: scale(.995); }
+.digital-swiper { height: 590rpx; }
+.digital-swiper swiper-item { overflow: hidden; }
+.digital-cover { width: 100%; height: 100%; }
+.digital-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,21,19,.06), rgba(20,21,19,.12) 45%, rgba(20,21,19,.78)); }
+.digital-badge { position: absolute; top: 25rpx; right: 25rpx; display: flex; align-items: baseline; padding: 13rpx 17rpx; border: 1rpx solid rgba(255,255,255,.5); border-radius: 50rpx; background: rgba(25,27,24,.45); color: white; backdrop-filter: blur(8px); }
+.digital-badge text:first-child { margin-right: 10rpx; font-family: Georgia, serif; font-size: 26rpx; }
+.digital-badge text:last-child { font-size: 16rpx; letter-spacing: 2rpx; }
+.digital-content { position: absolute; right: 28rpx; bottom: 29rpx; left: 28rpx; color: white; }
+.digital-card-kicker { display: block; color: rgba(255,255,255,.65); font-size: 15rpx; letter-spacing: 3rpx; }
+.digital-card-title { display: block; margin-top: 14rpx; font-family: "Songti SC", serif; font-size: 36rpx; line-height: 1.45; }
+.digital-card-desc { display: block; margin-top: 10rpx; color: rgba(255,255,255,.6); font-size: 18rpx; line-height: 1.6; }
+.digital-meta { display: flex; justify-content: space-between; margin-top: 21rpx; padding-top: 18rpx; border-top: 1rpx solid rgba(255,255,255,.28); color: rgba(255,255,255,.75); font-size: 17rpx; }
+.digital-meta text:last-child { color: white; }
+.operations-panel { border: 1rpx solid rgba(29,32,29,.13); background: #E5DFD4; color: #262925; box-shadow: 0 16rpx 40rpx rgba(48,46,40,.06); }
+.operations-head { border-bottom-color: rgba(29,32,29,.13); }
+.operations-kicker { color: #A34234; }
+.live-status { color: #77766F; }
+.operations-link { color: #353733; }
+.metric-card { border-color: rgba(29,32,29,.11); background: rgba(255,255,255,.38); }
+.metric-label { color: #74736C; }
+.metric-unit { color: #8C8981; }
+.trend-row { color: #96938B; }
+.trend-up { color: #538A61; }
+.mini-bars { border-bottom-color: rgba(29,32,29,.13); }
+.mini-bars view { background: rgba(51,54,49,.23); }
+.mini-bars .current-bar { background: #A64334; }
+.heat-value text:last-child { color: #77756E; }
+.heat-track { background: rgba(29,32,29,.12); }
+.heat-scale { color: #96938B; }
+.heat-scale text:nth-child(2) { color: #A64334; }
+.device-section { border-top-color: rgba(29,32,29,.13); }
+.device-heading text:last-child { color: #538A61; }
+.device-row { background: rgba(255,255,255,.4); }
+.device-icon { border-color: rgba(29,32,29,.13); }
+.device-code { color: #A09D95; }
+.device-ok { color: #538A61; }
+.review-heading { display: flex; align-items: flex-end; justify-content: space-between; margin: 100rpx 0 30rpx; }
+.review-title { display: block; margin-top: 12rpx; font-family: "Songti SC", serif; font-size: 48rpx; }
+.review-status { display: flex; flex-direction: column; align-items: flex-end; padding-bottom: 7rpx; }
+.review-count { padding-bottom: 7rpx; color: #918E86; font-size: 16rpx; letter-spacing: 2rpx; }
+.review-page-no { color: #3F413C; font-family: Georgia, serif; font-size: 22rpx; letter-spacing: 2rpx; }
+.review-card { margin-bottom: 48rpx; }
+.review-image-wrap { position: relative; height: 390rpx; overflow: hidden; border-radius: 6rpx; background: #D9D4CA; }
+.review-image { width: 100%; height: 100%; }
+.review-favorite { position: absolute; top: 20rpx; left: 20rpx; display: flex; align-items: center; justify-content: center; width: 55rpx; height: 55rpx; border-radius: 50%; background: rgba(244,239,229,.9); color: #555750; font-size: 30rpx; }
+.review-favorite.liked { background: #A64234; color: white; }
+.review-index { position: absolute; top: 20rpx; right: 20rpx; display: flex; align-items: center; justify-content: center; width: 55rpx; height: 55rpx; border-radius: 50%; background: rgba(244,239,229,.9); color: #292B27; font-family: Georgia, serif; font-size: 17rpx; line-height: 1; text-align: center; }
+.review-content { padding: 24rpx 3rpx 0; }
+.review-card-title { display: block; font-family: "Songti SC", serif; font-size: 33rpx; line-height: 1.45; }
+.review-excerpt { display: -webkit-box; overflow: hidden; margin-top: 14rpx; color: #79776F; font-family: "Songti SC", serif; font-size: 21rpx; line-height: 1.75; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.review-meta { display: flex; justify-content: space-between; margin-top: 21rpx; padding-top: 18rpx; border-top: 1rpx solid rgba(29,32,29,.11); color: #9A978F; font-size: 17rpx; }
+.review-arrow { color: #383A35; }
+.review-pagination { display: flex; align-items: center; justify-content: space-between; margin-top: 10rpx; padding: 26rpx 0; border-top: 1rpx solid rgba(29,32,29,.14); border-bottom: 1rpx solid rgba(29,32,29,.14); }
+.page-button { display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 190rpx; height: 68rpx; margin: 0; padding: 0; border: 1rpx solid rgba(29,32,29,.22); border-radius: 40rpx; background: transparent; color: #333530; font-size: 19rpx; line-height: 1; text-align: center; }
+.page-button.disabled { border-color: rgba(29,32,29,.08); color: #B5B2AA; }
+.page-dots { display: flex; align-items: center; gap: 13rpx; }
+.page-dot { width: 10rpx; height: 10rpx; border-radius: 50%; background: #C4C0B7; transition: width .2s ease; }
+.page-dot.active { width: 32rpx; border-radius: 10rpx; background: #9A3D2F; }
+.dataset-note { display: flex; flex-direction: column; margin-top: 85rpx; padding: 28rpx 0; border-top: 1rpx solid rgba(29,32,29,.14); color: #99968E; font-size: 16rpx; line-height: 1.9; letter-spacing: 1rpx; }
+.modal-mask { position: fixed; inset: 0; z-index: 99; display: flex; align-items: flex-end; background: rgba(20,21,19,.65); }
+.review-modal { width: 100%; max-height: 90vh; overflow: hidden; border-radius: 24rpx 24rpx 0 0; background: #F2EFE8; }
+.modal-image-wrap { position: relative; height: 400rpx; background: #D7D2C8; }
+.modal-image { width: 100%; height: 100%; }
+.modal-image-tip { position: absolute; right: 22rpx; bottom: 20rpx; padding: 10rpx 15rpx; border-radius: 4rpx; background: rgba(20,21,19,.68); color: white; font-size: 17rpx; }
+.modal-body { padding: 28rpx 34rpx calc(env(safe-area-inset-bottom) + 30rpx); }
+.modal-topline { display: flex; align-items: center; justify-content: space-between; color: #9A3D2F; font-size: 18rpx; letter-spacing: 3rpx; gap: 16rpx; }
+.modal-topline-label { flex: 1; color: #9A3D2F; font-size: 18rpx; letter-spacing: 3rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.modal-topline-info { display: flex; align-items: center; margin-top: 10rpx; color: #9A3D2F; font-size: 18rpx; letter-spacing: 3rpx; }
+.modal-actions { display: flex; align-items: center; gap: 13rpx; }
+.modal-favorite { display: flex; align-items: center; justify-content: center; width: 55rpx; height: 55rpx; border: 1rpx solid rgba(29,32,29,.2); border-radius: 50%; color: #555750; font-size: 29rpx; letter-spacing: 0; }
+.modal-favorite.liked { border-color: #A64234; background: #A64234; color: white; }
+.modal-close { display: flex; align-items: center; justify-content: center; width: 55rpx; height: 55rpx; border: 1rpx solid rgba(29,32,29,.2); border-radius: 50%; color: #333530; font-size: 30rpx; line-height: 1; letter-spacing: 0; text-align: center; flex-shrink: 0; }
+.modal-title { display: block; margin-top: 13rpx; padding-right: 50rpx; font-family: "Songti SC", serif; font-size: 39rpx; line-height: 1.4; }
+.modal-meta { display: flex; flex-direction: column; margin-top: 15rpx; color: #918E86; font-size: 18rpx; line-height: 1.7; }
+.modal-scroll { max-height: 520rpx; margin-top: 24rpx; }
+.modal-intro { color: #5D5E58; font-family: "Songti SC", serif; font-size: 22rpx; line-height: 1.9; text-align: justify; }
+.modal-organizer { display: flex; flex-direction: column; margin-top: 25rpx; padding-top: 20rpx; border-top: 1rpx solid rgba(29,32,29,.12); color: #85827A; font-size: 18rpx; line-height: 1.8; }
+.modal-digital-button { display: flex; align-items: center; justify-content: center; box-sizing: border-box; height: 76rpx; margin: 25rpx 0 0; padding: 0; border-radius: 3rpx; background: #A44234; color: white; font-size: 20rpx; line-height: 1; letter-spacing: 1rpx; text-align: center; }
+.modal-artworks { margin-top: 32rpx; padding-top: 24rpx; border-top: 1rpx solid rgba(29,32,29,.12); }
+.modal-artworks-head { display: flex; justify-content: space-between; margin-bottom: 18rpx; font-family: "Songti SC", serif; font-size: 25rpx; }.modal-artworks-head text:last-child { color: #99968E; font-family: sans-serif; font-size: 15rpx; }
+.modal-artwork-scroll { width: calc(100% + 34rpx); }.modal-artwork-row { display: flex; padding-right: 34rpx; }.modal-artwork-card { flex: none; width: 260rpx; margin-right: 16rpx; }.modal-artwork-card image { width: 260rpx; height: 255rpx; border-radius: 4rpx; background: #D7D2C8; }.modal-artwork-title { display: block; margin-top: 12rpx; overflow: hidden; font-family: "Songti SC", serif; font-size: 21rpx; text-overflow: ellipsis; white-space: nowrap; }.modal-artwork-meta, .modal-artwork-size { display: block; margin-top: 6rpx; overflow: hidden; color: #8D8A82; font-size: 14rpx; text-overflow: ellipsis; white-space: nowrap; }
+.modal-artworks-empty { display: flex; flex-direction: column; margin-top: 28rpx; padding: 21rpx; border-radius: 4rpx; background: #E7E2D8; }.modal-artworks-empty text:first-child { font-family: "Songti SC", serif; font-size: 23rpx; }.modal-artworks-empty text:last-child { margin-top: 8rpx; color: #96938B; font-size: 16rpx; }
+.current-reservation { display: flex; align-items: center; justify-content: space-between; margin-top: 22rpx; color: #8A877F; font-size: 17rpx; }
+.current-reservation button { display: flex; align-items: center; justify-content: center; width: 190rpx; height: 62rpx; margin: 0; padding: 0; border: 1rpx solid rgba(39,41,37,.2); border-radius: 40rpx; background: transparent; color: #343630; font-size: 19rpx; line-height: 1; text-align: center; }
+.today-count { color: #9A3D2F; font-size: 17rpx; margin-right: 16rpx; white-space: nowrap; }
+.program-section { margin-top: 88rpx; }
+.exhibition-review-section { margin-top: 78rpx; }
+.preview-section { margin-top: 78rpx; }
+.program-heading { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 27rpx; }
+.program-title { display: block; margin-top: 12rpx; font-family: "Songti SC", serif; font-size: 43rpx; }
+.program-count { padding-bottom: 6rpx; color: #96938B; font-size: 14rpx; letter-spacing: 2rpx; }
+.unified-section-status { display: flex; flex-direction: column; align-items: flex-end; padding-bottom: 2rpx; }
+.unified-section-status .program-count { padding-bottom: 5rpx; }
+.unified-review-list { display: flex; flex-direction: column; gap: 18rpx; }
+.unified-review-card { min-height: 330rpx; }
+.unified-review-image-wrap { position: relative; flex: none; width: 250rpx; min-height: 330rpx; overflow: hidden; background: #D5D0C6; }
+.unified-review-image-wrap > image { width: 100%; height: 100%; min-height: 330rpx; }
+.unified-review-image-wrap .review-favorite { top: 16rpx; left: 16rpx; width: 50rpx; height: 50rpx; font-size: 27rpx; }
+.unified-review-image-wrap .review-index { top: 16rpx; right: 16rpx; width: 50rpx; height: 50rpx; font-size: 15rpx; line-height: 1; }
+.program-status.archive { background: #DED8CD; color: #7C544B; }
+.unified-review-copy { display: flex; flex-direction: column; align-items: flex-start; }
+.unified-review-copy .program-summary { -webkit-line-clamp: 2; }
+.unified-detail-link { margin-top: auto; padding-top: 17rpx; color: #3D3F3A; font-size: 17rpx; }
+.unified-pagination { margin-top: 24rpx; }
+.preview-card { overflow: hidden; border: 1rpx solid rgba(29,32,29,.1); border-radius: 7rpx; background: #E7E1D6; }
+.preview-card > image { width: 100%; height: 355rpx; background: #D5D0C6; }
+.preview-copy { padding: 27rpx; }
+.program-status { display: inline-flex; padding: 8rpx 13rpx; border-radius: 30rpx; font-size: 14rpx; letter-spacing: 1rpx; }
+.program-status.upcoming { background: #A64234; color: #FFF9F0; }
+.program-status.ended { background: #D8D2C7; color: #77746D; }
+.preview-title, .program-card-title { display: block; margin-top: 17rpx; font-family: "Songti SC", serif; font-size: 31rpx; line-height: 1.45; }
+.program-meta { display: block; margin-top: 10rpx; color: #85827A; font-size: 17rpx; line-height: 1.55; }
+.program-summary { display: -webkit-box; overflow: hidden; margin-top: 15rpx; color: #6F6E67; font-family: "Songti SC", serif; font-size: 20rpx; line-height: 1.75; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.program-button { display: flex; align-items: center; justify-content: center; height: 67rpx; margin: 24rpx 0 0; padding: 0; border-radius: 3rpx; background: #272925; color: #F8F3E9; font-size: 18rpx; line-height: 1; text-align: center; }
+.program-button.disabled { border: 1rpx solid rgba(29,32,29,.12); background: transparent; color: #9D9A92; }
+.program-empty { display: flex; min-height: 190rpx; flex-direction: column; align-items: center; justify-content: center; border: 1rpx dashed rgba(29,32,29,.18); border-radius: 6rpx; color: #7F7D75; }
+.program-empty text:first-child { font-family: "Songti SC", serif; font-size: 26rpx; }
+.program-empty text:last-child { margin-top: 10rpx; color: #AAA79F; font-size: 17rpx; }
+.program-empty.compact { min-height: 126rpx; margin-bottom: 19rpx; background: rgba(231,225,214,.45); }
+.program-card { display: flex; overflow: hidden; border: 1rpx solid rgba(29,32,29,.1); border-radius: 6rpx; background: #E9E4DA; }
+.program-card > image { flex: none; width: 250rpx; min-height: 330rpx; background: #D5D0C6; }
+.program-card-copy { min-width: 0; flex: 1; padding: 24rpx 23rpx; }
+.program-card-title { font-size: 27rpx; }
+.subsection-head { display: flex; align-items: baseline; justify-content: space-between; margin: 55rpx 0 22rpx; padding-top: 26rpx; border-top: 1rpx solid rgba(29,32,29,.13); }
+.subsection-head text:first-child { font-family: "Songti SC", serif; font-size: 31rpx; }
+.subsection-head text:last-child { color: #9B9890; font-size: 14rpx; letter-spacing: 2rpx; }
+.lecture-review-grid { display: flex; justify-content: space-between; }
+.lecture-review-card { width: 48.3%; }
+.lecture-review-card image { width: 100%; height: 230rpx; border-radius: 5rpx; background: #D7D2C8; }
+.lecture-review-speaker { display: block; margin-top: 15rpx; color: #A34133; font-size: 14rpx; }
+.lecture-review-title { display: -webkit-box; overflow: hidden; min-height: 88rpx; margin-top: 9rpx; font-family: "Songti SC", serif; font-size: 23rpx; line-height: 1.55; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.lecture-review-link { display: block; margin-top: 12rpx; color: #77746D; font-size: 16rpx; }
+.activity-scroll { width: calc(100% + 32rpx); }
+.activity-row { display: flex; padding-right: 32rpx; }
+.activity-card { flex: none; width: 510rpx; margin-right: 18rpx; overflow: hidden; border-radius: 6rpx; background: #E7E1D6; }
+.activity-card image { width: 100%; height: 290rpx; background: #D5D0C6; }
+.activity-copy { padding: 23rpx; }
+.activity-date { color: #9A4032; font-size: 14rpx; letter-spacing: 1rpx; }
+.activity-title { display: block; min-height: 80rpx; margin-top: 11rpx; font-family: "Songti SC", serif; font-size: 27rpx; line-height: 1.5; }
+.program-modal { width: 100%; max-height: 90vh; overflow: hidden; border-radius: 24rpx 24rpx 0 0; background: #F2EFE8; }
+.program-modal-image { width: 100%; height: 390rpx; background: #D7D2C8; }
+.program-modal-body { max-height: 650rpx; overflow-y: auto; padding: 28rpx 34rpx calc(env(safe-area-inset-bottom) + 34rpx); }
+.program-modal-meta { display: block; margin-top: 10rpx; color: #85827A; font-size: 18rpx; line-height: 1.65; }
+.program-modal-summary { display: block; margin-top: 23rpx; padding-top: 21rpx; border-top: 1rpx solid rgba(29,32,29,.12); color: #5D5E58; font-family: "Songti SC", serif; font-size: 22rpx; line-height: 1.85; text-align: justify; }
+.modal-program-button { display: flex; align-items: center; justify-content: center; height: 76rpx; margin: 26rpx 0 0; padding: 0; border-radius: 3rpx; background: #A44234; color: white; font-size: 20rpx; line-height: 1; text-align: center; }
+.modal-program-button.disabled { background: #D9D3C8; color: #8D8A82; }
+
+/* 讲座/活动收藏按钮 */
+.program-card-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 24rpx; }
+.program-card-bottom .program-button { margin: 0; }
+.program-favorite-btn { display: flex; align-items: center; justify-content: center; width: 55rpx; height: 55rpx; border: 1rpx solid rgba(29,32,29,.18); border-radius: 50%; color: #555750; font-size: 28rpx; }
+.program-favorite-btn.liked { border-color: #A64234; background: #A64234; color: white; }
+.activity-card-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 24rpx; }
+.activity-card-bottom .program-button { margin: 0; }
+.lecture-review-card { position: relative; }
+.lecture-review-favorite { position: absolute; top: 14rpx; right: 14rpx; display: flex; align-items: center; justify-content: center; width: 50rpx; height: 50rpx; border-radius: 50%; background: rgba(244,239,229,.9); color: #555750; font-size: 27rpx; z-index: 2; }
+.lecture-review-favorite.liked { background: #A64234; color: white; }
+
+/* 搜索栏入口 */
+.search-bar { display: flex; align-items: center; margin-top: 32rpx; padding: 22rpx 26rpx; border: 1rpx solid rgba(29,32,29,.14); border-radius: 40rpx; background: rgba(255,255,255,.55); }
+.search-icon { margin-right: 14rpx; color: #9D9A92; font-size: 30rpx; line-height: 1; }
+.search-placeholder { color: #B5B1A8; font-size: 22rpx; letter-spacing: 1rpx; }
+
+/* 搜索面板 */
+.search-panel { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; background: #F2EFE8; }
+.search-panel-header { display: flex; align-items: center; padding: calc(env(safe-area-inset-top) + 22rpx) 30rpx 20rpx; }
+.search-input-wrap { display: flex; flex: 1; align-items: center; height: 72rpx; padding: 0 24rpx; border-radius: 40rpx; background: rgba(255,255,255,.75); }
+.search-icon-inner { margin-right: 14rpx; color: #9D9A92; font-size: 30rpx; }
+.search-input { flex: 1; height: 72rpx; font-size: 24rpx; color: #1D201D; }
+.search-input-placeholder { color: #B5B1A8; }
+.search-cancel { display: flex; align-items: center; justify-content: center; width: 62rpx; height: 62rpx; min-width: 62rpx; border: 1rpx solid rgba(29,32,29,.18); border-radius: 50%; color: #555750; font-size: 32rpx; line-height: 1; margin-right: 22rpx; flex-shrink: 0; }
+
+/* 搜索 Tab */
+.search-tabs { display: flex; padding: 12rpx 30rpx 0; border-bottom: 1rpx solid rgba(29,32,29,.1); }
+.search-tab { display: flex; align-items: center; justify-content: center; flex: 1; height: 76rpx; margin-right: 12rpx; border-bottom: 3rpx solid transparent; color: #9D9A92; font-size: 24rpx; letter-spacing: 2rpx; }
+.search-tab:last-child { margin-right: 0; }
+.search-tab.active { border-bottom-color: #9A3D2F; color: #1D201D; font-weight: 600; }
+.search-tab-count { margin-left: 8rpx; padding: 2rpx 10rpx; border-radius: 20rpx; background: #E7E1D6; color: #9A3D2F; font-size: 16rpx; font-weight: 400; }
+
+/* 搜索结果区 */
+.search-results { flex: 1; padding: 24rpx 30rpx; }
+.search-empty { display: flex; flex-direction: column; align-items: center; padding: 80rpx 0; color: #9D9A92; }
+.search-empty text:first-child { font-family: "Songti SC", serif; font-size: 28rpx; color: #7A7870; }
+.search-empty text:last-child { margin-top: 12rpx; font-size: 20rpx; }
+
+/* 搜索结果卡片 */
+.search-result-card { display: flex; margin-bottom: 20rpx; overflow: hidden; border: 1rpx solid rgba(29,32,29,.1); border-radius: 7rpx; background: #E9E4DA; }
+.search-result-image { flex: none; width: 220rpx; min-height: 220rpx; background: #D5D0C6; }
+.search-result-copy { min-width: 0; flex: 1; padding: 22rpx; }
+.search-result-tag { display: inline-flex; padding: 6rpx 12rpx; border-radius: 20rpx; font-size: 14rpx; letter-spacing: 1rpx; }
+.search-result-tag.current { background: #9A3D2F; color: #FFF9F0; }
+.search-result-tag.archive { background: #DED8CD; color: #7C544B; }
+.search-result-tag.lecture { background: #DDE5DA; color: #4E6E54; }
+.search-result-tag.activity { background: #E5DDD0; color: #8C6E3F; }
+.search-result-title { display: block; margin-top: 14rpx; font-family: "Songti SC", serif; font-size: 27rpx; line-height: 1.45; }
+.search-result-meta { display: block; margin-top: 8rpx; color: #85827A; font-size: 17rpx; line-height: 1.55; }
+
+/* 搜索提示 */
+.search-hint { display: flex; flex-direction: column; align-items: center; padding-top: 160rpx; color: #C5C1B8; }
+.search-hint-icon { margin-bottom: 20rpx; font-size: 64rpx; }
+.search-hint text:last-child { font-size: 20rpx; letter-spacing: 1rpx; }
+
+/* 每日一画横滑区 */
+.daily-painting-section { margin-top: 48rpx; }
+.daily-painting-heading { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 24rpx; }
+.daily-painting-title { display: block; margin-top: 10rpx; font-family: "Songti SC", serif; font-size: 43rpx; }
+.daily-painting-date { padding-bottom: 6rpx; color: #96938B; font-size: 14rpx; letter-spacing: 2rpx; }
+.daily-painting-scroll { width: calc(100% + 32rpx); }
+.daily-painting-row { display: flex; padding-right: 32rpx; }
+.daily-painting-card { position: relative; flex: none; width: 400rpx; height: 520rpx; margin-right: 18rpx; overflow: hidden; border-radius: 7rpx; background: #D5D0C6; }
+.daily-painting-image { width: 100%; height: 100%; }
+.daily-painting-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(20,20,18,.65)); }
+.daily-painting-info { position: absolute; right: 24rpx; bottom: 24rpx; left: 24rpx; color: white; }
+.daily-painting-name { display: block; font-family: "Songti SC", serif; font-size: 30rpx; line-height: 1.4; }
+.daily-painting-artist { display: block; margin-top: 8rpx; color: rgba(255,255,255,.78); font-size: 18rpx; letter-spacing: 1rpx; }
+
+/* 线上征集板块 */
+.submission-section { margin-top: 92rpx; }
+.submission-heading { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 27rpx; }
+.submission-title { display: block; margin-top: 12rpx; font-family: "Songti SC", serif; font-size: 43rpx; }
+.submission-count { padding-bottom: 6rpx; color: #96938B; font-size: 14rpx; letter-spacing: 2rpx; }
+.submission-card { position: relative; height: 400rpx; overflow: hidden; border-radius: 7rpx; background: #2A2C27; box-shadow: 0 18rpx 50rpx rgba(43,42,37,.09); }
+.submission-card:active { transform: scale(.995); }
+.submission-card-bg { position: absolute; inset: 0; }
+.submission-card-img { width: 100%; height: 100%; }
+.submission-card-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,21,19,.1), rgba(20,21,19,.14) 45%, rgba(20,21,19,.82)); }
+.submission-card-content { position: absolute; right: 28rpx; bottom: 29rpx; left: 28rpx; color: white; }
+.submission-card-eyebrow { display: block; color: rgba(255,255,255,.65); font-size: 15rpx; letter-spacing: 3rpx; }
+.submission-card-title { display: block; margin-top: 14rpx; font-family: "Songti SC", serif; font-size: 36rpx; line-height: 1.45; }
+.submission-card-desc { display: block; margin-top: 12rpx; color: rgba(255,255,255,.75); font-family: "Songti SC", serif; font-size: 19rpx; line-height: 1.7; }
+.submission-card-action { display: flex; justify-content: space-between; margin-top: 21rpx; padding-top: 18rpx; border-top: 1rpx solid rgba(255,255,255,.28); color: rgba(255,255,255,.75); font-size: 17rpx; }
+.submission-card-arrow { color: white; }
+
+/* ============ 公告栏 ============ */
+.announcement-bar { margin-top: 26rpx; overflow: hidden; border: 1rpx solid rgba(29,32,29,.1); border-radius: 10rpx; background: #E7E1D6; }
+.announcement-track { display: flex; align-items: center; padding: 18rpx 22rpx; }
+.announcement-tag { flex: none; margin-right: 14rpx; padding: 7rpx 14rpx; border-radius: 30rpx; background: #C9BFAF; color: #5E5A51; font-size: 16rpx; letter-spacing: 1rpx; }
+.announcement-tag.urgent { background: #9A3D2F; color: #FFF9F0; }
+.announcement-swiper { flex: 1; height: 44rpx; }
+.announcement-text { display: flex; align-items: center; height: 44rpx; overflow: hidden; color: #4A4B44; font-size: 21rpx; text-overflow: ellipsis; white-space: nowrap; }
+.announcement-more { flex: none; margin-left: 12rpx; color: #9A3D2F; font-size: 17rpx; letter-spacing: 1rpx; }
+.announcement-dots { display: flex; align-items: center; justify-content: center; gap: 9rpx; padding: 0 0 13rpx; }
+.announcement-dot { width: 9rpx; height: 9rpx; border-radius: 50%; background: #C4C0B7; transition: width .2s ease; }
+.announcement-dot.active { width: 26rpx; border-radius: 10rpx; background: #9A3D2F; }
+
+/* ============ 快捷入口 ============ */
+.quick-nav { display: flex; margin-top: 26rpx; padding: 20rpx 12rpx; border: 1rpx solid rgba(29,32,29,.08); border-radius: 12rpx; background: rgba(255,255,255,.45); }
+.quick-item { display: flex; flex: 1; flex-direction: column; align-items: center; }
+.quick-icon { display: flex; align-items: center; justify-content: center; width: 72rpx; height: 72rpx; border: 1rpx solid rgba(29,32,29,.13); border-radius: 18rpx; background: #EFE9DE; color: #5E5447; font-family: "Songti SC", serif; font-size: 26rpx; }
+.quick-item:active .quick-icon { background: #E2D9CA; }
+.quick-label { margin-top: 11rpx; color: #6C6A63; font-size: 18rpx; letter-spacing: 1rpx; }
+
+/* ============ 公告弹窗 ============ */
+.announcement-modal { width: 88%; max-height: 78vh; display: flex; flex-direction: column; margin: auto; padding: 32rpx 34rpx 34rpx; overflow: hidden; border-radius: 16rpx; background: #F2EFE8; }
+.announcement-modal-head { display: flex; align-items: center; justify-content: space-between; gap: 16rpx; }
+.announcement-modal-tag { padding: 8rpx 16rpx; border-radius: 30rpx; background: #DED8CD; color: #6B4A3A; font-size: 17rpx; letter-spacing: 1rpx; }
+.announcement-modal-tag.urgent { background: #9A3D2F; color: #FFF9F0; }
+.announcement-modal-title { display: block; margin-top: 22rpx; font-family: "Songti SC", serif; font-size: 34rpx; line-height: 1.5; }
+.announcement-modal-scroll { flex: 1; max-height: 46vh; margin-top: 20rpx; }
+.announcement-modal-content { display: block; color: #5D5E58; font-family: "Songti SC", serif; font-size: 21rpx; line-height: 1.85; text-align: justify; white-space: pre-wrap; }
+.announcement-modal .modal-program-button { flex: none; margin-top: 26rpx; }

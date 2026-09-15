@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>北京画院 · 内容管理后台</title>
+  <meta name="description" content="北京画院线上展览小程序内容管理后台">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="/media?path=logo1.png" alt="北京画院">
+        <div><strong>北京画院</strong><span>内容管理后台</span></div>
+      </div>
+      <nav id="navigation" aria-label="内容分类"></nav>
+      <div class="sidebar-foot">
+        <span class="status-dot"></span>
+        <div><strong>本地数据已连接</strong><small>直接管理 dataset</small></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">BEIJING FINE ART ACADEMY</p>
+          <h1 id="pageTitle">内容总览</h1>
+        </div>
+        <div class="top-actions">
+          <label class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="搜索标题、作者或日期"></label>
+          <button class="button ghost" id="exportButton">生成小程序数据包</button>
+          <button class="button primary" id="addButton" hidden>＋ 新增内容</button>
+        </div>
+      </header>
+
+      <section id="dashboardView" class="view dashboard-view">
+        <div class="welcome-card">
+          <div>
+            <p class="eyebrow light">CONTENT OPERATIONS</p>
+            <h2>让每一次更新，<br>都准确抵达观众。</h2>
+            <p>统一维护展览、藏品、新闻和公共教育内容。所有保存操作都会自动备份原始数据。</p>
+          </div>
+          <div class="welcome-mark">北<br>京<br>画<br>院</div>
+        </div>
+        <div class="metric-grid" id="metricGrid"></div>
+        <div class="dashboard-grid">
+          <section class="panel quick-panel">
+            <div class="panel-head"><div><span>快捷入口</span><h3>常用内容</h3></div><small>QUICK ACCESS</small></div>
+            <div class="quick-grid" id="quickGrid"></div>
+          </section>
+          <section class="panel activity-panel">
+            <div class="panel-head"><div><span>操作记录</span><h3>最近更新</h3></div><small>AUDIT LOG</small></div>
+            <div id="activityList" class="activity-list"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="listView" class="view list-view" hidden>
+        <div class="list-summary"><span id="recordCount">0 条内容</span><small>点击条目即可编辑；保存前系统会自动备份</small></div>
+        <div id="recordGrid" class="record-grid"></div>
+        <div id="emptyState" class="empty-state" hidden><div>空</div><h3>暂时没有内容</h3><p>可以新增内容，或更换关键词重新搜索。</p></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="drawer-mask" id="drawerMask" hidden></div>
+  <aside class="editor-drawer" id="editorDrawer" aria-hidden="true">
+    <header class="drawer-head">
+      <div><p class="eyebrow">CONTENT EDITOR</p><h2 id="editorTitle">编辑内容</h2><small id="editorSource"></small></div>
+      <button class="icon-button" id="closeEditor" aria-label="关闭编辑器">×</button>
+    </header>
+    <div class="editor-media" id="editorMedia" hidden><img id="editorImage" alt="内容图片预览"></div>
+    <form id="editorForm" class="editor-form"></form>
+    <footer class="drawer-actions">
+      <button class="button danger" id="deleteButton" type="button">删除</button>
+      <div><button class="button ghost" id="cancelButton" type="button">取消</button><button class="button primary" id="saveButton" type="button">保存修改</button></div>
+    </footer>
+  </aside>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>

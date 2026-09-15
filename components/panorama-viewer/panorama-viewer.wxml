@@ -1,0 +1,9 @@
+<canvas
+  type="2d"
+  id="panoCanvas"
+  class="pano-canvas"
+  disable-scroll
+  bindtouchstart="onTouchStart"
+  bindtouchmove="onTouchMove"
+  bindtouchend="onTouchEnd"
+></canvas>

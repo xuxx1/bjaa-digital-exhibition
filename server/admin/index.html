@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>北京画院 · 内容管理</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+  .sidebar-link { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 8px; color: #6b7280; font-size: 14px; transition: all .15s; }
+  .sidebar-link:hover { background: #f3f4f6; color: #374151; }
+  .sidebar-link.active { background: #fef2f2; color: #991b1b; font-weight: 600; }
+  .btn { padding: 8px 16px; border-radius: 8px; font-size: 14px; cursor: pointer; transition: all .15s; }
+  .btn-primary { background: #991b1b; color: white; } .btn-primary:hover { background: #7f1d1d; }
+  .btn-outline { border: 1px solid #d1d5db; color: #374151; } .btn-outline:hover { background: #f9fafb; }
+  .btn-sm { padding: 4px 12px; font-size: 12px; }
+  .card { background: white; border-radius: 12px; border: 1px solid #e5e7eb; }
+  .input { width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; outline: none; }
+  .input:focus { border-color: #991b1b; box-shadow: 0 0 0 2px rgba(153,27,27,.1); }
+  textarea.input { min-height: 80px; resize: vertical; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 9999px; font-size: 12px; font-weight: 500; }
+  .badge-pending { background: #fef3c7; color: #92400e; }
+  .badge-confirmed { background: #d1fae5; color: #065f46; }
+  .badge-cancelled { background: #f3f4f6; color: #6b7280; }
+  .badge-done { background: #dbeafe; color: #1e40af; }
+  .upload-wrap { display: flex; gap: 8px; align-items: stretch; }
+  .upload-wrap input.input { flex: 1; }
+  .upload-btn { padding: 0 14px; border-radius: 8px; font-size: 13px; cursor: pointer; background: #f3f4f6; border: 1px solid #d1d5db; color: #374151; white-space: nowrap; transition: all .15s; display: flex; align-items: center; justify-content: center; min-height: 38px; }
+  .upload-btn:hover { background: #e5e7eb; }
+  .upload-btn.uploading { opacity: .5; cursor: wait; }
+  .upload-hint { font-size: 12px; color: #9ca3af; margin-top: 4px; }
+  .del-btn { padding: 0 10px; border-radius: 8px; font-size: 12px; cursor: pointer; background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; white-space: nowrap; min-height: 38px; display: flex; align-items: center; justify-content: center; }
+  .del-btn:hover { background: #fee2e2; }
+  .upload-preview { margin-top: 8px; }
+  .upload-preview img { max-height: 120px; border-radius: 8px; border: 1px solid #e5e7eb; }
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<!-- 登录页 -->
+<div id="loginPage" class="min-h-screen flex items-center justify-center">
+  <div class="card p-8 w-full max-w-sm">
+    <h1 class="text-xl font-bold text-center mb-6">北京画院 · 内容管理</h1>
+    <div class="mb-4">
+      <label class="block text-sm text-gray-600 mb-1">用户名</label>
+      <input id="loginUser" class="input" value="admin" placeholder="admin">
+    </div>
+    <div class="mb-6">
+      <label class="block text-sm text-gray-600 mb-1">密码</label>
+      <input id="loginPass" class="input" type="password" value="admin123" placeholder="admin123">
+    </div>
+    <button onclick="doLogin()" class="btn btn-primary w-full">登 录</button>
+    <p id="loginError" class="text-red-600 text-sm mt-3 text-center hidden"></p>
+  </div>
+</div>
+
+<!-- 主界面 -->
+<div id="mainApp" class="hidden flex min-h-screen">
+  <!-- 侧边栏 -->
+  <aside class="w-52 bg-white border-r border-gray-200 p-4 flex flex-col shrink-0">
+    <div class="mb-6">
+      <h2 class="font-bold text-lg text-gray-800">画院管理</h2>
+      <p class="text-xs text-gray-400 mt-1">BFAA Admin</p>
+    </div>
+    <nav class="flex-1 space-y-1" id="sidebarNav">
+      <a class="sidebar-link active" data-page="exhibitions" onclick="switchPage('exhibitions')">
+        <span>🖼</span> 展览管理</a>
+      <a class="sidebar-link" data-page="artworks" onclick="switchPage('artworks')">
+        <span>🎨</span> 藏品管理</a>
+      <a class="sidebar-link" data-page="programs" onclick="switchPage('programs')">
+        <span>📋</span> 讲座/活动</a>
+      <a class="sidebar-link" data-page="news" onclick="switchPage('news')">
+        <span>📰</span> 新闻管理</a>
+      <a class="sidebar-link" data-page="courses" onclick="switchPage('courses')">
+        <span>🎓</span> 线上微课</a>
+      <a class="sidebar-link" data-page="submissions" onclick="switchPage('submissions')">
+        <span>📮</span> 征集管理</a>
+      <a class="sidebar-link" data-page="feedback" onclick="switchPage('feedback')">
+        <span>💬</span> 用户反馈</a>
+      <a class="sidebar-link" data-page="sensitiveWords" onclick="switchPage('sensitiveWords')">
+        <span>🛡</span> 敏感词管理</a>
+      <a class="sidebar-link" data-page="announcements" onclick="switchPage('announcements')">
+        <span>📢</span> 公告管理</a>
+      <a class="sidebar-link" data-page="digitalGalleries" onclick="switchPage('digitalGalleries')">
+        <span>🌐</span> 数字展厅</a>
+      <a class="sidebar-link" data-page="bookings" onclick="switchPage('bookings')">
+        <span>📅</span> 预约管理</a>
+    </nav>
+    <div class="pt-4 border-t">
+      <button onclick="doLogout()" class="text-sm text-gray-400 hover:text-gray-600">退出登录</button>
+    </div>
+  </aside>
+
+  <!-- 内容区 -->
+  <main class="flex-1 p-6 overflow-auto">
+    <div id="pageContent"></div>
+  </main>
+</div>
+
+<script>
+const API = ''
+let TOKEN = localStorage.getItem('bfaa_token') || ''
+let currentPage = 'exhibitions'
+
+// ============ 通用 ============
+function genId(prefix) { return prefix + '-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6) }
+
+// ============ 图片上传 ============
+async function uploadImage(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+  const res = await fetch(API + '/api/admin/upload', {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + TOKEN },
+    body: formData
+  })
+  if (!res.ok) throw new Error('上传失败')
+  return await res.json()
+}
+function bindImageUpload(inputId) {
+  const wrap = document.getElementById(inputId).parentElement
+  const input = document.getElementById(inputId)
+  // 包裹 input
+  input.classList.add('input')
+  input.style.flex = '1'
+  input.parentElement.innerHTML = `<div class="upload-wrap"><input class="input" id="${inputId}" value="${input.value}" placeholder="输入图片URL或点击右侧按钮上传" style="flex:1"><button type="button" class="upload-btn" onclick="triggerUpload('${inputId}')">选择文件</button></div><div class="upload-hint">支持 JPG / PNG，建议宽度 ≥ 800px</div><div class="upload-preview" id="${inputId}_preview"></div>`
+  document.getElementById(inputId).value = input.value
+  showImagePreview(inputId)
+}
+function triggerUpload(inputId) {
+  const input = document.getElementById(inputId)
+  const fileInput = document.createElement('input')
+  fileInput.type = 'file'
+  fileInput.accept = 'image/*'
+  fileInput.onchange = async () => {
+    const file = fileInput.files[0]
+    if (!file) return
+    const btn = input.parentElement.querySelector('.upload-btn')
+    btn.textContent = '上传中...'
+    btn.classList.add('uploading')
+    try {
+      const result = await uploadImage(file)
+      input.value = result.url
+      showImagePreview(inputId)
+      btn.textContent = '选择文件'
+      btn.classList.remove('uploading')
+    } catch (e) {
+      alert('上传失败：' + e.message)
+      btn.textContent = '选择文件'
+      btn.classList.remove('uploading')
+    }
+  }
+  fileInput.click()
+}
+function showImagePreview(inputId) {
+  const url = document.getElementById(inputId).value
+  const preview = document.getElementById(inputId + '_preview')
+  if (!preview) return
+  preview.innerHTML = url ? `<img src="${url}" onerror="this.parentElement.innerHTML=''">` : ''
+}
+
+// ============ 认证 ============
+async function doLogin() {
+  const username = document.getElementById('loginUser').value
+  const password = document.getElementById('loginPass').value
+  try {
+    const res = await fetch(API + '/api/auth/login', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    })
+    const data = await res.json()
+    if (data.token) {
+      TOKEN = data.token
+      localStorage.setItem('bfaa_token', TOKEN)
+      showApp()
+    } else {
+      document.getElementById('loginError').textContent = data.error || '登录失败'
+      document.getElementById('loginError').classList.remove('hidden')
+    }
+  } catch (e) {
+    document.getElementById('loginError').textContent = '网络错误'
+    document.getElementById('loginError').classList.remove('hidden')
+  }
+}
+
+function doLogout() {
+  TOKEN = ''
+  localStorage.removeItem('bfaa_token')
+  document.getElementById('mainApp').classList.add('hidden')
+  document.getElementById('loginPage').classList.remove('hidden')
+}
+
+async function authFetch(url, opts = {}) {
+  const headers = { ...opts.headers, 'Authorization': 'Bearer ' + TOKEN, 'Content-Type': 'application/json' }
+  const res = await fetch(API + url, { ...opts, headers })
+  if (res.status === 401) { doLogout(); return null }
+  return res
+}
+
+function showApp() {
+  document.getElementById('loginPage').classList.add('hidden')
+  document.getElementById('mainApp').classList.remove('hidden')
+  switchPage(currentPage)
+}
+
+// ============ 页面切换 ============
+function switchPage(page) {
+  currentPage = page
+  document.querySelectorAll('.sidebar-link').forEach(el => {
+    el.classList.toggle('active', el.dataset.page === page)
+  })
+  const loaders = {
+    exhibitions: loadExhibitions,
+    artworks: loadArtworks,
+    programs: loadPrograms,
+    news: loadNews,
+    courses: loadCourses,
+    submissions: loadSubmissions,
+    feedback: loadFeedback,
+    sensitiveWords: loadSensitiveWords,
+    announcements: loadAnnouncements,
+    digitalGalleries: loadDigitalGalleries,
+    bookings: loadBookings
+  }
+  if (loaders[page]) loaders[page]()
+}
+
+// ============ 展览 ============
+async function loadExhibitions() {
+  const res = await authFetch('/api/admin/exhibitions')
+  const list = await res.json()
+  let html = `<div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold">展览管理</h2>
+    <button class="btn btn-primary" onclick="showExhibitionForm()">+ 新增展览</button>
+  </div>
+  <div class="card overflow-hidden"><table class="w-full text-sm">
+    <thead><tr class="border-b bg-gray-50 text-left text-gray-500">
+      <th class="p-3">标题</th><th class="p-3">类型</th><th class="p-3">时间</th><th class="p-3">地点</th><th class="p-3">可预约</th><th class="p-3 w-24">操作</th>
+    </tr></thead><tbody>`
+  list.forEach(e => {
+    html += `<tr class="border-b hover:bg-gray-50">
+      <td class="p-3 font-medium">${esc(e.title)}</td>
+      <td class="p-3"><span class="badge badge-confirmed">${esc(e.type)}</span></td>
+      <td class="p-3 text-gray-500">${esc(e.time||'-')}</td>
+      <td class="p-3 text-gray-500">${esc(e.location||'-')}</td>
+      <td class="p-3">${e.reservable ? '<span class="badge badge-pending">可预约</span>' : '-'}</td>
+      <td class="p-3">
+        <button class="btn btn-outline btn-sm mr-1" onclick='editExhibition(${JSON.stringify(e).replace(/'/g,"&#39;")})'>编辑</button>
+        <button class="btn btn-outline btn-sm text-red-600" onclick="delExhibition('${e.id}')">删除</button>
+      </td></tr>`
+  })
+  html += '</tbody></table></div>'
+  document.getElementById('pageContent').innerHTML = html
+}
+
+function showExhibitionForm(data) {
+  const d = data || { id: genId('exh'), type: '当前展览', title: '', image: '', time: '', location: '', organizer: '', intro: '', artworks: [], status_text: '', reservable: false, ended: false, booking_dates: [], booking_times: [], booking_quota: 5 }
+  const isEdit = !!data
+  let html = `<div class="card p-6 max-w-2xl">
+    <h3 class="text-lg font-bold mb-4">${isEdit ? '编辑展览' : '新增展览'}</h3>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div><label class="block text-sm text-gray-600 mb-1">ID</label><input class="input" id="ef_id" value="${d.id}" disabled></div>
+      <div><label class="block text-sm text-gray-600 mb-1">类型</label><select class="input" id="ef_type"><option ${d.type==='当前展览'?'selected':''}>当前展览</option><option ${d.type==='展览预告'?'selected':''}>展览预告</option><option ${d.type==='展览回顾'?'selected':''}>展览回顾</option></select></div>
+      <div><label class="block text-sm text-gray-600 mb-1">标题</label><input class="input" id="ef_title" value="${esc(d.title)}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">展期</label>
+          <div class="flex gap-2 items-center">
+             <input class="input" id="ef_time_start" type="date" value="${esc((d.time||'').split('至')[0]?.trim()||'')}" style="flex:1">
+             <span class="text-sm text-gray-400 px-1">至</span>
+             <input class="input" id="ef_time_end" type="date" value="${esc((d.time||'').split('至')[1]?.trim()||'')}" style="flex:1">
+           </div></div>
+      <div><label class="block text-sm text-gray-600 mb-1">地点</label><input class="input" id="ef_location" value="${esc(d.location||'')}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">主办方</label><input class="input" id="ef_organizer" value="${esc(d.organizer||'')}"></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">封面图</label><input class="input" id="ef_image" value="${esc(d.image||'')}"></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">简介</label><textarea class="input" id="ef_intro">${esc(d.intro||'')}</textarea></div>
+      <div><label class="block text-sm text-gray-600 mb-1">状态文字</label><input class="input" id="ef_status_text" value="${esc(d.status_text||'')}" placeholder="如：即将开展、报名已结束"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">状态</label>
+        <div class="flex items-center gap-4" style="min-height:38px">
+          <label class="flex items-center gap-2"><input type="checkbox" id="ef_reservable" ${d.reservable?'checked':''}><span class="text-sm">可预约</span></label>
+          <label class="flex items-center gap-2"><input type="checkbox" id="ef_ended" ${d.ended?'checked':''}><span class="text-sm">已结束</span></label>
+        </div></div>
+      <div><label class="block text-sm text-gray-600 mb-1">每日预约上限</label><input class="input" id="ef_booking_quota" type="number" min="1" max="999" value="${d.booking_quota||5}" placeholder="默认5人"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">预约日期</label>
+        <div id="ef_booking_dates_list">${(Array.isArray(d.booking_dates)?d.booking_dates:[]).map((item, idx) => `<div class="flex gap-2 mb-2 items-center"><input class="input" type="date" value="${esc(item.raw||'')}" data-idx="${idx}" style="flex:1"><button type="button" class="del-btn" onclick="removeBookingDate(${idx})">删除</button></div>`).join('')}</div>
+        <button type="button" class="upload-btn" onclick="addBookingDate()">+ 添加日期</button>
+      </div>
+      <div><label class="block text-sm text-gray-600 mb-1">预约时段</label>
+        <div id="ef_booking_times_list">${(Array.isArray(d.booking_times)?d.booking_times:[]).map((t, idx) => `<div class="flex gap-2 mb-2 items-center"><input class="input" type="time" value="${esc(t)}" data-idx="${idx}" style="flex:1"><button type="button" class="del-btn" onclick="removeBookingTime(${idx})">删除</button></div>`).join('')}</div>
+        <button type="button" class="upload-btn" onclick="addBookingTime()">+ 添加时段</button>
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <button class="btn btn-primary" onclick="saveExhibition(${isEdit})">${isEdit ? '保存' : '创建'}</button>
+      <button class="btn btn-outline" onclick="loadExhibitions()">取消</button>
+    </div></div>`
+  document.getElementById('pageContent').innerHTML = html
+  bindImageUpload('ef_image')
+}
+function editExhibition(d) { showExhibitionForm(d) }
+// 展览预约日期/时段管理
+function addBookingDate() {
+  const list = document.getElementById('ef_booking_dates_list')
+  const idx = list.children.length
+  const div = document.createElement('div')
+  div.className = 'flex gap-2 mb-2 items-center'
+  div.innerHTML = `<input class="input" type="date" data-idx="${idx}" style="flex:1"><button type="button" class="del-btn" onclick="this.parentElement.remove()">删除</button>`
+  list.appendChild(div)
+}
+function removeBookingDate(idx) {
+  const list = document.getElementById('ef_booking_dates_list')
+  if (list.children[idx]) list.children[idx].remove()
+}
+function addBookingTime() {
+  const list = document.getElementById('ef_booking_times_list')
+  const idx = list.children.length
+  const div = document.createElement('div')
+  div.className = 'flex gap-2 mb-2 items-center'
+  div.innerHTML = `<input class="input" type="time" data-idx="${idx}" style="flex:1"><button type="button" class="del-btn" onclick="this.parentElement.remove()">删除</button>`
+  list.appendChild(div)
+}
+function removeBookingTime(idx) {
+  const list = document.getElementById('ef_booking_times_list')
+  if (list.children[idx]) list.children[idx].remove()
+}
+function collectBookingDates() {
+  const WEEKS = ['周日','周一','周二','周三','周四','周五','周六']
+  const MONTHS = ['','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月']
+  const inputs = document.getElementById('ef_booking_dates_list').querySelectorAll('input[type="date"]')
+  return Array.from(inputs).filter(el => el.value).map(el => {
+    const d = new Date(el.value)
+    return { day: String(d.getDate()).padStart(2,'0'), week: WEEKS[d.getDay()], month: MONTHS[d.getMonth()+1], raw: el.value }
+  })
+}
+function collectBookingTimes() {
+  const inputs = document.getElementById('ef_booking_times_list').querySelectorAll('input[type="time"]')
+  return Array.from(inputs).filter(el => el.value).map(el => el.value)
+}
+async function saveExhibition(isEdit) {
+  // 组装展期
+  const timeStart = document.getElementById('ef_time_start').value
+  const timeEnd = document.getElementById('ef_time_end').value
+  let time = ''
+  if (timeStart && timeEnd) {
+    const ds = new Date(timeStart), de = new Date(timeEnd)
+    const fmt = (d) => `${d.getFullYear()}年${String(d.getMonth()+1).padStart(2,'0')}月${String(d.getDate()).padStart(2,'0')}日`
+    time = fmt(ds) + ' 至 ' + fmt(de)
+  } else if (timeStart) {
+    time = timeStart
+  }
+  const bookingDates = collectBookingDates()
+  const bookingTimes = collectBookingTimes()
+  const body = { id: document.getElementById('ef_id').value, type: document.getElementById('ef_type').value, title: document.getElementById('ef_title').value, time, location: document.getElementById('ef_location').value, organizer: document.getElementById('ef_organizer').value, image: document.getElementById('ef_image').value, intro: document.getElementById('ef_intro').value, status_text: document.getElementById('ef_status_text').value, reservable: document.getElementById('ef_reservable').checked, ended: document.getElementById('ef_ended').checked, booking_quota: parseInt(document.getElementById('ef_booking_quota').value) || 5, booking_dates: JSON.stringify(bookingDates), booking_times: JSON.stringify(bookingTimes) }
+  if (!body.title) return alert('标题必填')
+  const url = isEdit ? `/api/admin/exhibitions/${body.id}` : '/api/admin/exhibitions'
+  await authFetch(url, { method: isEdit ? 'PUT' : 'POST', body: JSON.stringify(body) })
+  loadExhibitions()
+}
+async function delExhibition(id) { if (!confirm('确定删除？')) return; await authFetch(`/api/admin/exhibitions/${id}`, { method: 'DELETE' }); loadExhibitions() }
+
+// ============ 藏品 ============
+async function loadArtworks() {
+  const res = await authFetch('/api/admin/artworks')
+  const list = await res.json()
+  let html = `<div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold">藏品管理</h2>
+    <button class="btn btn-primary" onclick="showArtworkForm()">+ 新增藏品</button>
+  </div><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">`
+  list.forEach(a => {
+    html += `<div class="card overflow-hidden">
+      <div class="h-40 bg-gray-100 flex items-center justify-center overflow-hidden">
+        ${a.image ? `<img src="${esc(a.image)}" class="w-full h-full object-cover">` : '<span class="text-gray-300 text-4xl">🎨</span>'}
+      </div>
+      <div class="p-3">
+        <h4 class="font-medium">${esc(a.title)}</h4>
+        <p class="text-sm text-gray-500">${esc(a.artist||'')} · ${esc(a.category||'')}</p>
+        <div class="mt-2 flex gap-1">
+          <button class="btn btn-outline btn-sm" onclick='editArtwork(${JSON.stringify(a).replace(/'/g,"&#39;")})'>编辑</button>
+          <button class="btn btn-outline btn-sm text-red-600" onclick="delArtwork('${a.id}')">删除</button>
+        </div>
+      </div></div>`
+  })
+  html += '</div>'
+  document.getElementById('pageContent').innerHTML = html
+}
+function showArtworkForm(data) {
+  const d = data || { id:genId('art'),title:'',artist:'',category:'中国画',size:'',image:'',birth:'',identity:'',artist_intro:'',work_intro:'' }
+  const isEdit = !!data
+  let html = `<div class="card p-6 max-w-2xl"><h3 class="text-lg font-bold mb-4">${isEdit?'编辑':'新增'}藏品</h3>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div><label class="block text-sm text-gray-600 mb-1">ID</label><input class="input" id="af_id" value="${d.id}" disabled></div>
+      <div><label class="block text-sm text-gray-600 mb-1">标题</label><input class="input" id="af_title" value="${esc(d.title)}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">作者</label><input class="input" id="af_artist" value="${esc(d.artist||'')}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">分类</label><select class="input" id="af_category"><option ${d.category==='齐白石'?'selected':''}>齐白石</option><option ${d.category==='中国画'?'selected':''}>中国画</option></select></div>
+      <div><label class="block text-sm text-gray-600 mb-1">尺寸</label><input class="input" id="af_size" value="${esc(d.size||'')}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">出生年份</label><input class="input" id="af_birth" type="number" min="1800" max="2100" step="1" value="${esc(d.birth||'')}" placeholder="如：1864"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">作者身份</label><input class="input" id="af_identity" value="${esc(d.identity||'')}"></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">封面图</label><input class="input" id="af_image" value="${esc(d.image||'')}"></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">作者简介</label><textarea class="input" id="af_artist_intro">${esc(d.artist_intro||'')}</textarea></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">作品简介</label><textarea class="input" id="af_work_intro">${esc(d.work_intro||'')}</textarea></div>
+    </div>
+    <div class="flex gap-2"><button class="btn btn-primary" onclick="saveArtwork(${isEdit})">${isEdit?'保存':'创建'}</button><button class="btn btn-outline" onclick="loadArtworks()">取消</button></div></div>`
+  document.getElementById('pageContent').innerHTML = html
+  bindImageUpload('af_image')
+}
+function editArtwork(d) { showArtworkForm(d) }
+async function saveArtwork(isEdit) {
+  const body = { id: document.getElementById('af_id').value, title: document.getElementById('af_title').value, artist: document.getElementById('af_artist').value, category: document.getElementById('af_category').value, size: document.getElementById('af_size').value, image: document.getElementById('af_image').value, birth: document.getElementById('af_birth').value, identity: document.getElementById('af_identity').value, artist_intro: document.getElementById('af_artist_intro').value, work_intro: document.getElementById('af_work_intro').value }
+  if (!body.title) return alert('标题必填')
+  await authFetch(isEdit ? `/api/admin/artworks/${body.id}` : '/api/admin/artworks', { method: isEdit ? 'PUT' : 'POST', body: JSON.stringify(body) })
+  loadArtworks()
+}
+async function delArtwork(id) { if (!confirm('确定删除？')) return; await authFetch(`/api/admin/artworks/${id}`, { method: 'DELETE' }); loadArtworks() }
+
+// ============ 讲座/活动 ============
+async function loadPrograms() {
+  const res = await authFetch('/api/admin/programs')
+  const list = await res.json()
+  let html = `<div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold">讲座 / 活动管理</h2>
+    <button class="btn btn-primary" onclick="showProgramForm()">+ 新增</button>
+  </div><div class="card overflow-hidden"><table class="w-full text-sm">
+    <thead><tr class="border-b bg-gray-50 text-left text-gray-500">
+      <th class="p-3">标题</th><th class="p-3">类型</th><th class="p-3">日期</th><th class="p-3">可预约</th><th class="p-3 w-24">操作</th>
+    </tr></thead><tbody>`
+  list.forEach(p => {
+    const statusLabel = p.reservable ? '可预约' : '已结束'
+    const statusClass = p.reservable ? 'badge-pending' : 'badge-cancelled'
+    html += `<tr class="border-b hover:bg-gray-50">
+      <td class="p-3 font-medium">${esc(p.title)}</td>
+      <td class="p-3"><span class="badge badge-confirmed">${esc(p.kind)}</span></td>
+      <td class="p-3 text-gray-500">${esc(p.publish_date||'-')}</td>
+      <td class="p-3"><span class="badge ${statusClass}">${statusLabel}</span></td>
+      <td class="p-3">
+        <button class="btn btn-outline btn-sm mr-1" onclick='editProgram(${JSON.stringify(p).replace(/'/g,"&#39;")})'>编辑</button>
+        <button class="btn btn-outline btn-sm text-red-600" onclick="delProgram('${p.id}')">删除</button>
+      </td></tr>`
+  })
+  html += '</tbody></table></div>'
+  document.getElementById('pageContent').innerHTML = html
+}
+function showProgramForm(data) {
+  const d = data || { id:genId('prg'),kind:'讲座预约',title:'',image:'',publish_date:'',time:'',location:'',speaker:'',audience:'',summary:'',source_url:'',status_text:'',reservable:false,ended:false,booking_dates:[],booking_times:[],booking_quota:5 }
+  const isEdit = !!data
+  // 将 publish_date 格式化为 YYYY-MM-DD（用于 date input）
+  const pdValue = d.publish_date ? d.publish_date.replace(/\./g, '-') : ''
+  // 解析活动时间：如 "2026年7月31日 9:30—11:30"
+  let timeDate = '', timeStart = '', timeEnd = ''
+  if (d.time) {
+    const m = d.time.match(/(\d{4})年(\d{1,2})月(\d{1,2})日/)
+    if (m) timeDate = `${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`
+    const tm = d.time.match(/(\d{1,2}:\d{2})\s*[—\-–]\s*(\d{1,2}:\d{2})/)
+    if (tm) { timeStart = tm[1]; timeEnd = tm[2] }
+  }
+  const statusValue = d.ended ? '已结束' : (d.reservable ? '可预约' : '已结束')
+  let html = `<div class="card p-6 max-w-2xl"><h3 class="text-lg font-bold mb-4">${isEdit?'编辑':'新增'}讲座/活动</h3>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div><label class="block text-sm text-gray-600 mb-1">ID</label><input class="input" id="pf_id" value="${d.id}" disabled></div>
+      <div><label class="block text-sm text-gray-600 mb-1">类型</label><select class="input" id="pf_kind">
+        <option ${d.kind==='讲座预约'?'selected':''}>讲座预约</option><option ${d.kind==='讲座回顾'?'selected':''}>讲座回顾</option><option ${d.kind==='活动预约'?'selected':''}>活动预约</option><option ${d.kind==='活动回顾'?'selected':''}>活动回顾</option></select></div>
+      <div><label class="block text-sm text-gray-600 mb-1">标题</label><input class="input" id="pf_title" value="${esc(d.title)}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">发布日期</label><input class="input" id="pf_date" type="date" value="${pdValue}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">活动日期</label><input class="input" id="pf_time_date" type="date" value="${timeDate}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">活动时段</label>
+        <div class="flex gap-2 items-center">
+          <input class="input" id="pf_time_start" type="time" value="${timeStart}" style="flex:1">
+          <span class="text-sm text-gray-400 px-1">至</span>
+          <input class="input" id="pf_time_end" type="time" value="${timeEnd}" style="flex:1">
+        </div></div>
+      <div><label class="block text-sm text-gray-600 mb-1">地点</label><input class="input" id="pf_location" value="${esc(d.location||'')}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">主讲人</label><input class="input" id="pf_speaker" value="${esc(d.speaker||'')}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">受众</label><input class="input" id="pf_audience" value="${esc(d.audience||'')}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">状态</label><select class="input" id="pf_status_select">
+        <option ${statusValue==='可预约'?'selected':''}>可预约</option><option ${statusValue==='已结束'?'selected':''}>已结束</option></select></div>
+      <div><label class="block text-sm text-gray-600 mb-1">每日预约上限</label><input class="input" id="pf_booking_quota" type="number" min="1" max="999" value="${d.booking_quota||5}" placeholder="默认5人"></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">封面图</label><input class="input" id="pf_image" value="${esc(d.image||'')}"></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">简介</label><textarea class="input" id="pf_summary">${esc(d.summary||'')}</textarea></div>
+    </div>
+    <div class="flex gap-2"><button class="btn btn-primary" onclick="saveProgram(${isEdit})">${isEdit?'保存':'创建'}</button><button class="btn btn-outline" onclick="loadPrograms()">取消</button></div></div>`
+  document.getElementById('pageContent').innerHTML = html
+  bindImageUpload('pf_image')
+}
+function editProgram(d) { showProgramForm(d) }
+async function saveProgram(isEdit) {
+  // 组装活动时间
+  const timeDate = document.getElementById('pf_time_date').value
+  const timeStart = document.getElementById('pf_time_start').value
+  const timeEnd = document.getElementById('pf_time_end').value
+  let time = ''
+  if (timeDate) {
+    const d2 = new Date(timeDate)
+    time = `${d2.getFullYear()}年${d2.getMonth()+1}月${d2.getDate()}日`
+    if (timeStart && timeEnd) time += ` ${timeStart}—${timeEnd}`
+  }
+  const statusSelect = document.getElementById('pf_status_select').value
+  const reservable = statusSelect === '可预约'
+  const ended = statusSelect === '已结束'
+  const body = { id: document.getElementById('pf_id').value, kind: document.getElementById('pf_kind').value, title: document.getElementById('pf_title').value, publish_date: document.getElementById('pf_date').value, time, location: document.getElementById('pf_location').value, speaker: document.getElementById('pf_speaker').value, audience: document.getElementById('pf_audience').value, image: document.getElementById('pf_image').value, status_text: statusSelect, reservable, ended, booking_quota: parseInt(document.getElementById('pf_booking_quota').value) || 5, summary: document.getElementById('pf_summary').value }
+  if (!body.title) return alert('标题必填')
+  await authFetch(isEdit ? `/api/admin/programs/${body.id}` : '/api/admin/programs', { method: isEdit ? 'PUT' : 'POST', body: JSON.stringify(body) })
+  loadPrograms()
+}
+async function delProgram(id) { if (!confirm('确定删除？')) return; await authFetch(`/api/admin/programs/${id}`, { method: 'DELETE' }); loadPrograms() }
+
+// ============ 新闻 ============
+async function loadNews() {
+  const res = await authFetch('/api/admin/news')
+  const list = await res.json()
+  let html = `<div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold">新闻管理</h2>
+    <button class="btn btn-primary" onclick="showNewsForm()">+ 新增新闻</button>
+  </div><div class="card overflow-hidden"><table class="w-full text-sm">
+    <thead><tr class="border-b bg-gray-50 text-left text-gray-500">
+      <th class="p-3">标题</th><th class="p-3">类型</th><th class="p-3">日期</th><th class="p-3 w-24">操作</th>
+    </tr></thead><tbody>`
+  list.forEach(n => {
+    html += `<tr class="border-b hover:bg-gray-50">
+      <td class="p-3 font-medium">${esc(n.title)}</td>
+      <td class="p-3"><span class="badge badge-confirmed">${esc(n.type||'')}</span></td>
+      <td class="p-3 text-gray-500">${esc(n.date||'-')}</td>
+      <td class="p-3">
+        <button class="btn btn-outline btn-sm mr-1" onclick='editNews(${JSON.stringify(n).replace(/'/g,"&#39;")})'>编辑</button>
+        <button class="btn btn-outline btn-sm text-red-600" onclick="delNews('${n.id}')">删除</button>
+      </td></tr>`
+  })
+  html += '</tbody></table></div>'
+  document.getElementById('pageContent').innerHTML = html
+}
+function showNewsForm(data) {
+  const d = data || { id:genId('news'),title:'',date:'',type:'展览动态',summary:'',image:'',content:[] }
+  const isEdit = !!data
+  let html = `<div class="card p-6 max-w-2xl"><h3 class="text-lg font-bold mb-4">${isEdit?'编辑':'新增'}新闻</h3>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div><label class="block text-sm text-gray-600 mb-1">ID</label><input class="input" id="nf_id" value="${d.id}" disabled></div>
+      <div><label class="block text-sm text-gray-600 mb-1">标题</label><input class="input" id="nf_title" value="${esc(d.title)}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">日期</label><input class="input" id="nf_date" type="date" value="${esc(d.date||'')}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">类型</label><select class="input" id="nf_type">
+        <option ${d.type==='展览动态'?'selected':''}>展览动态</option><option ${d.type==='画院新闻'?'selected':''}>画院新闻</option><option ${d.type==='公示公告'?'selected':''}>公示公告</option><option ${d.type==='开放通知'?'selected':''}>开放通知</option></select></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">封面图</label><input class="input" id="nf_image" value="${esc(d.image||'')}"></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">摘要</label><input class="input" id="nf_summary" value="${esc(d.summary||'')}"></div>
+      <div class="col-span-2">
+        <label class="block text-sm text-gray-600 mb-1">正文（每行一段；图片行以 [img:URL] 格式表示）</label>
+        <div style="margin-bottom:8px"><button type="button" class="upload-btn" onclick="insertNewsImage()">插入图片</button></div>
+        <textarea class="input" id="nf_content" rows="8">${(d.content||[]).join('\n')}</textarea>
+      </div>
+    </div>
+    <div class="flex gap-2"><button class="btn btn-primary" onclick="saveNews(${isEdit})">${isEdit?'保存':'创建'}</button><button class="btn btn-outline" onclick="loadNews()">取消</button></div></div>`
+  document.getElementById('pageContent').innerHTML = html
+  bindImageUpload('nf_image')
+}
+function insertNewsImage() {
+  const fileInput = document.createElement('input')
+  fileInput.type = 'file'
+  fileInput.accept = 'image/*'
+  fileInput.onchange = async () => {
+    const file = fileInput.files[0]
+    if (!file) return
+    try {
+      const result = await uploadImage(file)
+      const textarea = document.getElementById('nf_content')
+      const pos = textarea.selectionStart
+      const before = textarea.value.substring(0, pos)
+      const after = textarea.value.substring(pos)
+      const insert = '[img:' + result.url + ']'
+      textarea.value = before + insert + after
+      alert('图片已插入')
+    } catch (e) {
+      alert('上传失败：' + e.message)
+    }
+  }
+  fileInput.click()
+}
+function editNews(d) { showNewsForm(d) }
+async function saveNews(isEdit) {
+  const body = { id: document.getElementById('nf_id').value, title: document.getElementById('nf_title').value, date: document.getElementById('nf_date').value, type: document.getElementById('nf_type').value, image: document.getElementById('nf_image').value, summary: document.getElementById('nf_summary').value, content: document.getElementById('nf_content').value.split('\n').filter(Boolean) }
+  if (!body.title) return alert('标题必填')
+  await authFetch(isEdit ? `/api/admin/news/${body.id}` : '/api/admin/news', { method: isEdit ? 'PUT' : 'POST', body: JSON.stringify(body) })
+  loadNews()
+}
+async function delNews(id) { if (!confirm('确定删除？')) return; await authFetch(`/api/admin/news/${id}`, { method: 'DELETE' }); loadNews() }
+
+// ============ 线上微课 ============
+async function loadCourses() {
+  const res = await authFetch('/api/admin/courses')
+  const list = await res.json()
+  let html = `<div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold">线上微课 · 艺术小讲堂</h2>
+    <button class="btn btn-primary" onclick="showCourseForm()">+ 新增课程</button>
+  </div><div class="card overflow-hidden"><table class="w-full text-sm">
+    <thead><tr class="border-b bg-gray-50 text-left text-gray-500">
+      <th class="p-3">封面</th><th class="p-3">标题</th><th class="p-3">类型</th><th class="p-3">分类</th><th class="p-3">状态</th><th class="p-3 w-24">操作</th>
+    </tr></thead><tbody>`
+  list.forEach(c => {
+    html += `<tr class="border-b hover:bg-gray-50">
+      <td class="p-3">${c.cover ? `<img src="${esc(c.cover)}" class="w-14 h-14 object-cover rounded">` : '<span class="text-gray-300 text-xl">🎬</span>'}</td>
+      <td class="p-3 font-medium">${esc(c.title)}</td>
+      <td class="p-3"><span class="badge badge-confirmed">${esc(c.type)}</span></td>
+      <td class="p-3 text-gray-500">${esc(c.category||'-')}</td>
+      <td class="p-3">${c.status ? '<span class="badge badge-pending">上架中</span>' : '<span class="badge badge-cancelled">已下架</span>'}</td>
+      <td class="p-3">
+        <button class="btn btn-outline btn-sm mr-1" onclick='editCourse(${JSON.stringify(c).replace(/'/g,"&#39;")})'>编辑</button>
+        <button class="btn btn-outline btn-sm text-red-600" onclick="delCourse('${c.id}')">删除</button>
+      </td></tr>`
+  })
+  html += '</tbody></table></div>'
+  document.getElementById('pageContent').innerHTML = html
+}
+function showCourseForm(data) {
+  const d = data || { id:genId('crs'), title:'', type:'图文专栏', category:'国画基础知识', cover:'', duration:'', summary:'', content:[], video_url:'', status:true }
+  const isEdit = !!data
+  let html = `<div class="card p-6 max-w-2xl"><h3 class="text-lg font-bold mb-4">${isEdit?'编辑':'新增'}课程</h3>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div><label class="block text-sm text-gray-600 mb-1">ID</label><input class="input" id="cf_id" value="${d.id}" disabled></div>
+      <div><label class="block text-sm text-gray-600 mb-1">类型</label><select class="input" id="cf_type">
+        <option ${d.type==='短视频'?'selected':''}>短视频</option><option ${d.type==='图文专栏'?'selected':''}>图文专栏</option></select></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">标题</label><input class="input" id="cf_title" value="${esc(d.title)}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">分类</label><select class="input" id="cf_category">
+        <option ${d.category==='国画基础知识'?'selected':''}>国画基础知识</option><option ${d.category==='齐白石艺术科普'?'selected':''}>齐白石艺术科普</option><option ${d.category==='其他'?'selected':''}>其他</option></select></div>
+      <div><label class="block text-sm text-gray-600 mb-1">时长</label><input class="input" id="cf_duration" value="${esc(d.duration||'')}" placeholder="如 5:30（短视频用）"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">状态</label><select class="input" id="cf_status">
+        <option ${d.status?'selected':''} value="1">上架</option><option ${!d.status?'selected':''} value="0">下架</option></select></div>
+      <div><label class="block text-sm text-gray-600 mb-1">排序</label><input class="input" id="cf_sort" type="number" value="${d.sort_order||0}"></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">封面图</label><input class="input" id="cf_cover" value="${esc(d.cover||'')}"></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">简介</label><input class="input" id="cf_summary" value="${esc(d.summary||'')}"></div>
+      <div class="col-span-2" id="cf_video_wrap" style="${d.type==='短视频'?'':'display:none'}"><label class="block text-sm text-gray-600 mb-1">视频地址</label><input class="input" id="cf_video_url" value="${esc(d.video_url||'')}" placeholder="https://..."></div>
+      <div class="col-span-2" id="cf_content_wrap" style="${d.type==='图文专栏'?'':'display:none'}">
+        <label class="block text-sm text-gray-600 mb-1">正文（每行一段；图片行以 [img:URL] 格式表示）</label>
+        <textarea class="input" id="cf_content" rows="8">${(d.content||[]).join('\n')}</textarea>
+      </div>
+    </div>
+    <div class="flex gap-2"><button class="btn btn-primary" onclick="saveCourse(${isEdit})">${isEdit?'保存':'创建'}</button><button class="btn btn-outline" onclick="loadCourses()">取消</button></div></div>`
+  document.getElementById('pageContent').innerHTML = html
+  bindImageUpload('cf_cover')
+  // 类型切换时显示/隐藏对应字段
+  document.getElementById('cf_type').onchange = function() {
+    document.getElementById('cf_video_wrap').style.display = this.value === '短视频' ? '' : 'none'
+    document.getElementById('cf_content_wrap').style.display = this.value === '图文专栏' ? '' : 'none'
+  }
+}
+function editCourse(d) { showCourseForm(d) }
+async function saveCourse(isEdit) {
+  const type = document.getElementById('cf_type').value
+  const body = {
+    id: document.getElementById('cf_id').value,
+    title: document.getElementById('cf_title').value,
+    type,
+    category: document.getElementById('cf_category').value,
+    cover: document.getElementById('cf_cover').value,
+    duration: document.getElementById('cf_duration').value,
+    summary: document.getElementById('cf_summary').value,
+    video_url: type === '短视频' ? document.getElementById('cf_video_url').value : '',
+    content: type === '图文专栏' ? document.getElementById('cf_content').value.split('\n').filter(Boolean) : [],
+    sort_order: parseInt(document.getElementById('cf_sort').value) || 0,
+    status: document.getElementById('cf_status').value === '1'
+  }
+  if (!body.title) return alert('标题必填')
+  await authFetch(isEdit ? `/api/admin/courses/${body.id}` : '/api/admin/courses', { method: isEdit ? 'PUT' : 'POST', body: JSON.stringify(body) })
+  loadCourses()
+}
+async function delCourse(id) { if (!confirm('确定删除？')) return; await authFetch(`/api/admin/courses/${id}`, { method: 'DELETE' }); loadCourses() }
+
+// ============ 线上征集 ============
+async function loadSubmissions() {
+  const res = await authFetch('/api/admin/submissions')
+  const list = await res.json()
+  const counts = { '待审核': 0, '已展示': 0, '未通过': 0 }
+  list.forEach(s => { if (counts[s.status] !== undefined) counts[s.status]++ })
+  let html = `<div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold">线上征集 · 大众书画投稿</h2>
+    <button class="btn btn-primary" onclick="showSubmissionForm()">+ 新增投稿</button>
+  </div>
+  <div class="grid grid-cols-3 gap-4 mb-6">
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-yellow-600">${counts['待审核']||0}</div><div class="text-sm text-gray-500">待审核</div></div>
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-green-600">${counts['已展示']||0}</div><div class="text-sm text-gray-500">已展示</div></div>
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-gray-500">${counts['未通过']||0}</div><div class="text-sm text-gray-500">未通过</div></div>
+  </div>
+  <div class="card overflow-hidden"><table class="w-full text-sm">
+    <thead><tr class="border-b bg-gray-50 text-left text-gray-500">
+      <th class="p-3">作品图</th><th class="p-3">作品名称</th><th class="p-3">作者</th><th class="p-3">联系方式</th><th class="p-3">状态</th><th class="p-3 w-24">操作</th>
+    </tr></thead><tbody>`
+  list.forEach(s => {
+    const badgeClass = s.status === '已展示' ? 'badge-confirmed' : (s.status === '未通过' ? 'badge-cancelled' : 'badge-pending')
+    html += `<tr class="border-b hover:bg-gray-50">
+      <td class="p-3">${s.image ? `<img src="${esc(s.image)}" class="w-14 h-14 object-cover rounded">` : '<span class="text-gray-300 text-xl">🖼</span>'}</td>
+      <td class="p-3 font-medium">${esc(s.title)}</td>
+      <td class="p-3">${esc(s.author)}</td>
+      <td class="p-3 text-gray-500">${esc(s.contact||'-')}</td>
+      <td class="p-3"><select class="text-xs border rounded p-1" onchange="updateSubmissionStatus('${s.id}', this.value)">
+        <option ${s.status==='待审核'?'selected':''}>待审核</option>
+        <option ${s.status==='已展示'?'selected':''}>已展示</option>
+        <option ${s.status==='未通过'?'selected':''}>未通过</option>
+      </select></td>
+      <td class="p-3">
+        <button class="btn btn-outline btn-sm mr-1" onclick='editSubmission(${JSON.stringify(s).replace(/'/g,"&#39;")})'>编辑</button>
+        <button class="btn btn-outline btn-sm text-red-600" onclick="delSubmission('${s.id}')">删除</button>
+      </td></tr>`
+  })
+  html += '</tbody></table></div>'
+  document.getElementById('pageContent').innerHTML = html
+}
+function showSubmissionForm(data) {
+  const d = data || { id:genId('sub'), title:'', author:'', intro:'', image:'', contact:'', status:'待审核' }
+  const isEdit = !!data
+  let html = `<div class="card p-6 max-w-2xl"><h3 class="text-lg font-bold mb-4">${isEdit?'编辑':'新增'}投稿</h3>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div><label class="block text-sm text-gray-600 mb-1">ID</label><input class="input" id="sf_id" value="${d.id}" disabled></div>
+      <div><label class="block text-sm text-gray-600 mb-1">状态</label><select class="input" id="sf_status">
+        <option ${d.status==='待审核'?'selected':''}>待审核</option><option ${d.status==='已展示'?'selected':''}>已展示</option><option ${d.status==='未通过'?'selected':''}>未通过</option></select></div>
+      <div><label class="block text-sm text-gray-600 mb-1">作品名称</label><input class="input" id="sf_title" value="${esc(d.title)}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">作者</label><input class="input" id="sf_author" value="${esc(d.author)}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">联系方式</label><input class="input" id="sf_contact" value="${esc(d.contact||'')}" placeholder="手机/微信（仅后台可见）"></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">作品图</label><input class="input" id="sf_image" value="${esc(d.image||'')}"></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">作品简介</label><textarea class="input" id="sf_intro">${esc(d.intro||'')}</textarea></div>
+    </div>
+    <div class="flex gap-2"><button class="btn btn-primary" onclick="saveSubmission(${isEdit})">${isEdit?'保存':'创建'}</button><button class="btn btn-outline" onclick="loadSubmissions()">取消</button></div></div>`
+  document.getElementById('pageContent').innerHTML = html
+  bindImageUpload('sf_image')
+}
+function editSubmission(d) { showSubmissionForm(d) }
+async function saveSubmission(isEdit) {
+  const body = {
+    id: document.getElementById('sf_id').value,
+    title: document.getElementById('sf_title').value,
+    author: document.getElementById('sf_author').value,
+    intro: document.getElementById('sf_intro').value,
+    image: document.getElementById('sf_image').value,
+    contact: document.getElementById('sf_contact').value,
+    status: document.getElementById('sf_status').value
+  }
+  if (!body.title || !body.author) return alert('作品名称和作者必填')
+  await authFetch(isEdit ? `/api/admin/submissions/${body.id}` : '/api/admin/submissions', { method: isEdit ? 'PUT' : 'POST', body: JSON.stringify(body) })
+  loadSubmissions()
+}
+async function updateSubmissionStatus(id, status) {
+  const res = await authFetch('/api/admin/submissions')
+  const list = await res.json()
+  const item = list.find(s => s.id === id)
+  if (!item) return
+  item.status = status
+  await authFetch(`/api/admin/submissions/${id}`, { method: 'PUT', body: JSON.stringify(item) })
+  loadSubmissions()
+}
+async function delSubmission(id) { if (!confirm('确定删除？')) return; await authFetch(`/api/admin/submissions/${id}`, { method: 'DELETE' }); loadSubmissions() }
+
+// ============ 用户反馈 ============
+async function loadFeedback() {
+  const res = await authFetch('/api/admin/feedback')
+  const list = await res.json()
+  const counts = { '待处理': 0, '已处理': 0, '已忽略': 0 }
+  list.forEach(f => { if (counts[f.status] !== undefined) counts[f.status]++ })
+  let html = `<div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold">用户反馈 · 意见与建议</h2>
+    <button class="btn btn-primary" onclick="showFeedbackForm()">+ 新增反馈</button>
+  </div>
+  <div class="grid grid-cols-3 gap-4 mb-6">
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-yellow-600">${counts['待处理']||0}</div><div class="text-sm text-gray-500">待处理</div></div>
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-green-600">${counts['已处理']||0}</div><div class="text-sm text-gray-500">已处理</div></div>
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-gray-500">${counts['已忽略']||0}</div><div class="text-sm text-gray-500">已忽略</div></div>
+  </div>
+  <div class="card overflow-hidden"><table class="w-full text-sm">
+    <thead><tr class="border-b bg-gray-50 text-left text-gray-500">
+      <th class="p-3">分类</th><th class="p-3">反馈内容</th><th class="p-3">联系方式</th><th class="p-3">提交时间</th><th class="p-3">状态</th><th class="p-3 w-24">操作</th>
+      <th class="p-3">回复</th>
+    </tr></thead><tbody>`
+  list.forEach(f => {
+    const badgeClass = f.status === '已处理' ? 'badge-confirmed' : (f.status === '已忽略' ? 'badge-cancelled' : 'badge-pending')
+    const categoryBadge = f.category === '问题' ? 'badge-pending' : (f.category === '活动想法' ? 'badge-done' : 'badge-confirmed')
+    html += `<tr class="border-b hover:bg-gray-50 align-top">
+      <td class="p-3"><span class="badge ${categoryBadge}">${esc(f.category||'建议')}</span></td>
+      <td class="p-3 max-w-md"><div class="whitespace-pre-wrap break-words">${esc(f.content)}</div></td>
+      <td class="p-3 text-gray-500">${esc(f.contact||'-')}</td>
+      <td class="p-3 text-gray-500 whitespace-nowrap">${esc(f.created_at||'-')}</td>
+      <td class="p-3"><select class="text-xs border rounded p-1" onchange="updateFeedbackStatus('${f.id}', this.value)">
+        <option ${f.status==='待处理'?'selected':''}>待处理</option>
+        <option ${f.status==='已处理'?'selected':''}>已处理</option>
+        <option ${f.status==='已忽略'?'selected':''}>已忽略</option>
+      </select></td>
+      <td class="p-3">
+        <button class="btn btn-outline btn-sm mr-1" onclick='editFeedback(${JSON.stringify(f).replace(/'/g,"&#39;")})'>编辑</button>
+        <button class="btn btn-outline btn-sm text-red-600" onclick="delFeedback('${f.id}')">删除</button>
+      </td>
+      <td class="p-3">
+        ${f.reply ? '<div class="text-xs text-gray-600 whitespace-pre-wrap break-words">' + esc(f.reply) + '<div class="text-gray-400 mt-1">' + esc(f.replied_at) + '</div></div>' : '<button class="btn btn-primary btn-sm" onclick="replyFeedback(\''+f.id+'\')">回复</button>'}
+      </td></tr>`
+  })
+  html += '</tbody></table></div>'
+  document.getElementById('pageContent').innerHTML = html
+}
+function showFeedbackForm(data) {
+  const d = data || { id:genId('fb'), category:'建议', content:'', contact:'', status:'待处理' }
+  const isEdit = !!data
+  let html = `<div class="card p-6 max-w-2xl"><h3 class="text-lg font-bold mb-4">${isEdit?'编辑':'新增'}反馈</h3>
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div><label class="block text-sm text-gray-600 mb-1">ID</label><input class="input" id="ff_id" value="${d.id}" disabled></div>
+      <div><label class="block text-sm text-gray-600 mb-1">状态</label><select class="input" id="ff_status">
+        <option ${d.status==='待处理'?'selected':''}>待处理</option><option ${d.status==='已处理'?'selected':''}>已处理</option><option ${d.status==='已忽略'?'selected':''}>已忽略</option></select></div>
+      <div><label class="block text-sm text-gray-600 mb-1">分类</label><select class="input" id="ff_category">
+        <option ${d.category==='建议'?'selected':''}>建议</option><option ${d.category==='问题'?'selected':''}>问题</option><option ${d.category==='活动想法'?'selected':''}>活动想法</option><option ${d.category==='其他'?'selected':''}>其他</option></select></div>
+      <div><label class="block text-sm text-gray-600 mb-1">联系方式（选填）</label><input class="input" id="ff_contact" value="${esc(d.contact||'')}" placeholder="手机/微信（仅后台可见）"></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">反馈内容</label><textarea class="input" id="ff_content" style="min-height:120px">${esc(d.content||'')}</textarea></div>
+    </div>
+    <div class="flex gap-2"><button class="btn btn-primary" onclick="saveFeedback(${isEdit})">${isEdit?'保存':'创建'}</button><button class="btn btn-outline" onclick="loadFeedback()">取消</button></div></div>`
+  document.getElementById('pageContent').innerHTML = html
+}
+function editFeedback(d) { showFeedbackForm(d) }
+async function saveFeedback(isEdit) {
+  const body = {
+    id: document.getElementById('ff_id').value,
+    category: document.getElementById('ff_category').value,
+    content: document.getElementById('ff_content').value,
+    contact: document.getElementById('ff_contact').value,
+    status: document.getElementById('ff_status').value
+  }
+  if (!body.content.trim()) return alert('反馈内容必填')
+  await authFetch(isEdit ? `/api/admin/feedback/${body.id}` : '/api/admin/feedback', { method: isEdit ? 'PUT' : 'POST', body: JSON.stringify(body) })
+  loadFeedback()
+}
+async function updateFeedbackStatus(id, status) {
+  const res = await authFetch('/api/admin/feedback')
+  const list = await res.json()
+  const item = list.find(f => f.id === id)
+  if (!item) return
+  item.status = status
+  await authFetch(`/api/admin/feedback/${id}`, { method: 'PUT', body: JSON.stringify(item) })
+  loadFeedback()
+}
+async function delFeedback(id) { if (!confirm('确定删除？')) return; await authFetch(`/api/admin/feedback/${id}`, { method: 'DELETE' }); loadFeedback() }
+
+function replyFeedback(id) {
+  // 先取反馈内容作为预览，再弹窗填回复
+  authFetch('/api/admin/feedback').then(res => res.json()).then(list => {
+    const item = list.find(f => f.id === id)
+    const preview = item ? (item.content || '').slice(0, 40) : ''
+    const reply = prompt('回复反馈（' + (item ? item.category : '') + '）：' + preview)
+    if (reply && reply.trim()) {
+      submitFeedbackReply(id, reply.trim())
+    }
+  })
+}
+async function submitFeedbackReply(id, reply) {
+  await authFetch(`/api/admin/feedback/${id}/reply`, { method: 'PUT', body: JSON.stringify({ reply }) })
+  loadFeedback()
+}
+
+// ============ 敏感词管理 ============
+async function loadSensitiveWords() {
+  const res = await authFetch('/api/admin/sensitive-words')
+  const list = await res.json()
+  let html = `<div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold">敏感词管理</h2>
+  </div>
+  <div class="card p-6 mb-6 max-w-3xl">
+    <label class="block text-sm text-gray-600 mb-1">添加敏感词</label>
+    <div class="flex gap-2">
+      <input class="input" id="sw_input" placeholder="多个词用逗号或空格分隔，如：广告,代购,赌博" style="flex:1">
+      <button class="btn btn-primary" onclick="addSensitiveWords()">添加</button>
+    </div>
+    <p class="text-xs text-gray-400 mt-2">含敏感词的反馈无法提交，用户会看到「反馈内容包含不当词汇」的提示。</p>
+  </div>
+  <div class="card overflow-hidden"><table class="w-full text-sm">
+    <thead><tr class="border-b bg-gray-50 text-left text-gray-500">
+      <th class="p-3">ID</th><th class="p-3">敏感词</th><th class="p-3">添加时间</th><th class="p-3 w-24">操作</th>
+    </tr></thead><tbody>`
+  if (list.length === 0) {
+    html += `<tr class="border-b"><td class="p-3 text-center text-gray-400" colspan="4">暂无敏感词</td></tr>`
+  }
+  list.forEach(w => {
+    html += `<tr class="border-b hover:bg-gray-50">
+      <td class="p-3 text-gray-400">${w.id}</td>
+      <td class="p-3"><span class="badge badge-pending">${esc(w.word)}</span></td>
+      <td class="p-3 text-gray-500">${esc(w.created_at||'-')}</td>
+      <td class="p-3"><button class="btn btn-outline btn-sm text-red-600" onclick="delSensitiveWord(${w.id})">删除</button></td>
+    </tr>`
+  })
+  html += '</tbody></table></div>'
+  if (list.length > 0) {
+    html += `<div class="mt-3"><button class="btn btn-outline btn-sm text-red-600" onclick="clearSensitiveWords()">清空全部</button></div>`
+  }
+  document.getElementById('pageContent').innerHTML = html
+}
+async function addSensitiveWords() {
+  const input = document.getElementById('sw_input')
+  const words = (input.value || '').trim()
+  if (!words) return alert('请填写敏感词')
+  const res = await authFetch('/api/admin/sensitive-words', { method: 'POST', body: JSON.stringify({ words }) })
+  const data = await res.json()
+  if (data.existing && data.existing.length > 0) {
+    alert(`已添加 ${data.added} 个，${data.existing.length} 个已存在：${data.existing.join('、')}`)
+  } else {
+    alert(`已添加 ${data.added} 个敏感词`)
+  }
+  loadSensitiveWords()
+}
+async function delSensitiveWord(id) { if (!confirm('确定删除？')) return; await authFetch(`/api/admin/sensitive-words/${id}`, { method: 'DELETE' }); loadSensitiveWords() }
+async function clearSensitiveWords() { if (!confirm('确定清空全部敏感词？')) return; await authFetch('/api/admin/sensitive-words', { method: 'DELETE' }); loadSensitiveWords() }
+
+// ============ 公告管理 ============
+async function loadAnnouncements() {
+  const res = await authFetch('/api/admin/announcements')
+  const list = await res.json()
+  const counts = { '发布': 0, '下架': 0, '紧急': 0, '弹窗': 0 }
+  list.forEach(a => {
+    if (a.status) counts['发布']++
+    else counts['下架']++
+    if (a.urgent) counts['紧急']++
+    if (a.popup) counts['弹窗']++
+  })
+  let html = `<div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold">公告管理</h2>
+    <button class="btn btn-primary" onclick="showAnnouncementForm()">+ 发布公告</button>
+  </div>
+  <div class="grid grid-cols-4 gap-4 mb-6">
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-green-600">${counts['发布']||0}</div><div class="text-sm text-gray-500">已发布</div></div>
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-gray-500">${counts['下架']||0}</div><div class="text-sm text-gray-500">已下架</div></div>
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-red-600">${counts['紧急']||0}</div><div class="text-sm text-gray-500">紧急公告</div></div>
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-blue-600">${counts['弹窗']||0}</div><div class="text-sm text-gray-500">弹窗公告</div></div>
+  </div>
+  <div class="card overflow-hidden"><table class="w-full text-sm">
+    <thead><tr class="border-b bg-gray-50 text-left text-gray-500">
+      <th class="p-3">标题</th><th class="p-3">内容</th><th class="p-3">紧急</th><th class="p-3">弹窗</th><th class="p-3">状态</th><th class="p-3">更新时间</th><th class="p-3 w-24">操作</th>
+    </tr></thead><tbody>`
+  if (list.length === 0) {
+    html += `<tr class="border-b"><td class="p-3 text-center text-gray-400" colspan="7">暂无公告，点击右上角发布</td></tr>`
+  }
+  list.forEach(a => {
+    html += `<tr class="border-b hover:bg-gray-50 align-top">
+      <td class="p-3 font-medium">${a.urgent ? '<span class="badge badge-pending mr-1">紧急</span>' : ''}${esc(a.title)}</td>
+      <td class="p-3 max-w-md"><div class="whitespace-pre-wrap break-words text-gray-500">${esc(a.content||'-')}</div></td>
+      <td class="p-3">${a.urgent ? '<span class="badge badge-pending">紧急</span>' : '-'}</td>
+      <td class="p-3">${a.popup ? '<span class="badge badge-done">弹窗</span>' : '-'}</td>
+      <td class="p-3"><select class="text-xs border rounded p-1" onchange="updateAnnouncementStatus('${a.id}', this.value)">
+        <option value="1" ${a.status?'selected':''}>发布</option>
+        <option value="0" ${!a.status?'selected':''}>下架</option>
+      </select></td>
+      <td class="p-3 text-gray-500 whitespace-nowrap">${esc(a.updated_at||a.created_at||'-')}</td>
+      <td class="p-3">
+        <button class="btn btn-outline btn-sm mr-1" onclick='editAnnouncement(${JSON.stringify(a).replace(/'/g,"&#39;")})'>编辑</button>
+        <button class="btn btn-outline btn-sm text-red-600" onclick="delAnnouncement('${a.id}')">删除</button>
+      </td></tr>`
+  })
+  html += '</tbody></table></div>'
+  document.getElementById('pageContent').innerHTML = html
+}
+function showAnnouncementForm(data) {
+  const d = data || { id: genId('ann'), title:'', content:'', urgent:false, popup:false, status:true, sort_order:0 }
+  const isEdit = !!data
+  let html = `<div class="card p-6 max-w-2xl"><h3 class="text-lg font-bold mb-4">${isEdit?'编辑公告':'发布公告'}</h3>
+    <input type="hidden" id="af_id" value="${esc(d.id)}">
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">公告标题</label><input class="input" id="af_title" value="${esc(d.title)}" placeholder="如：春节闭馆通知"></div>
+      <div class="col-span-2"><label class="block text-sm text-gray-600 mb-1">公告内容</label><textarea class="input" id="af_content" style="min-height:100px" placeholder="公告详细内容（选填）">${esc(d.content||'')}</textarea></div>
+      <div><label class="block text-sm text-gray-600 mb-2">是否紧急</label>
+        <label class="inline-flex items-center gap-2"><input type="checkbox" id="af_urgent" ${d.urgent?'checked':''} class="w-4 h-4"><span class="text-sm">紧急公告（红色标记、置顶）</span></label></div>
+      <div><label class="block text-sm text-gray-600 mb-2">是否弹窗</label>
+        <label class="inline-flex items-center gap-2"><input type="checkbox" id="af_popup" ${d.popup?'checked':''} class="w-4 h-4"><span class="text-sm">进入展览页时弹窗展示</span></label></div>
+      <div><label class="block text-sm text-gray-600 mb-1">排序</label><input class="input" id="af_sort" type="number" value="${d.sort_order||0}"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">状态</label><select class="input" id="af_status"><option value="1" ${d.status?'selected':''}>发布</option><option value="0" ${!d.status?'selected':''}>下架</option></select></div>
+    </div>
+    <div class="flex gap-2"><button class="btn btn-primary" onclick="saveAnnouncement(${isEdit})">${isEdit?'保存':'发布'}</button><button class="btn btn-outline" onclick="loadAnnouncements()">取消</button></div></div>`
+  document.getElementById('pageContent').innerHTML = html
+}
+function editAnnouncement(d) { showAnnouncementForm(d) }
+async function saveAnnouncement(isEdit) {
+  const body = {
+    id: document.getElementById('af_id').value,
+    title: document.getElementById('af_title').value,
+    content: document.getElementById('af_content').value,
+    urgent: document.getElementById('af_urgent').checked,
+    popup: document.getElementById('af_popup').checked,
+    sort_order: parseInt(document.getElementById('af_sort').value) || 0,
+    status: document.getElementById('af_status').value === '1'
+  }
+  if (!body.title.trim()) return alert('公告标题必填')
+  await authFetch(isEdit ? `/api/admin/announcements/${body.id}` : '/api/admin/announcements', { method: isEdit ? 'PUT' : 'POST', body: JSON.stringify(body) })
+  loadAnnouncements()
+}
+async function updateAnnouncementStatus(id, status) {
+  const res = await authFetch('/api/admin/announcements')
+  const list = await res.json()
+  const item = list.find(a => a.id === id)
+  if (!item) return
+  item.status = status === '1'
+  await authFetch(`/api/admin/announcements/${id}`, { method: 'PUT', body: JSON.stringify(item) })
+  loadAnnouncements()
+}
+async function delAnnouncement(id) { if (!confirm('确定删除？')) return; await authFetch(`/api/admin/announcements/${id}`, { method: 'DELETE' }); loadAnnouncements() }
+
+// ============ 预约 ============
+async function loadBookings() {
+  const [bres, stats] = await Promise.all([authFetch('/api/admin/bookings'), authFetch('/api/admin/bookings/stats')])
+  const list = await bres.json()
+  const s = await stats.json()
+  // 按来源分组
+  const sourceMap = {}
+  ;(s.bySource || []).forEach(item => { sourceMap[item.program_id] = item.confirmed_count })
+  // 按类型分组
+  const kindMap = {}
+  ;(s.byKind || []).forEach(item => { kindMap[item.program_kind] = { total: item.total_count, confirmed: item.confirmed_count } })
+
+  let html = `<div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold">预约管理</h2>
+  </div>
+  <div class="grid grid-cols-4 gap-4 mb-6">
+    <div class="card p-4 text-center"><div class="text-2xl font-bold">${s.total||0}</div><div class="text-sm text-gray-500">预约总人数</div></div>
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-yellow-600">${s.pending||0}</div><div class="text-sm text-gray-500">待确认人数</div></div>
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-green-600">${s.confirmed||0}</div><div class="text-sm text-gray-500">已确认人数</div></div>
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-blue-600">${s.today||0}</div><div class="text-sm text-gray-500">今日新增人数</div></div>
+  </div>`
+
+  // 按类型分组卡片
+  const kindLabels = { '展览预约':'🖼 展览预约', '讲座预约':'📋 讲座预约', '活动预约':'🎭 活动预约' }
+  html += `<div class="grid grid-cols-3 gap-4 mb-6">`
+  Object.keys(kindLabels).forEach(k => {
+    const info = kindMap[k] || { total: 0, confirmed: 0 }
+    html += `<div class="card p-4"><div class="text-sm text-gray-500 mb-1">${kindLabels[k]||k}</div><div class="flex items-baseline gap-2"><span class="text-xl font-bold text-green-600">${info.confirmed}</span><span class="text-sm text-gray-400">已确认 / ${info.total} 总计</span></div></div>`
+  })
+  html += `</div>`
+
+  // 按来源分组统计
+  if (s.bySource && s.bySource.length > 0) {
+    html += `<div class="card p-4 mb-6"><div class="text-sm font-medium text-gray-600 mb-3">各展览/活动已确认人数</div><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">`
+    s.bySource.forEach(item => {
+      html += `<div class="border rounded-lg p-3"><div class="text-xs text-gray-500">${esc(item.program_kind||'')}</div><div class="text-sm font-medium truncate" title="${esc(item.program_title||'')}">${esc(item.program_title||'未指定')}</div><div class="text-lg font-bold text-green-600">${item.confirmed_count} <span class="text-xs text-gray-400 font-normal">人已确认</span></div></div>`
+    })
+    html += `</div></div>`
+  }
+
+  // 筛选栏
+  html += `<div class="flex gap-3 mb-4 items-center">
+    <select class="input" style="width:140px" id="bk_filter_kind" onchange="filterBookings()">
+      <option value="">全部类型</option><option value="展览预约">展览预约</option><option value="讲座预约">讲座预约</option><option value="活动预约">活动预约</option>
+    </select>
+    <select class="input" style="width:140px" id="bk_filter_status" onchange="filterBookings()">
+      <option value="">全部状态</option><option value="待确认">待确认</option><option value="已确认">已确认</option><option value="已完成">已完成</option><option value="已取消">已取消</option>
+    </select>
+    <input class="input" style="width:200px" id="bk_filter_keyword" placeholder="搜索姓名/手机/预约号" oninput="filterBookings()">
+  </div>
+  <div id="batchBar" class="hidden mb-4 flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-lg p-3">
+    <span class="text-sm text-amber-700">已选择 <strong id="selectedCount">0</strong> 条</span>
+    <button onclick="batchUpdateStatus('已确认')" class="px-3 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700">批量确认</button>
+    <button onclick="batchUpdateStatus('已取消')" class="px-3 py-1 text-xs bg-gray-500 text-white rounded hover:bg-gray-600">批量取消</button>
+    <button onclick="batchUpdateStatus('已完成')" class="px-3 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">批量完成</button>
+    <button onclick="batchDelete()" class="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700">批量删除</button>
+    <button onclick="clearSelection()" class="px-3 py-1 text-xs text-gray-500 hover:text-gray-700">取消选择</button>
+  </div>
+  <div class="card overflow-hidden"><table class="w-full text-sm">
+    <thead><tr class="border-b bg-gray-50 text-left text-gray-500">
+      <th class="p-3 w-10"><input type="checkbox" id="checkAll" onchange="toggleCheckAll(this.checked)"></th>
+      <th class="p-3">预约号</th><th class="p-3">类型</th><th class="p-3">来源</th><th class="p-3">联系人/参观人</th><th class="p-3">日期/时段</th><th class="p-3">状态</th><th class="p-3 w-32">操作</th>
+    </tr></thead><tbody id="bk_tbody">`
+  list.forEach(b => {
+    html += renderBookingRow(b, sourceMap)
+  })
+  html += '</tbody></table></div>'
+  document.getElementById('pageContent').innerHTML = html
+  // 保存完整列表供筛选用
+  window._bookingList = list
+  window._bookingSourceMap = sourceMap
+}
+function renderBookingRow(b, sourceMap) {
+  const badgeClass = b.status==='待确认'?'badge-pending':b.status==='已确认'?'badge-confirmed':b.status==='已完成'?'badge-done':'badge-cancelled'
+  let visitorsHtml = ''
+  const visitors = (b.visitors_info && Array.isArray(b.visitors_info) && b.visitors_info.length > 0)
+    ? b.visitors_info
+    : [{ name: b.contact_name, phone: b.contact_phone }]
+  visitors.forEach((v, i) => {
+    const label = visitors.length === 1 ? '' : `<span class="text-gray-400 mr-1">${i+1}.</span>`
+    const tag = i === 0 ? '<span class="text-xs bg-amber-100 text-amber-700 rounded px-1 ml-1">联系人</span>' : ''
+    visitorsHtml += `<div class="${i > 0 ? 'mt-1' : ''}">${label}<span class="font-medium">${esc(v.name||'')}</span> <span class="text-gray-500">${esc(v.phone||'')}</span>${tag}</div>`
+  })
+  return `<tr class="border-b hover:bg-gray-50" data-kind="${esc(b.program_kind||'')}" data-status="${esc(b.status||'')}" data-search="${esc((b.contact_name||'')+(b.contact_phone||'')+(b.booking_no||''))}">
+    <td class="p-3"><input type="checkbox" class="booking-check" data-id="${b.id}" onchange="onCheckChange()"></td>
+    <td class="p-3 font-mono text-xs">${esc(b.booking_no)}</td>
+    <td class="p-3"><span class="badge badge-confirmed">${esc(b.program_kind||'')}</span></td>
+    <td class="p-3 text-sm">${esc(b.program_title||'-')}</td>
+    <td class="p-3">${visitorsHtml}</td>
+    <td class="p-3 text-xs">${esc(b.booking_date||'-')} ${esc(b.booking_time||'')}</td>
+    <td class="p-3"><span class="badge ${badgeClass}">${esc(b.status)}</span></td>
+    <td class="p-3">
+      <select class="text-xs border rounded p-1" onchange="updateBookingStatus(${b.id}, this.value)">
+        <option ${b.status==='待确认'?'selected':''}>待确认</option>
+        <option ${b.status==='已确认'?'selected':''}>已确认</option>
+        <option ${b.status==='已完成'?'selected':''}>已完成</option>
+        <option ${b.status==='已取消'?'selected':''}>已取消</option>
+      </select>
+    </td></tr>`
+}
+function filterBookings() {
+  const kind = document.getElementById('bk_filter_kind').value
+  const status = document.getElementById('bk_filter_status').value
+  const keyword = (document.getElementById('bk_filter_keyword').value || '').toLowerCase()
+  document.querySelectorAll('#bk_tbody tr').forEach(tr => {
+    const trKind = (tr.getAttribute('data-kind')||'')
+    const trStatus = (tr.getAttribute('data-status')||'')
+    const trSearch = (tr.getAttribute('data-search')||'').toLowerCase()
+    let show = true
+    if (kind && trKind !== kind) show = false
+    if (status && trStatus !== status) show = false
+    if (keyword && !trSearch.includes(keyword)) show = false
+    tr.style.display = show ? '' : 'none'
+  })
+}
+async function updateBookingStatus(id, status) {
+  await authFetch(`/api/admin/bookings/${id}/status`, { method: 'PUT', body: JSON.stringify({ status }) })
+  loadBookings()
+}
+
+// ============ 批量操作 ============
+function getSelectedIds() {
+  return Array.from(document.querySelectorAll('.booking-check:checked')).map(el => Number(el.dataset.id))
+}
+function onCheckChange() {
+  const ids = getSelectedIds()
+  const bar = document.getElementById('batchBar')
+  const count = document.getElementById('selectedCount')
+  if (ids.length > 0) { bar.classList.remove('hidden'); bar.classList.add('flex'); count.textContent = ids.length }
+  else { bar.classList.add('hidden'); bar.classList.remove('flex') }
+  const allBox = document.getElementById('checkAll')
+  if (allBox) allBox.checked = document.querySelectorAll('.booking-check:checked').length === document.querySelectorAll('.booking-check').length
+}
+function toggleCheckAll(checked) {
+  document.querySelectorAll('.booking-check').forEach(el => { el.checked = checked })
+  onCheckChange()
+}
+function clearSelection() {
+  toggleCheckAll(false)
+}
+async function batchUpdateStatus(status) {
+  const ids = getSelectedIds()
+  if (ids.length === 0) return
+  if (!confirm(`确认将 ${ids.length} 条预约状态改为"${status}"？`)) return
+  await authFetch('/api/admin/bookings/batch-status', { method: 'PUT', body: JSON.stringify({ ids, status }) })
+  loadBookings()
+}
+async function batchDelete() {
+  const ids = getSelectedIds()
+  if (ids.length === 0) return
+  if (!confirm(`确认删除 ${ids.length} 条预约记录？此操作不可恢复。`)) return
+  await authFetch('/api/admin/bookings/batch', { method: 'DELETE', body: JSON.stringify({ ids }) })
+  loadBookings()
+}
+
+// ============ 数字展厅 ============
+async function loadDigitalGalleries() {
+  const res = await authFetch('/api/admin/digital-galleries')
+  const list = await res.json()
+  const online = list.filter(g => g.status).length
+  let html = `<div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold">数字展厅 · 在线全景展览</h2>
+    <button class="btn btn-primary" onclick="showDigitalGalleryForm()">+ 新增展厅</button>
+  </div>
+  <div class="grid grid-cols-3 gap-4 mb-6">
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-green-600">${online}</div><div class="text-sm text-gray-500">已上架</div></div>
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-gray-500">${list.length - online}</div><div class="text-sm text-gray-500">已下架</div></div>
+    <div class="card p-4 text-center"><div class="text-2xl font-bold text-gray-700">${list.length}</div><div class="text-sm text-gray-500">总计</div></div>
+  </div>`
+  if (list.length === 0) {
+    html += `<div class="card p-8 text-center text-gray-400">暂无数字展厅，点击右上角添加</div>`
+  } else {
+    html += `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">`
+    list.forEach(g => {
+      html += `<div class="card overflow-hidden">
+        ${g.cover ? `<img src="${esc(g.cover)}" class="w-full h-40 object-cover" onerror="this.style.display='none'">` : `<div class="w-full h-40 bg-gray-100 flex items-center justify-center text-gray-300 text-4xl">🌐</div>`}
+        <div class="p-4">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-gray-800">${esc(g.title)}</h3>
+            <span class="badge ${g.status ? 'badge-confirmed' : 'badge-cancelled'}">${g.status ? '上架' : '下架'}</span>
+          </div>
+          ${g.description ? `<p class="text-sm text-gray-500 mb-2 line-clamp-2">${esc(g.description)}</p>` : ''}
+          <div class="text-xs text-gray-400 truncate mb-3">🔗 ${esc(g.url)}</div>
+          <div class="text-xs text-gray-400 mb-3">排序: ${g.sort_order || 0} · ${esc(g.created_at||'')}</div>
+          <div class="flex gap-2">
+            <button class="btn btn-outline btn-sm" onclick='editDigitalGallery(${JSON.stringify(g).replace(/'/g,"&#39;")})'>编辑</button>
+            <button class="btn ${g.status ? 'btn-outline' : 'btn-primary'} btn-sm" onclick="toggleDigitalGalleryStatus('${g.id}', ${g.status})">${g.status ? '下架' : '上架'}</button>
+            <button class="btn btn-outline btn-sm text-red-600" onclick="delDigitalGallery('${g.id}')">删除</button>
+          </div>
+        </div>
+      </div>`
+    })
+    html += `</div>`
+  }
+  document.getElementById('pageContent').innerHTML = html
+}
+function showDigitalGalleryForm(data) {
+  const d = data || { id:genId('dg'), title:'', url:'', cover:'', description:'', status:true, sort_order:0 }
+  const isEdit = !!data
+  let html = `<div class="card p-6 max-w-2xl"><h3 class="text-lg font-bold mb-4">${isEdit?'编辑':'新增'}数字展厅</h3>
+    <input type="hidden" id="dg_id" value="${d.id}">
+    <div class="grid grid-cols-1 gap-4 mb-4">
+      <div><label class="block text-sm text-gray-600 mb-1">展厅标题 *</label><input class="input" id="dg_title" value="${esc(d.title)}" placeholder="如：真言可贵——周思聪的变法之路"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">全景页面 URL *</label><input class="input" id="dg_url" value="${esc(d.url)}" placeholder="https://quanjing.artron.net/.../tour.html"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">封面图 URL</label><input class="input" id="dg_cover" value="${esc(d.cover||'')}" placeholder="留空则使用默认背景"></div>
+      <div><label class="block text-sm text-gray-600 mb-1">简介</label><textarea class="input" id="dg_description" placeholder="展厅简介（选填）">${esc(d.description||'')}</textarea></div>
+      <div class="grid grid-cols-2 gap-4">
+        <div><label class="block text-sm text-gray-600 mb-1">状态</label><select class="input" id="dg_status">
+          <option value="1" ${d.status?'selected':''}>上架</option><option value="0" ${!d.status?'selected':''}>下架</option></select></div>
+        <div><label class="block text-sm text-gray-600 mb-1">排序（越小越靠前）</label><input class="input" id="dg_sort_order" type="number" value="${d.sort_order||0}"></div>
+      </div>
+    </div>
+    <div class="flex gap-2"><button class="btn btn-primary" onclick="saveDigitalGallery(${isEdit})">${isEdit?'保存':'创建'}</button><button class="btn btn-outline" onclick="loadDigitalGalleries()">取消</button></div></div>`
+  document.getElementById('pageContent').innerHTML = html
+}
+function editDigitalGallery(d) { showDigitalGalleryForm(d) }
+async function saveDigitalGallery(isEdit) {
+  const body = {
+    id: document.getElementById('dg_title').dataset.id || genId('dg'),
+    title: document.getElementById('dg_title').value,
+    url: document.getElementById('dg_url').value,
+    cover: document.getElementById('dg_cover').value,
+    description: document.getElementById('dg_description').value,
+    status: document.getElementById('dg_status').value === '1',
+    sort_order: parseInt(document.getElementById('dg_sort_order').value) || 0
+  }
+  // 从 showDigitalGalleryForm 传过来的 id 在 form 里没有单独字段，需要用 data.id
+  if (!body.title.trim()) return alert('请填写展厅标题')
+  if (!body.url.trim()) return alert('请填写全景页面 URL')
+  // 获取 id：从隐藏的 data 属性或重新生成
+  // 实际上 edit 时 id 来自传入的 d.id，我们需要在 form 里加一个隐藏字段
+  const idInput = document.getElementById('dg_id')
+  const id = idInput ? idInput.value : body.id
+  await authFetch(isEdit ? `/api/admin/digital-galleries/${id}` : '/api/admin/digital-galleries', { method: isEdit ? 'PUT' : 'POST', body: JSON.stringify({ ...body, id }) })
+  loadDigitalGalleries()
+}
+async function toggleDigitalGalleryStatus(id, currentStatus) {
+  const res = await authFetch('/api/admin/digital-galleries')
+  const list = await res.json()
+  const item = list.find(g => g.id === id)
+  if (!item) return
+  await authFetch(`/api/admin/digital-galleries/${id}`, { method: 'PUT', body: JSON.stringify({ ...item, status: !currentStatus }) })
+  loadDigitalGalleries()
+}
+async function delDigitalGallery(id) { if (!confirm('确定删除？')) return; await authFetch(`/api/admin/digital-galleries/${id}`, { method: 'DELETE' }); loadDigitalGalleries() }
+
+// ============ 工具 ============
+function esc(s) { if (!s) return ''; const d = document.createElement('div'); d.textContent = s; return d.innerHTML }
+
+// 启动
+if (TOKEN) { showApp() }
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+.collections-scroll { height: 100vh; }
+.collections-page { padding-bottom: 70rpx; }
+.top-row { display: flex; align-items: flex-end; justify-content: space-between; }
+
+/* 画展一隅入口 */
+.curator-entry { position: relative; margin-top: 36rpx; height: 320rpx; overflow: hidden; border-radius: 8rpx; }
+.curator-entry-bg { position: absolute; inset: 0; }
+.curator-entry-img { width: 100%; height: 100%; }
+.curator-entry-shade { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(29,32,29,.65), rgba(154,61,47,.35), rgba(29,32,29,.55)); }
+.curator-entry-content { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; padding: 32rpx; color: #F8F3E9; }
+.curator-eyebrow { font-size: 13rpx; letter-spacing: 3rpx; color: rgba(255,255,255,.6); }
+.curator-title { display: block; margin-top: 12rpx; font-family: "Songti SC", serif; font-size: 44rpx; font-weight: 600; }
+.curator-desc { display: block; margin-top: 10rpx; font-size: 20rpx; line-height: 1.6; color: rgba(255,255,255,.75); max-width: 480rpx; }
+.curator-action { display: flex; align-items: center; justify-content: space-between; margin-top: 22rpx; padding-top: 18rpx; border-top: 1rpx solid rgba(255,255,255,.25); font-size: 22rpx; letter-spacing: 1rpx; }
+.curator-arrow { display: flex; align-items: center; justify-content: center; width: 44rpx; height: 44rpx; border: 1rpx solid rgba(255,255,255,.4); border-radius: 50%; font-size: 22rpx; }
+.curator-entry:active { opacity: .92; }
+.course-entry { margin-top: 24rpx; }
+.course-entry-img { width: 100%; height: 100%; }
+.course-entry .curator-entry-shade { background: linear-gradient(180deg, rgba(20,21,19,.18), rgba(20,21,19,.42) 46%, rgba(20,21,19,.8)); }
+.collection-summary { display: grid; grid-template-columns: 1fr auto; align-items: end; margin-top: 68rpx; padding: 32rpx 0; border-top: 1rpx solid rgba(29,32,29,.16); border-bottom: 1rpx solid rgba(29,32,29,.16); font-size: 20rpx; }
+.collection-number { font-family: Georgia, serif; font-size: 50rpx; line-height: 1; }
+.collection-note { grid-column: 1 / 3; margin-top: 20rpx; color: #85827A; font-family: "Songti SC", serif; font-size: 21rpx; line-height: 1.6; }
+.category-row { display: flex; margin-top: 44rpx; gap: 16rpx; }
+.category { flex: 1; padding: 25rpx 26rpx; border: 1rpx solid rgba(29,32,29,.16); border-radius: 6rpx; color: #74736D; }
+.category.active { border-color: #1D201D; background: #1D201D; color: white; }
+.category-name { display: block; font-family: "Songti SC", serif; font-size: 29rpx; }
+.category-caption { display: block; margin-top: 8rpx; color: #9A9891; font-size: 17rpx; letter-spacing: 1rpx; }
+.category.active .category-caption { color: rgba(255,255,255,.58); }
+.result-row { display: flex; justify-content: space-between; margin: 60rpx 0 24rpx; font-family: "Songti SC", serif; font-size: 28rpx; }
+.result-count { color: #908D85; font-family: sans-serif; font-size: 18rpx; }
+.art-grid { display: flex; flex-wrap: wrap; justify-content: space-between; }
+.art-card { width: 324rpx; margin-bottom: 52rpx; }
+.art-visual { position: relative; height: 420rpx; overflow: hidden; border-radius: 5rpx; background: #DDD8CE; }
+.art-image { width: 100%; height: 100%; }
+.category-tag { position: absolute; top: 16rpx; left: 16rpx; padding: 8rpx 13rpx; border-radius: 30rpx; background: rgba(248,245,238,.88); color: #343632; font-size: 16rpx; }
+.view-detail { position: absolute; right: 0; bottom: 0; left: 0; padding: 17rpx 18rpx; background: linear-gradient(transparent, rgba(20,20,18,.72)); color: white; font-size: 17rpx; text-align: right; letter-spacing: 1rpx; }
+.art-info { display: flex; align-items: flex-start; justify-content: space-between; padding-top: 19rpx; }
+.art-copy { flex: 1; min-width: 0; }
+.art-title { display: block; overflow: hidden; font-family: "Songti SC", serif; font-size: 27rpx; text-overflow: ellipsis; white-space: nowrap; }
+.art-artist, .art-size { display: block; margin-top: 8rpx; color: #85827B; font-size: 18rpx; }
+.art-size { color: #A09D95; }
+.like { flex: none; padding: 0 4rpx 10rpx 12rpx; color: #7E7B74; font-size: 32rpx; }
+.like.liked { color: #A34133; }
+
+/* 内嵌搜索框 */
+.search-bar { display: flex; align-items: center; margin-top: 36rpx; padding: 0 26rpx; height: 76rpx; border: 1rpx solid rgba(29,32,29,.14); border-radius: 40rpx; background: rgba(255,255,255,.55); }
+.search-bar-icon { margin-right: 14rpx; color: #9D9A92; font-size: 30rpx; }
+.search-bar-input { flex: 1; height: 76rpx; font-size: 24rpx; color: #1D201D; }
+.search-bar-placeholder { color: #B5B1A8; }
+.search-bar-clear { padding: 0 8rpx; color: #9D9A92; font-size: 34rpx; line-height: 1; }
+
+/* 热门标签 */
+.search-tags { display: flex; flex-wrap: wrap; gap: 14rpx; margin-top: 22rpx; }
+.search-tag { padding: 12rpx 26rpx; border: 1rpx solid rgba(29,32,29,.16); border-radius: 40rpx; color: #555750; font-size: 20rpx; letter-spacing: 1rpx; background: rgba(255,255,255,.35); }
+
+/* 搜索空态（内嵌） */
+.search-empty-inline { display: flex; flex-direction: column; align-items: center; padding: 100rpx 0 60rpx; }
+.search-empty-inline-icon { font-size: 56rpx; color: #C5C1B8; }
+.search-empty-inline-title { margin-top: 18rpx; color: #7A7870; font-family: "Songti SC", serif; font-size: 28rpx; }
+.search-empty-inline-hint { margin-top: 12rpx; color: #A09D95; font-size: 20rpx; }

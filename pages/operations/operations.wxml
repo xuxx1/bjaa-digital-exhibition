@@ -1,0 +1,93 @@
+<scroll-view class="operations-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="operations-page">
+    <custom-navbar title="展厅运维详情" theme="dark" rightType="refresh" bind:righttap="refreshData" />
+
+    <view class="operations-hero">
+      <view class="hero-grid grid-one"></view><view class="hero-grid grid-two"></view>
+      <view class="hero-topline">
+        <view class="system-live"><view></view><text>SYSTEM ONLINE</text></view>
+        <text>{{updatedAt}}</text>
+      </view>
+      <text class="hero-kicker">EXHIBITION OPERATIONS</text>
+      <text class="hero-title">展厅实时运维</text>
+      <text class="hero-subtitle">问虫——齐白石的草间对话</text>
+      <view class="hero-summary">
+        <view><text>今日客流</text><text>{{visits}}</text><text>{{visitTrend}}</text></view>
+        <view><text>浏览热度</text><text>{{heat}}%</text><text>较高</text></view>
+        <view><text>设备在线</text><text>100%</text><text>全部正常</text></view>
+      </view>
+    </view>
+
+    <view class="operations-content">
+      <view class="section-head">
+        <view><text class="section-no">01</text><text class="section-title">分时客流</text></view>
+        <text class="section-caption">截至 16:00</text>
+      </view>
+      <view class="traffic-card">
+        <view class="traffic-summary"><text>今日累计访问</text><text>{{visits}}<text class="traffic-unit"> 人次</text></text></view>
+        <view class="bar-chart">
+          <view class="bar-item" wx:for="{{hourlyVisits}}" wx:key="time">
+            <text class="bar-count">{{item.count}}</text>
+            <view class="bar-track"><view class="bar-fill {{index === 6 ? 'peak' : ''}}" style="height: {{item.value}}%"></view></view>
+            <text class="bar-time">{{item.time}}</text>
+          </view>
+        </view>
+        <view class="chart-note"><view></view><text>15:00 达到今日客流峰值</text></view>
+      </view>
+
+      <view class="section-head">
+        <view><text class="section-no">02</text><text class="section-title">展品浏览热度</text></view>
+        <text class="section-caption">平均热度 {{heat}}%</text>
+      </view>
+      <view class="popular-list">
+        <view class="popular-item" wx:for="{{popularArtworks}}" wx:key="rank">
+          <text class="popular-rank">{{item.rank}}</text>
+          <view class="popular-copy"><text>{{item.title}}</text><text>{{item.artist}} · {{item.views}} 次浏览</text></view>
+          <view class="popular-heat"><text>{{item.heat}}%</text><view><view style="width: {{item.heat}}%"></view></view></view>
+        </view>
+      </view>
+
+      <view class="section-head">
+        <view><text class="section-no">03</text><text class="section-title">环境与设备</text></view>
+        <view class="all-normal"><view></view><text>全部正常</text></view>
+      </view>
+      <view class="environment-grid">
+        <view class="environment-card temp-card">
+          <text class="environment-label">TEMPERATURE</text>
+          <view class="environment-value"><text>{{environment.temperature}}</text><text>°C</text></view>
+          <text class="environment-target">标准 {{environment.targetTemperature}}</text>
+        </view>
+        <view class="environment-card humidity-card">
+          <text class="environment-label">HUMIDITY</text>
+          <view class="environment-value"><text>{{environment.humidity}}</text><text>%RH</text></view>
+          <text class="environment-target">标准 {{environment.targetHumidity}}</text>
+        </view>
+      </view>
+      <view class="device-detail-list">
+        <view class="device-detail" wx:for="{{devices}}" wx:key="code">
+          <view class="device-detail-top">
+            <view><text class="device-code">{{item.code}}</text><text class="device-title">{{item.name}}</text></view>
+            <view class="device-status"><view></view><text>{{item.status}}</text></view>
+          </view>
+          <view class="device-progress"><view style="width: {{item.progress}}%"></view></view>
+          <text class="device-description">{{item.detail}}</text>
+        </view>
+      </view>
+
+      <view class="section-head">
+        <view><text class="section-no">04</text><text class="section-title">今日巡检记录</text></view>
+        <text class="section-caption">4 条记录</text>
+      </view>
+      <view class="log-list">
+        <view class="log-item" wx:for="{{logs}}" wx:key="time">
+          <text class="log-time">{{item.time}}</text>
+          <view class="log-line"><view></view></view>
+          <view class="log-copy"><text>{{item.title}}</text><text>{{item.result}}</text></view>
+          <text class="log-check">✓</text>
+        </view>
+      </view>
+
+      <view class="operations-footer"><text>BEIJING FINE ART ACADEMY · OPS</text><text>数据每 5 分钟自动更新</text></view>
+    </view>
+  </view>
+</scroll-view>

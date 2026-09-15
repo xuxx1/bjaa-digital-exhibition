@@ -1,0 +1,33 @@
+<view class="navbar {{theme === 'dark' ? 'dark' : 'light'}} {{borderBottom ? 'border-bottom' : ''}}">
+  <view class="navbar-inner">
+    <view class="navbar-left" wx:if="{{back}}" bindtap="onBack">
+      <text>←</text>
+    </view>
+    <view class="navbar-left navbar-left-hidden" wx:else></view>
+
+    <view class="navbar-center" wx:if="{{centerTitle}}">
+      <text class="navbar-title-center">{{title}}</text>
+      <text class="navbar-subtitle" wx:if="{{subtitle}}">{{subtitle}}</text>
+    </view>
+    <text class="navbar-title" wx:elif="{{title}}">{{title}}</text>
+    <view class="navbar-title-placeholder" wx:else></view>
+
+    <view class="navbar-right">
+      <view class="navbar-action navbar-favorite {{liked ? 'liked' : ''}}"
+            wx:if="{{rightType === 'favorite'}}"
+            catchtap="onFavoriteTap">
+        {{liked ? '♥' : '♡'}}
+      </view>
+      <view class="navbar-action navbar-refresh"
+            wx:elif="{{rightType === 'refresh'}}"
+            catchtap="onRightTap">
+        ↻
+      </view>
+      <view class="navbar-action navbar-logo" wx:elif="{{rightType === 'logo'}}">
+        <image src="/logo1.png" mode="aspectFit"></image>
+      </view>
+      <text class="navbar-right-text" wx:elif="{{rightType === 'text' && rightText}}">{{rightText}}</text>
+      <view class="navbar-action navbar-placeholder" wx:elif="{{rightType === 'none'}}"></view>
+    </view>
+  </view>
+</view>

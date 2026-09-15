@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "线上微课",
+  "usingComponents": {
+    "custom-navbar": "/components/custom-navbar/custom-navbar"
+  }
+}

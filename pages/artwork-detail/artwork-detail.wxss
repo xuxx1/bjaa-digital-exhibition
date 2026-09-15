@@ -1,0 +1,22 @@
+.detail-scroll { height: 100vh; background: #E9E5DC; }
+.detail-page { min-height: 100vh; }
+.image-stage { position: relative; padding: 44rpx 32rpx 100rpx; background: #222420; }
+.zoom-area { width: 100%; height: 820rpx; overflow: hidden; background: #D5D0C6; box-shadow: 0 26rpx 55rpx rgba(0,0,0,.28); }
+.zoom-view { width: 100%; height: 100%; }
+.detail-image { display: block; width: 100%; height: 100%; background: #D5D0C6; }
+.zoom-tip { position: absolute; bottom: 56rpx; left: 32rpx; display: flex; align-items: center; color: rgba(245,240,231,.58); font-size: 16rpx; letter-spacing: 1rpx; }
+.zoom-icon { display: inline-flex; align-items: center; justify-content: center; width: 34rpx; height: 34rpx; margin-right: 10rpx; border: 1rpx solid rgba(245,240,231,.25); border-radius: 50%; font-size: 18rpx; }
+.image-index { position: absolute; right: 40rpx; bottom: 27rpx; color: rgba(245,240,231,.52); font-size: 15rpx; letter-spacing: 3rpx; }
+.detail-content { padding: 58rpx 36rpx 90rpx; }
+.detail-title { display: block; margin-top: 18rpx; font-family: "Songti SC", serif; font-size: 58rpx; line-height: 1.2; }
+.artist-line { display: flex; align-items: baseline; margin-top: 24rpx; }
+.artist-name { font-family: "Songti SC", serif; font-size: 31rpx; }
+.artist-years { margin-left: 18rpx; color: #87847C; font-family: Georgia, serif; font-size: 20rpx; }
+.metadata { display: flex; flex-wrap: wrap; margin-top: 52rpx; border-top: 1rpx solid rgba(29,32,29,.15); border-bottom: 1rpx solid rgba(29,32,29,.15); }
+.meta-item { width: 50%; box-sizing: border-box; padding: 27rpx 10rpx 27rpx 0; color: #373934; font-size: 21rpx; line-height: 1.55; }
+.meta-item.full { width: 100%; border-top: 1rpx solid rgba(29,32,29,.1); }
+.meta-label { display: block; margin-bottom: 9rpx; color: #9B4537; font-size: 16rpx; letter-spacing: 2rpx; }
+.intro-section { margin-top: 58rpx; }
+.section-label { display: block; margin-bottom: 22rpx; font-family: "Songti SC", serif; font-size: 30rpx; }
+.intro-text { color: #5F605A; font-family: "Songti SC", serif; font-size: 24rpx; line-height: 2; text-align: justify; }
+.archive-note { display: flex; flex-direction: column; margin-top: 62rpx; padding: 27rpx 0; border-top: 1rpx solid rgba(29,32,29,.13); color: #99968E; font-size: 16rpx; line-height: 1.8; letter-spacing: 1rpx; }

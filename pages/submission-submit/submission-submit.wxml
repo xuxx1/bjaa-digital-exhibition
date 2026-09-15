@@ -1,0 +1,60 @@
+<scroll-view class="ss-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="ss-page">
+    <custom-navbar title="我要投稿" theme="light" rightType="logo" borderBottom />
+
+    <view class="ss-head">
+      <text class="eyebrow">SUBMIT YOUR WORK</text>
+      <text class="ss-title">我要投稿</text>
+      <text class="ss-lead">提交你的书画作品，经审核通过后将在线上展厅展示。</text>
+    </view>
+
+    <view class="ss-form">
+      <view class="ss-field">
+        <text class="ss-label">作品名称 <text class="ss-required">*</text></text>
+        <input class="ss-input" placeholder="如：春山图" placeholder-class="ss-placeholder" value="{{title}}" bindinput="onTitleInput" maxlength="40" />
+      </view>
+
+      <view class="ss-field">
+        <text class="ss-label">作者 <text class="ss-required">*</text></text>
+        <input class="ss-input" placeholder="您的姓名或笔名" placeholder-class="ss-placeholder" value="{{author}}" bindinput="onAuthorInput" maxlength="20" />
+      </view>
+
+      <view class="ss-field">
+        <text class="ss-label">作品简介</text>
+        <textarea class="ss-textarea" placeholder="创作灵感、题材、技法等（选填）" placeholder-class="ss-placeholder" value="{{intro}}" bindinput="onIntroInput" maxlength="300" auto-height></textarea>
+      </view>
+
+      <view class="ss-field">
+        <text class="ss-label">作品图像 <text class="ss-required">*</text></text>
+        <view class="ss-upload" wx:if="{{!imagePreview}}" bindtap="chooseImage">
+          <text class="ss-upload-glyph">＋</text>
+          <text class="ss-upload-text">点击选择作品图片</text>
+          <text class="ss-upload-hint">支持 JPG / PNG，建议横图</text>
+        </view>
+        <view class="ss-upload-preview" wx:else>
+          <image class="ss-preview-img" src="{{imagePreview}}" mode="aspectFill" bindtap="chooseImage"></image>
+          <view class="ss-remove" catchtap="removeImage">×</view>
+        </view>
+      </view>
+
+      <view class="ss-field">
+        <text class="ss-label">联系方式</text>
+        <input class="ss-input" placeholder="手机号或微信号（选填，仅后台可见）" placeholder-class="ss-placeholder" value="{{contact}}" bindinput="onContactInput" maxlength="40" />
+      </view>
+    </view>
+
+    <view class="ss-submit-row">
+      <button class="ss-submit" bindtap="submit" disabled="{{submitting}}">{{submitting ? '提交中...' : '提交投稿'}}</button>
+    </view>
+
+    <view class="ss-note">
+      <text>投稿须知</text>
+      <text>投稿作品须为本人原创；作品经审核后展示，画院保留对投稿作品的使用权利（仅用于线上展示）。</text>
+    </view>
+
+    <view class="ss-footer">
+      <text>BEIJING FINE ART ACADEMY</text>
+      <text>线上征集 · 大众书画投稿</text>
+    </view>
+  </view>
+</scroll-view>

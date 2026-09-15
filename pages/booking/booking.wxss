@@ -1,0 +1,81 @@
+.booking-scroll { height: 100vh; background: #F2EFE8; }
+.booking-page { min-height: 100vh; }
+.exhibition-hero { position: relative; height: 520rpx; overflow: hidden; color: white; }
+.exhibition-hero > image { width: 100%; height: 100%; }
+.hero-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(25,26,23,.08), rgba(25,26,23,.76)); }
+.hero-copy { position: absolute; right: 35rpx; bottom: 35rpx; left: 35rpx; }
+.hero-kicker { display: block; color: rgba(255,255,255,.62); font-size: 15rpx; letter-spacing: 3rpx; }
+.hero-title { display: block; margin-top: 13rpx; font-family: "Songti SC", serif; font-size: 40rpx; line-height: 1.4; }
+.hero-location { display: block; margin-top: 12rpx; color: rgba(255,255,255,.72); font-size: 19rpx; }
+.booking-form { padding: 54rpx 35rpx 90rpx; }
+.step-head { display: flex; align-items: center; margin: 46rpx 0 24rpx; }
+.step-head:first-child { margin-top: 0; }
+.step-no { width: 58rpx; color: #A54133; font-size: 16rpx; letter-spacing: 2rpx; }
+.step-title { font-family: "Songti SC", serif; font-size: 29rpx; }
+/* 选择预约项目 */
+.item-picker { display: flex; flex-direction: column; gap: 18rpx; }
+.item-picker-inline { margin-bottom: 20rpx; }
+.item-card { display: flex; gap: 22rpx; padding: 20rpx; border: 2rpx solid rgba(29,32,29,.1); border-radius: 8rpx; background: rgba(255,255,255,.7); }
+.item-card.active { border-color: #9A3D2F; background: rgba(154,61,47,.06); }
+.item-card-image { width: 140rpx; height: 140rpx; border-radius: 6rpx; flex-shrink: 0; }
+.item-card-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8rpx; }
+.item-card-kind { display: inline-block; align-self: flex-start; padding: 2rpx 12rpx; border-radius: 4rpx; font-size: 16rpx; color: white; }
+.item-card-kind.kind-exh { background: #9A3D2F; }
+.item-card-kind.kind-lecture { background: #4A6B5D; }
+.item-card-kind.kind-activity { background: #6B5A3D; }
+.item-card-title { font-family: "Songti SC", serif; font-size: 26rpx; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item-card-location { font-size: 18rpx; color: #8D8A82; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item-empty { display: flex; flex-direction: column; align-items: center; gap: 16rpx; padding: 60rpx 0; color: #8D8A82; font-size: 22rpx; }
+.item-switch { display: inline-block; margin: 16rpx 0 8rpx; padding: 8rpx 20rpx; border: 1rpx solid rgba(29,32,29,.15); border-radius: 6rpx; font-size: 20rpx; color: #9A3D2F; }
+.date-scroll { width: calc(100% + 35rpx); }
+.date-row { display: flex; padding-right: 35rpx; }
+.date-card { flex: none; width: 138rpx; margin-right: 13rpx; padding: 20rpx 0; border: 1rpx solid rgba(29,32,29,.14); border-radius: 5rpx; color: #686961; text-align: center; }
+.date-card.active { border-color: #222420; background: #222420; color: white; }
+.date-card.full { opacity: .5; border-color: rgba(29,32,29,.1); }
+.date-card.full .date-week { color: #9A3D2F; }
+.date-card.closed { opacity: .4; border-color: rgba(29,32,29,.08); background: rgba(29,32,29,.02); }
+.date-card.closed .date-week { color: #8D8A82; }
+.date-booked { display: block; margin-top: 4rpx; font-size: 13rpx; color: #9A3D2F; }
+.full-notice { padding: 18rpx 24rpx; margin-bottom: 16rpx; border-radius: 6rpx; background: rgba(154,61,47,.08); color: #9A3D2F; font-size: 22rpx; }
+.date-month, .date-week { display: block; font-size: 16rpx; }
+.date-day { display: block; margin: 9rpx 0 6rpx; font-family: Georgia, serif; font-size: 37rpx; }
+.time-head { margin-top: 53rpx; }
+.time-grid { display: flex; gap: 16rpx; }
+.time-card { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32rpx 0; border: 1rpx solid rgba(29,32,29,.14); border-radius: 5rpx; font-family: "Songti SC", serif; font-size: 26rpx; text-align: center; }
+.time-card.active { border-color: #9F4032; color: #9F4032; background: rgba(154,61,47,.04); box-shadow: inset 0 0 0 1rpx #9F4032; }
+.time-label { line-height: 1.4; }
+.visitor-control { display: flex; align-items: center; justify-content: space-between; padding: 21rpx 0; border-top: 1rpx solid rgba(29,32,29,.13); border-bottom: 1rpx solid rgba(29,32,29,.13); font-size: 22rpx; }
+.counter { display: flex; align-items: center; gap: 26rpx; font-family: Georgia, serif; font-size: 28rpx; }
+.counter-button { display: flex; align-items: center; justify-content: center; width: 57rpx; height: 57rpx; border: 1rpx solid rgba(29,32,29,.2); border-radius: 50%; line-height: 1; text-align: center; }
+.visitor-note { display: block; margin-top: 12rpx; color: #9A978F; font-size: 16rpx; }
+.quota-info { padding: 12rpx 24rpx; margin-bottom: 6rpx; border-radius: 6rpx; background: rgba(154,61,47,.06); color: #9A3D2F; font-size: 18rpx; }
+.visitor-section { margin-top: 24rpx; padding: 20rpx 0 8rpx; border-top: 1rpx solid rgba(29,32,29,.1); }
+.visitor-section:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+.visitor-label { display: flex; align-items: center; margin-bottom: 14rpx; }
+.visitor-index { display: flex; align-items: center; justify-content: center; width: 36rpx; height: 36rpx; margin-right: 12rpx; border-radius: 50%; background: #222420; color: white; font-size: 18rpx; line-height: 1; text-align: center; }
+.visitor-label-text { font-size: 20rpx; color: #77766F; }
+.contact-head { margin-top: 54rpx; }
+.contact-field { display: flex; align-items: center; padding: 24rpx 0; border-bottom: 1rpx solid rgba(29,32,29,.14); font-size: 21rpx; }
+.contact-field > text { width: 125rpx; }
+.contact-field input { flex: 1; height: 52rpx; font-size: 23rpx; }
+.form-placeholder { color: #AEABA3; }
+.booking-agreement { display: flex; align-items: center; margin-top: 31rpx; color: #77766F; font-size: 18rpx; }
+.agreement-check { display: flex; align-items: center; justify-content: center; width: 30rpx; height: 30rpx; margin-right: 14rpx; border: 1rpx solid #8D8A82; border-radius: 2rpx; line-height: 1; text-align: center; }
+.agreement-check.checked { border-color: #A54133; background: #A54133; color: white; }
+.submit-booking { display: flex; align-items: center; justify-content: center; box-sizing: border-box; height: 94rpx; margin-top: 39rpx; padding: 0; border-radius: 5rpx; background: #222420; color: white; font-size: 24rpx; line-height: 1; letter-spacing: 4rpx; text-align: center; }
+.submit-note { display: block; margin-top: 15rpx; color: #9A978F; font-size: 16rpx; text-align: center; }
+.success-page { display: flex; min-height: 100vh; box-sizing: border-box; flex-direction: column; align-items: center; padding: calc(env(safe-area-inset-top) + 75rpx) 36rpx 70rpx; background: #E9E5DC; }
+.success-mark { display: flex; align-items: center; justify-content: center; width: 95rpx; height: 95rpx; border-radius: 50%; background: #27342A; color: white; font-size: 44rpx; line-height: 1; text-align: center; }
+.success-kicker { margin-top: 28rpx; color: #A54133; font-size: 15rpx; letter-spacing: 3rpx; }
+.success-title { margin-top: 13rpx; font-family: "Songti SC", serif; font-size: 53rpx; }
+.success-subtitle { margin-top: 10rpx; color: #848178; font-size: 20rpx; }
+.success-ticket { position: relative; width: 100%; margin-top: 50rpx; overflow: hidden; border-radius: 8rpx; background: #F7F3EA; box-shadow: 0 23rpx 55rpx rgba(47,47,41,.12); }
+.success-ticket > image { width: 100%; height: 270rpx; }
+.ticket-body { padding: 29rpx; }
+.ticket-title { display: block; margin-bottom: 25rpx; font-family: "Songti SC", serif; font-size: 30rpx; }
+.ticket-row { display: flex; justify-content: space-between; padding: 14rpx 0; border-top: 1rpx dashed rgba(29,32,29,.13); color: #77746D; font-size: 18rpx; }
+.ticket-row text:last-child { color: #333530; }
+.ticket-cut { position: absolute; top: 250rpx; width: 40rpx; height: 40rpx; border-radius: 50%; background: #E9E5DC; }
+.cut-left { left: -20rpx; }.cut-right { right: -20rpx; }
+.finish-button { display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 100%; height: 92rpx; margin-top: 42rpx; padding: 0; border-radius: 5rpx; background: #222420; color: white; font-size: 24rpx; line-height: 1; letter-spacing: 4rpx; text-align: center; }
+.success-note { margin-top: 16rpx; color: #8E8B83; font-size: 17rpx; }

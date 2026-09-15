@@ -1,0 +1,102 @@
+<scroll-view class="favorites-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="favorites-page">
+    <custom-navbar title="我的收藏" theme="dark" rightType="logo" />
+
+    <view class="favorites-head">
+      <text class="eyebrow">PRIVATE COLLECTION</text>
+      <text class="favorites-title">我的收藏</text>
+      <view class="favorites-summary">
+        <text>每一次收藏，都是与艺术的一次相遇。</text>
+        <text class="favorite-count">{{favorites.length + favoriteExhibitions.length + favoritePrograms.length}}</text>
+      </view>
+
+      <view class="favorite-tabs">
+        <view class="favorite-tab {{activeType === 'artwork' ? 'active' : ''}}" bindtap="chooseType" data-type="artwork">
+          <text>藏品</text><text>{{favorites.length}}</text>
+        </view>
+        <view class="favorite-tab {{activeType === 'exhibition' ? 'active' : ''}}" bindtap="chooseType" data-type="exhibition">
+          <text>展览</text><text>{{favoriteExhibitions.length}}</text>
+        </view>
+        <view class="favorite-tab {{activeType === 'program' ? 'active' : ''}}" bindtap="chooseType" data-type="program">
+          <text>讲座/活动</text><text>{{favoritePrograms.length}}</text>
+        </view>
+      </view>
+    </view>
+
+    <block wx:if="{{activeType === 'artwork'}}">
+      <view class="favorite-list" wx:if="{{favorites.length}}">
+        <view class="favorite-card" wx:for="{{favorites}}" wx:key="id" bindtap="openArtwork" data-id="{{item.id}}">
+          <image class="favorite-image" src="{{item.image}}" mode="aspectFill" lazy-load></image>
+          <view class="favorite-content">
+            <view class="favorite-topline">
+              <text>{{item.category}}</text>
+              <view class="remove" catchtap="removeFavorite" data-id="{{item.id}}">♥</view>
+            </view>
+            <text class="favorite-name">{{item.title}}</text>
+            <text class="favorite-artist">{{item.artist}} · {{item.birth}}</text>
+            <view class="favorite-meta"><text>{{item.size}}</text><text>查看详情 ↗</text></view>
+          </view>
+        </view>
+      </view>
+      <view class="empty-state" wx:else>
+        <view class="empty-art"><view class="empty-frame"></view><view class="empty-sun"></view></view>
+        <text class="empty-title">还没有收藏藏品</text>
+        <text class="empty-copy">前往藏品一览，点击作品旁的心形按钮，将喜欢的作品收藏到这里。</text>
+        <button class="discover-button" bindtap="discoverArtworks">发现藏品</button>
+      </view>
+    </block>
+
+    <block wx:elif="{{activeType === 'exhibition'}}">
+      <view class="exhibition-favorite-list" wx:if="{{favoriteExhibitions.length}}">
+        <view class="exhibition-favorite-card" wx:for="{{favoriteExhibitions}}" wx:key="id" bindtap="previewExhibition" data-id="{{item.id}}">
+          <view class="exhibition-favorite-image-wrap">
+            <image class="exhibition-favorite-image" src="{{item.image}}" mode="aspectFill" lazy-load></image>
+            <view class="exhibition-favorite-remove" catchtap="removeExhibitionFavorite" data-id="{{item.id}}">♥</view>
+            <text class="exhibition-favorite-tag">展览回顾</text>
+          </view>
+          <view class="exhibition-favorite-body">
+            <text class="exhibition-favorite-title">{{item.title}}</text>
+            <text class="exhibition-favorite-intro">{{item.intro}}</text>
+            <view class="exhibition-favorite-meta"><text>{{item.time || '展览档案'}}</text><text>查看大图 ↗</text></view>
+          </view>
+        </view>
+      </view>
+      <view class="empty-state" wx:else>
+        <view class="empty-art"><view class="empty-frame"></view><view class="empty-sun"></view></view>
+        <text class="empty-title">还没有收藏展览</text>
+        <text class="empty-copy">前往展览回顾，点击展览封面上的心形按钮，将感兴趣的展览收藏到这里。</text>
+        <button class="discover-button" bindtap="discoverExhibitions">浏览展览</button>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="program-favorite-list" wx:if="{{favoritePrograms.length}}">
+        <view class="program-favorite-card" wx:for="{{favoritePrograms}}" wx:key="id" bindtap="previewProgramImage" data-id="{{item.id}}">
+          <view class="program-favorite-image-wrap">
+            <image class="program-favorite-image" src="{{item.image}}" mode="aspectFill" lazy-load></image>
+            <view class="program-favorite-remove" catchtap="removeProgramFavorite" data-id="{{item.id}}">♥</view>
+            <text class="program-favorite-tag">{{item.kind}}</text>
+          </view>
+          <view class="program-favorite-body">
+            <text class="program-favorite-title">{{item.title}}</text>
+            <text class="program-favorite-meta" wx:if="{{item.speaker}}">主讲人：{{item.speaker}}</text>
+            <text class="program-favorite-meta" wx:if="{{item.time}}">{{item.time}}</text>
+            <text class="program-favorite-summary">{{item.summary}}</text>
+            <view class="program-favorite-footer"><text>{{item.publishDate}}</text><text>查看大图 ↗</text></view>
+          </view>
+        </view>
+      </view>
+      <view class="empty-state" wx:else>
+        <view class="empty-art"><view class="empty-frame"></view><view class="empty-sun"></view></view>
+        <text class="empty-title">还没有收藏讲座/活动</text>
+        <text class="empty-copy">前往展览页，点击讲座或活动卡片上的心形按钮，将感兴趣的讲座或活动收藏到这里。</text>
+        <button class="discover-button" bindtap="discoverPrograms">发现讲座/活动</button>
+      </view>
+    </block>
+
+    <view class="favorites-footer" wx:if="{{favorites.length || favoriteExhibitions.length || favoritePrograms.length}}">
+      <text>BEIJING FINE ART ACADEMY</text>
+      <text>已为你保存 {{favorites.length}} 件藏品、{{favoriteExhibitions.length}} 个展览与 {{favoritePrograms.length}} 个讲座/活动</text>
+    </view>
+  </view>
+</scroll-view>

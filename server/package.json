@@ -1,0 +1,20 @@
+{
+  "name": "bfaa-server",
+  "version": "1.0.0",
+  "description": "北京画院美术馆小程序 - 后端API + 管理后台",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "init": "node seed.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^13.0.3",
+    "express": "^4.19.0",
+    "jsonwebtoken": "^9.0.0",
+    "multer": "^1.4.4"
+  },
+  "allowScripts": {
+    "better-sqlite3@11.10.0": true
+  }
+}

@@ -1,0 +1,44 @@
+/* 基础布局 */
+.navbar { position: relative; z-index: 10; }
+.navbar-inner { display: flex; align-items: center; justify-content: space-between; padding: calc(env(safe-area-inset-top) + 22rpx) 30rpx 24rpx; }
+
+/* 主题 */
+.navbar.light { background: #F2EFE8; color: #272A26; }
+.navbar.dark { background: #222420; color: #F5F0E7; }
+.navbar.border-bottom { border-bottom: 1rpx solid rgba(29,32,29,.11); }
+.navbar.dark.border-bottom { border-bottom-color: rgba(255,255,255,.1); }
+
+/* 返回按钮 */
+.navbar-left { display: flex; align-items: center; justify-content: center; width: 62rpx; height: 62rpx; border: 1rpx solid rgba(29,32,29,.2); border-radius: 50%; font-size: 28rpx; letter-spacing: 0; flex-shrink: 0; }
+.navbar.dark .navbar-left { border-color: rgba(255,255,255,.25); }
+.navbar-left-hidden { visibility: hidden; border-color: transparent; }
+
+/* 标题 */
+.navbar-title { flex: 1; padding: 0 20rpx; font-size: 19rpx; letter-spacing: 3rpx; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.navbar-title-placeholder { flex: 1; }
+
+/* 居中标题（gallery 用） */
+.navbar-center { position: absolute; left: 50%; display: flex; flex-direction: column; align-items: center; transform: translateX(-50%); }
+.navbar-title-center { font-family: "Songti SC", serif; font-size: 22rpx; letter-spacing: 2rpx; }
+.navbar-subtitle { margin-top: 5rpx; color: #96938A; font-size: 11rpx; letter-spacing: 3rpx; }
+
+/* 右侧操作区 */
+.navbar-right { display: flex; align-items: center; flex-shrink: 0; }
+.navbar-action { display: flex; align-items: center; justify-content: center; width: 62rpx; height: 62rpx; border: 1rpx solid rgba(29,32,29,.2); border-radius: 50%; font-size: 28rpx; letter-spacing: 0; }
+.navbar.dark .navbar-action { border-color: rgba(255,255,255,.25); }
+.navbar-placeholder { border-color: transparent; }
+.navbar.dark .navbar-placeholder { border-color: transparent; }
+
+/* 收藏心形 */
+.navbar-favorite.liked { border-color: #A64234; background: #A64234; color: white; }
+
+/* 刷新按钮 */
+.navbar-refresh { font-size: 26rpx; }
+
+/* Logo */
+.navbar-logo image { width: 39rpx; height: 39rpx; border: 4rpx solid white; background: white; }
+.navbar.light .navbar-logo { border-color: rgba(29,32,29,.2); }
+.navbar.light .navbar-logo image { border-color: transparent; }
+
+/* 右侧文字 */
+.navbar-right-text { color: inherit; font-size: 18rpx; letter-spacing: 2rpx; }

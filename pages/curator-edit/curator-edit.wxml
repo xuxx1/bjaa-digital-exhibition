@@ -1,0 +1,74 @@
+<view class="curator-page">
+  <!-- 导航栏 -->
+  <view class="curator-navbar" style="padding-top: calc(env(safe-area-inset-top) + 20rpx)">
+    <view class="nav-back" bindtap="goBack">
+      <text class="nav-arrow">←</text>
+    </view>
+    <text class="nav-title">画展一隅</text>
+    <view class="nav-step">{{step}} / 2</view>
+  </view>
+
+  <!-- 步骤1: 选择作品 -->
+  <scroll-view class="step-scroll" scroll-y enhanced show-scrollbar="{{false}}" wx:if="{{step === 1}}">
+    <view class="step-header">
+      <text class="step-eyebrow">STEP 01</text>
+      <text class="step-title">选择作品</text>
+      <text class="step-desc">从馆藏中挑选 5-10 件作品，组成你的微展览</text>
+    </view>
+
+    <view class="selected-bar {{selectedArtworks.length ? 'has-selection' : ''}}">
+      <text class="selected-label">{{selectedArtworks.length ? '已选 ' + selectedArtworks.length + ' 件' : '尚未选择作品'}}</text>
+      <view class="selected-thumbs">
+        <image class="selected-thumb" wx:for="{{selectedArtworks}}" wx:key="id" src="{{item.image}}" mode="aspectFill"></image>
+      </view>
+    </view>
+
+    <view class="pick-grid">
+      <view class="pick-card {{item.selected ? 'picked' : ''}}" wx:for="{{allArtworks}}" wx:key="id" bindtap="togglePick" data-id="{{item.id}}" data-index="{{index}}">
+        <image class="pick-img" src="{{item.image}}" mode="aspectFill"></image>
+        <view class="pick-overlay" wx:if="{{item.selected}}">
+          <text class="pick-check">✓</text>
+        </view>
+        <view class="pick-info">
+          <text class="pick-title">{{item.title}}</text>
+          <text class="pick-artist">{{item.artist}}</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 步骤2: 展言与主题 -->
+  <scroll-view class="step-scroll" scroll-y enhanced show-scrollbar="{{false}}" wx:if="{{step === 2}}">
+    <view class="step-header">
+      <text class="step-eyebrow">STEP 02</text>
+      <text class="step-title">展言与主题</text>
+      <text class="step-desc">为你的微展览命名，写一段展言，然后进入自由排版</text>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">展览主题</text>
+      <input class="form-input" placeholder="如：墨间生灵" value="{{theme}}" bindinput="onThemeInput" maxlength="20" />
+      <text class="form-hint">{{theme.length}} / 20</text>
+    </view>
+
+    <view class="form-group">
+      <text class="form-label">展言</text>
+      <textarea class="form-textarea" placeholder="写一段话，阐释你的策展理念…" value="{{prologue}}" bindinput="onPrologueInput" maxlength="200" auto-height />
+      <text class="form-hint">{{prologue.length}} / 200</text>
+    </view>
+
+    <view class="selected-preview">
+      <text class="preview-label">已选作品 ({{selectedArtworks.length}})</text>
+      <view class="preview-thumbs">
+        <image class="preview-thumb" wx:for="{{selectedArtworks}}" wx:key="id" src="{{item.image}}" mode="aspectFill"></image>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar" style="padding-bottom: calc(env(safe-area-inset-bottom) + 16rpx)">
+    <button class="bar-btn bar-btn-prev" wx:if="{{step > 1}}" bindtap="prevStep">上一步</button>
+    <button class="bar-btn bar-btn-next" wx:if="{{step < 2}}" bindtap="nextStep" disabled="{{step === 1 && selectedArtworks.length < 5}}">选好了 ({{selectedArtworks.length}}/5)</button>
+    <button class="bar-btn bar-btn-finish" wx:if="{{step === 2}}" bindtap="nextStep">开始排版</button>
+  </view>
+</view>

@@ -1,0 +1,59 @@
+<scroll-view class="detail-scroll" scroll-y enhanced show-scrollbar="{{false}}" wx:if="{{artwork}}">
+  <view class="detail-page">
+    <custom-navbar title="作品详情" theme="dark" rightType="favorite" liked="{{liked}}" bind:favoritetap="toggleLike" />
+
+    <view class="image-stage">
+      <movable-area class="zoom-area" scale-area>
+        <movable-view class="zoom-view" direction="all" scale scale-min="1" scale-max="4" scale-value="1" inertia out-of-bounds>
+          <image class="detail-image" src="{{artwork.image}}" mode="aspectFit"></image>
+        </movable-view>
+      </movable-area>
+      <view class="zoom-tip"><text class="zoom-icon">↔</text><text>双指缩放 · 拖动查看细节</text></view>
+      <text class="image-index">COLLECTION · {{artwork.category}}</text>
+    </view>
+
+    <view class="detail-content">
+      <text class="eyebrow">ARTWORK ARCHIVE</text>
+      <text class="detail-title">{{artwork.title}}</text>
+      <view class="artist-line">
+        <text class="artist-name">{{artwork.artist}}</text>
+        <text class="artist-years">{{artwork.birth}}</text>
+      </view>
+
+      <view class="metadata">
+        <view class="meta-item">
+          <text class="meta-label">类别</text>
+          <text>{{artwork.category}}</text>
+        </view>
+        <view class="meta-item">
+          <text class="meta-label">尺寸</text>
+          <text>{{artwork.size}}</text>
+        </view>
+        <view class="meta-item full">
+          <text class="meta-label">作者身份</text>
+          <text>{{artwork.identity}}</text>
+        </view>
+      </view>
+
+      <view class="intro-section" wx:if="{{artwork.artist_intro}}">
+        <text class="section-label">作者简介</text>
+        <text class="intro-text">{{artwork.artist_intro}}</text>
+      </view>
+
+      <view class="intro-section" wx:if="{{artwork.work_intro}}">
+        <text class="section-label">作品简介</text>
+        <text class="intro-text">{{artwork.work_intro}}</text>
+      </view>
+
+      <view class="intro-section" wx:elif="{{artwork.intro && !artwork.artist_intro && !artwork.work_intro}}">
+        <text class="section-label">艺术家简介</text>
+        <text class="intro-text">{{artwork.intro}}</text>
+      </view>
+
+      <view class="archive-note">
+        <text>DATASET ARCHIVE</text>
+        <text>本作品信息与图像来自项目本地馆藏数据集</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

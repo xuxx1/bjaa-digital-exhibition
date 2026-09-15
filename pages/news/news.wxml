@@ -1,0 +1,38 @@
+<scroll-view class="news-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="news-page">
+    <custom-navbar title="新闻讯息" theme="light" rightType="logo" borderBottom />
+
+    <view class="news-head">
+      <text class="eyebrow">LATEST NEWS</text>
+      <text class="news-title">新闻讯息</text>
+      <text class="news-lead">关注北京画院的展览动态、开放通知与最新消息。</text>
+    </view>
+
+    <view class="featured-news" bindtap="openNews" data-id="{{featured.id}}">
+      <image src="{{featured.image}}" mode="aspectFill"></image>
+      <view class="featured-shade"></view>
+      <view class="featured-tag">最新 · {{featured.type}}</view>
+      <view class="featured-copy">
+        <text class="featured-date">{{featured.date}}</text>
+        <text class="featured-title">{{featured.title}}</text>
+        <view class="featured-link"><text>阅读新闻</text><text>↗</text></view>
+      </view>
+    </view>
+
+    <view class="news-section-head"><text>全部新闻</text><text>05 ARTICLES</text></view>
+    <view class="news-list">
+      <view class="news-item" wx:for="{{news}}" wx:key="id" bindtap="openNews" data-id="{{item.id}}">
+        <image class="news-thumb" src="{{item.image}}" mode="aspectFill" wx:if="{{item.image}}"></image>
+        <view class="notice-thumb" wx:else><image src="/logo1.png" mode="aspectFit"></image><text>NOTICE</text></view>
+        <view class="news-item-copy">
+          <view class="news-meta"><text>{{item.type}}</text><text>{{item.date}}</text></view>
+          <text class="news-item-title">{{item.title}}</text>
+          <text class="news-summary">{{item.summary}}</text>
+          <text class="news-arrow">查看详情 ↗</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="news-footer"><text>BEIJING FINE ART ACADEMY</text><text>新闻内容来自项目本地数据集</text></view>
+  </view>
+</scroll-view>

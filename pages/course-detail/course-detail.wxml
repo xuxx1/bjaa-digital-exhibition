@@ -1,0 +1,52 @@
+<scroll-view class="cd-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="cd-page" wx:if="{{course}}">
+    <custom-navbar title="课程详情" theme="light" rightType="logo" borderBottom />
+
+    <!-- 封面 -->
+    <view class="cd-cover-wrap">
+      <image wx:if="{{course.cover}}" class="cd-cover" src="{{course.cover}}" mode="aspectFill"></image>
+      <view wx:else class="cd-cover-placeholder">
+        <text class="cd-cover-glyph">{{course.type === '短视频' ? '▶' : '文'}}</text>
+      </view>
+      <view class="cd-cover-shade"></view>
+      <view class="cd-cover-copy">
+        <view class="cd-tags">
+          <text class="cd-tag">{{course.type}}</text>
+          <text class="cd-tag" wx:if="{{course.duration}}">{{course.duration}}</text>
+        </view>
+        <text class="cd-title">{{course.title}}</text>
+        <text class="cd-category">{{course.category}}</text>
+      </view>
+    </view>
+
+    <!-- 简介 -->
+    <view class="cd-summary" wx:if="{{course.summary}}">
+      <text class="cd-summary-label">课程简介</text>
+      <text class="cd-summary-text">{{course.summary}}</text>
+    </view>
+
+    <!-- 短视频：视频播放 -->
+    <view class="cd-video" wx:if="{{course.type === '短视频' && course.video_url}}">
+      <video
+        class="cd-video-player"
+        src="{{course.video_url}}"
+        controls
+        object-fit="contain"
+      ></video>
+    </view>
+
+    <!-- 图文专栏：正文 -->
+    <view class="cd-body" wx:if="{{course.type === '图文专栏' || course.content.length > 0}}">
+      <text class="cd-body-label">正文</text>
+      <view class="cd-paragraph" wx:for="{{paragraphs}}" wx:key="index">
+        <image wx:if="{{item.type === 'img'}}" class="cd-para-img" src="{{item.src}}" mode="widthFix" lazy-load></image>
+        <text wx:else class="cd-para-text">{{item.text}}</text>
+      </view>
+    </view>
+
+    <view class="cd-footer">
+      <text>BEIJING FINE ART ACADEMY</text>
+      <text>线上微课 · 艺术小讲堂</text>
+    </view>
+  </view>
+</scroll-view>

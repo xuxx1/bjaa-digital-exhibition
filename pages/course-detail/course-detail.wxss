@@ -1,0 +1,32 @@
+.cd-scroll { height: 100vh; background: #F2EFE8; }
+.cd-page { min-height: 100vh; padding-bottom: 80rpx; }
+
+/* 封面 */
+.cd-cover-wrap { position: relative; height: 480rpx; overflow: hidden; }
+.cd-cover { width: 100%; height: 100%; }
+.cd-cover-placeholder { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: linear-gradient(135deg, #E8E2D6, #CFC6B4); }
+.cd-cover-glyph { color: #8A7C63; font-size: 110rpx; }
+.cd-cover-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,21,18,.08), rgba(20,21,18,.05) 45%, rgba(20,21,18,.78)); }
+.cd-cover-copy { position: absolute; right: 36rpx; bottom: 34rpx; left: 36rpx; color: white; }
+.cd-tags { display: flex; gap: 12rpx; }
+.cd-tag { padding: 8rpx 15rpx; border-radius: 30rpx; background: rgba(255,255,255,.22); font-size: 16rpx; letter-spacing: 1rpx; }
+.cd-title { display: block; margin-top: 18rpx; font-family: "Songti SC", serif; font-size: 40rpx; line-height: 1.4; }
+.cd-category { display: block; margin-top: 12rpx; color: rgba(255,255,255,.65); font-size: 18rpx; letter-spacing: 2rpx; }
+
+/* 简介 */
+.cd-summary { margin: 34rpx 36rpx 0; padding: 28rpx; border-left: 4rpx solid #9A3D2F; background: rgba(255,255,255,.5); border-radius: 4rpx; }
+.cd-summary-label { display: block; color: #9C4134; font-family: "Songti SC", serif; font-size: 22rpx; letter-spacing: 2rpx; }
+.cd-summary-text { display: block; margin-top: 12rpx; color: #5C5A53; font-size: 21rpx; line-height: 1.8; }
+
+/* 视频 */
+.cd-video { margin: 34rpx 36rpx 0; }
+.cd-video-player { width: 100%; height: 400rpx; border-radius: 8rpx; background: #1D201D; }
+
+/* 正文 */
+.cd-body { margin: 40rpx 36rpx 0; padding-top: 30rpx; border-top: 1rpx solid rgba(29,32,29,.13); }
+.cd-body-label { display: block; color: #9C4139; font-family: "Songti SC", serif; font-size: 23rpx; letter-spacing: 2rpx; }
+.cd-paragraph { margin-top: 26rpx; }
+.cd-para-text { display: block; color: #3E403A; font-size: 23rpx; line-height: 1.95; letter-spacing: .5rpx; }
+.cd-para-img { width: 100%; border-radius: 6rpx; }
+
+.cd-footer { display: flex; flex-direction: column; margin: 70rpx 36rpx 0; padding: 25rpx 0; border-top: 1rpx solid rgba(29,32,29,.13); color: #99968E; font-size: 14rpx; line-height: 1.9; letter-spacing: 1rpx; }

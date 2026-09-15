@@ -1,0 +1,48 @@
+<view class="daily-sign-page">
+  <view class="ds-header">
+    <view class="ds-back" bindtap="goBack">← 返回</view>
+    <text class="ds-header-title">每日一画</text>
+    <view class="ds-header-right"></view>
+  </view>
+
+  <view class="ds-preview-wrap">
+    <view class="ds-preview-card">
+      <view class="ds-date-block">
+        <text class="ds-date-day">{{dateDay}}</text>
+        <view class="ds-date-copy">
+          <text>{{dateMonthYear}}</text>
+          <text>{{dateWeekday}}</text>
+        </view>
+      </view>
+      <view class="ds-rule"></view>
+
+      <image
+        class="ds-work-image"
+        wx:if="{{paintingImage && !imageLoadError}}"
+        src="{{paintingImage}}"
+        mode="widthFix"
+        binderror="onPreviewImageError"
+      ></image>
+      <view class="ds-image-error" wx:elif="{{imageResolving}}">作品图片加载中...</view>
+      <view class="ds-image-error" wx:else>作品图片暂时无法显示</view>
+
+      <text class="ds-card-title">{{paintingTitle}}</text>
+      <text class="ds-card-artist">{{paintingArtist}} {{paintingBirth ? '· ' + paintingBirth : ''}}</text>
+      <text class="ds-card-category" wx:if="{{paintingCategory}}">{{paintingCategory}}</text>
+      <text class="ds-card-intro" wx:if="{{paintingIntro}}">{{paintingIntro}}</text>
+
+      <view class="ds-card-footer">
+        <text>北京画院美术馆</text>
+        <text>每日一画 · 2026</text>
+      </view>
+    </view>
+  </view>
+
+  <canvas type="2d" id="dailySignCanvas" class="ds-export-canvas" style="width:630rpx;height:{{canvasHeight}}rpx"></canvas>
+
+  <view class="ds-actions">
+    <button class="ds-btn ds-btn-save" bindtap="saveToAlbum">保存到相册</button>
+    <button class="ds-btn ds-btn-share" open-type="share">分享给朋友</button>
+  </view>
+
+</view>

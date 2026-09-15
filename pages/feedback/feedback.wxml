@@ -1,0 +1,78 @@
+<scroll-view class="fb-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="fb-page">
+    <custom-navbar title="意见反馈" theme="light" rightType="logo" borderBottom />
+
+    <view class="fb-head">
+      <text class="eyebrow">VOICE OF VISITORS</text>
+      <text class="fb-title">意见反馈</text>
+      <text class="fb-lead">您的每一条声音，都在帮助我们做得更好。可以写下建议、遇到的问题，或对展览与活动的想法。</text>
+    </view>
+
+    <view class="fb-form">
+      <!-- 分类选择 -->
+      <view class="fb-field">
+        <text class="fb-label">反馈类型</text>
+        <view class="fb-cats">
+          <view class="fb-category {{category === item ? 'active' : ''}}" wx:for="{{categories}}" wx:key="*this" bindtap="selectCategory" data-category="{{item}}">{{item}}</view>
+        </view>
+      </view>
+
+      <!-- 反馈内容 -->
+      <view class="fb-field">
+        <text class="fb-label">反馈内容 <text class="fb-required">*</text></text>
+        <textarea class="fb-textarea" placeholder="请描述您的建议、遇到的问题或活动想法…" placeholder-class="fb-placeholder" value="{{content}}" bindinput="onContentInput" maxlength="500" auto-height></textarea>
+        <text class="fb-counter">{{content.length}} / 500</text>
+      </view>
+
+      <!-- 联系方式（选填） -->
+      <view class="fb-field">
+        <text class="fb-label">联系方式 <text class="fb-optional">（选填）</text></text>
+        <textarea class="fb-contact" placeholder="手机号或微信号" placeholder-class="fb-placeholder" value="{{contact}}" bindinput="onContactInput" maxlength="40" auto-height></textarea>
+        <text class="fb-tip">仅后台管理员可见，不会公开展示。填写后可查看您的历史反馈。</text>
+      </view>
+    </view>
+
+    <view class="fb-submit-row">
+      <button class="fb-submit {{submitting ? 'disabled' : ''}}" bindtap="submit" disabled="{{submitting}}">提 交 反 馈</button>
+    </view>
+
+    <!-- 我的反馈 -->
+    <view class="fb-mine" wx:if="{{myFeedback.length > 0}}">
+      <view class="fb-mine-head">
+        <text class="fb-mine-title">我的反馈</text>
+        <text class="fb-mine-count">共 {{myFeedback.length}} 条</text>
+      </view>
+      <view class="fb-mine-list">
+        <view class="fb-mine-item" wx:for="{{myFeedback}}" wx:key="id">
+          <view class="fb-mine-top">
+            <text class="fb-mine-cat">{{item.category}}</text>
+            <text class="fb-mine-status fb-mine-status-{{item.statusClass}}">{{item.status}}</text>
+          </view>
+          <text class="fb-mine-content">{{item.content}}</text>
+          <text class="fb-mine-date">{{item.created_at}}</text>
+          <!-- 后端回复 -->
+          <view class="fb-reply" wx:if="{{item.reply}}">
+            <text class="fb-reply-label">管理员回复</text>
+            <text class="fb-reply-content">{{item.reply}}</text>
+            <text class="fb-reply-date">{{item.replied_at}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 查看我的反馈按钮 -->
+    <view class="fb-check-mine" wx:if="{{myFeedback.length === 0}}">
+      <button class="fb-check-btn" bindtap="onCheckMine">查看我的反馈</button>
+    </view>
+
+    <view class="fb-note">
+      <text>关于反馈</text>
+      <text>我们认真阅读每一条反馈。涉及预约、展览或活动的建议，通常会在一周内跟进处理。</text>
+    </view>
+
+    <view class="fb-footer">
+      <text>BEIJING FINE ART ACADEMY</text>
+      <text>艺术让我们再次相遇</text>
+    </view>
+  </view>
+</scroll-view>

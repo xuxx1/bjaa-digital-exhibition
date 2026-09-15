@@ -1,0 +1,171 @@
+<scroll-view class="login-scroll" scroll-y enhanced show-scrollbar="{{false}}" wx:if="{{!loggedIn}}">
+  <view class="login-page">
+    <view class="login-art">
+      <image class="login-art-image" src="/index.jpg" mode="aspectFill"></image>
+      <view class="login-art-overlay"></view>
+      <image class="login-logo" src="/logo1.png" mode="aspectFit"></image>
+      <view class="art-word">BEIJING<br/>FINE ART<br/>ACADEMY</view>
+      <view class="art-index">北京画院 · VISITOR ACCESS</view>
+    </view>
+
+    <view class="login-panel">
+      <text class="eyebrow">ACCOUNT ACCESS</text>
+      <text class="login-title">欢迎回来</text>
+      <text class="login-subtitle">登录后可预约展览、同步收藏作品与查看历史观展记录。</text>
+
+      <view class="form">
+        <view class="field">
+          <text class="field-label">手机号码</text>
+          <input class="field-input" type="number" maxlength="11" placeholder="请输入手机号码" placeholder-class="placeholder" bindinput="onPhoneInput" />
+        </view>
+        <view class="field code-field">
+          <view class="code-input-wrap">
+            <text class="field-label">验证码</text>
+            <input class="field-input" type="number" maxlength="6" placeholder="请输入验证码" placeholder-class="placeholder" bindinput="onCodeInput" />
+          </view>
+          <button class="code-button" bindtap="getCode" disabled="{{counting}}">{{codeText}}</button>
+        </view>
+        <button class="primary-button login-button" bindtap="login">登录 / 注册</button>
+
+        <view class="divider"><view></view><text>或</text><view></view></view>
+
+        <button class="wechat-button" bindtap="wechatLogin">
+          <view class="wechat-icon">⌁</view>
+          <text>使用微信快捷登录</text>
+        </button>
+
+        <view class="agreement" bindtap="toggleAgreement">
+          <view class="check {{agreed ? 'checked' : ''}}">{{agreed ? '✓' : ''}}</view>
+          <text>我已阅读并同意《用户服务协议》与《隐私政策》</text>
+        </view>
+      </view>
+
+      <view class="member-benefits">
+        <view class="benefit">
+          <text class="benefit-no">01</text>
+          <text>开放展览预约</text>
+        </view>
+        <view class="benefit">
+          <text class="benefit-no">02</text>
+          <text>建立私人收藏夹</text>
+        </view>
+        <view class="benefit">
+          <text class="benefit-no">03</text>
+          <text>获取新闻资讯</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<scroll-view class="member-scroll" scroll-y enhanced show-scrollbar="{{false}}" wx:else>
+  <view class="member-page">
+    <view class="member-hero">
+      <image class="member-hero-image" src="/index.jpg" mode="aspectFill"></image>
+      <view class="member-hero-overlay"></view>
+      <view class="member-nav">
+        <view class="member-brand">
+          <image src="/logo1.png" mode="aspectFit"></image>
+          <text>北京画院</text>
+        </view>
+      </view>
+      <view class="member-welcome">
+        <text class="member-kicker">BEIJING FINE ART ACADEMY</text>
+        <view class="member-title-row">
+          <text class="member-title">您好，{{memberName}}</text>
+          <view class="feedback-entry" bindtap="openFeedback">
+            <text class="feedback-entry-hint">告诉我们您的想法</text>
+            <view class="feedback-pencil">
+              <text class="feedback-pencil-icon">✎</text>
+            </view>
+          </view>
+        </view>
+        <text class="member-phone">{{maskedPhone}}</text>
+      </view>
+    </view>
+
+    <view class="member-body">
+      <view class="member-pass">
+        <view class="pass-top">
+          <view>
+            <text class="pass-label">VISITOR ACCOUNT</text>
+            <text class="pass-level">北京画院 · 观展账户</text>
+          </view>
+          <image class="pass-logo" src="/logo1.png" mode="aspectFit"></image>
+        </view>
+        <view class="pass-bottom">
+          <text>NO. BFAA 2026 0820</text>
+          <text>有效期至 2027.08</text>
+        </view>
+      </view>
+
+      <view class="member-section-head">
+        <view>
+          <text class="eyebrow">VISITOR SERVICES</text>
+          <text class="member-section-title">参观服务</text>
+        </view>
+        <text class="member-section-no">01 — 03</text>
+      </view>
+
+      <view class="booking-entry" bindtap="openBooking">
+        <image class="booking-cover" src="../../assets/exhibitions/current-0.jpg" mode="aspectFill"></image>
+        <view class="booking-shade"></view>
+        <view class="booking-tag">开放预约</view>
+        <view class="booking-copy">
+          <text class="booking-overline">EXHIBITION BOOKING</text>
+          <text class="booking-title">展览预约</text>
+          <text class="booking-exhibition">问虫——齐白石的草间对话</text>
+          <view class="booking-action">
+            <text>选择参观日期与场次</text>
+            <view class="booking-arrow">→</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="member-tools">
+        <view class="member-tool" bindtap="openFavorites">
+          <text class="tool-no">02</text>
+          <text class="tool-title">我的收藏</text>
+          <text class="tool-caption">查看已收藏作品</text>
+          <text class="tool-arrow">↗</text>
+        </view>
+        <view class="member-tool" bindtap="openNews">
+          <text class="tool-no">03</text>
+          <text class="tool-title">新闻讯息</text>
+          <text class="tool-caption">查看画院新闻与通知</text>
+          <text class="tool-arrow">↗</text>
+        </view>
+      </view>
+
+      <view class="history-section">
+        <view class="history-heading">
+          <view>
+            <text class="eyebrow">VISIT HISTORY</text>
+            <text class="history-title">观展足迹</text>
+          </view>
+          <text class="history-count">{{visitHistory.length}} 次观展</text>
+        </view>
+        <view class="history-list">
+          <view class="history-card" wx:for="{{visitHistory}}" wx:key="id" bindtap="openVisitedExhibition" data-id="{{item.id}}">
+            <image class="history-image" src="{{item.image}}" mode="aspectFill"></image>
+            <view class="history-content">
+              <view class="history-status"><view></view><text>已观展</text></view>
+              <text class="history-name">{{item.title}}</text>
+              <text class="history-meta">{{item.date}} · {{item.venue}}</text>
+              <text class="history-link">查看展览详情 ↗</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="logout-entry" bindtap="logout">
+        <text>退出登录 / 切换账号</text>
+      </view>
+
+      <view class="member-footer">
+        <text>BEIJING FINE ART ACADEMY</text>
+        <text>艺术让我们再次相遇</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>

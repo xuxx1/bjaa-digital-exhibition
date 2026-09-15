@@ -1,0 +1,53 @@
+<scroll-view class="courses-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="courses-page">
+    <custom-navbar title="线上微课" theme="light" rightType="logo" borderBottom />
+
+    <view class="courses-head">
+      <text class="eyebrow">ONLINE CLASSES</text>
+      <text class="courses-title">线上微课</text>
+      <text class="courses-lead">艺术小讲堂 · 国画基础知识与齐白石艺术科普，随时随地学习。</text>
+    </view>
+
+    <!-- 分类筛选 -->
+    <view class="category-row">
+      <view
+        class="category {{activeCategory === item ? 'active' : ''}}"
+        wx:for="{{categories}}"
+        wx:key="*this"
+        bindtap="chooseCategory"
+        data-category="{{item}}"
+      >{{item}}</view>
+    </view>
+
+    <!-- 课程列表 -->
+    <view class="course-list" wx:if="{{visibleCourses.length > 0}}">
+      <view class="course-card" wx:for="{{visibleCourses}}" wx:key="id" bindtap="openCourse" data-id="{{item.id}}">
+        <view class="course-visual">
+          <image wx:if="{{item.cover}}" class="course-cover" src="{{item.cover}}" mode="aspectFill" lazy-load></image>
+          <view wx:else class="course-cover-placeholder">
+            <text class="course-cover-glyph">{{item.type === '短视频' ? '▶' : '文'}}</text>
+          </view>
+          <view class="course-type-tag">{{item.type}}</view>
+          <view class="course-duration" wx:if="{{item.duration}}">{{item.duration}}</view>
+        </view>
+        <view class="course-copy">
+          <text class="course-title">{{item.title}}</text>
+          <text class="course-category">{{item.category}}</text>
+          <text class="course-summary">{{item.summary}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空态 -->
+    <view class="course-empty" wx:else>
+      <text class="course-empty-glyph">▤</text>
+      <text class="course-empty-title">栏目建设中</text>
+      <text class="course-empty-hint">后台可随时上新课程，敬请期待</text>
+    </view>
+
+    <view class="courses-footer">
+      <text>BEIJING FINE ART ACADEMY</text>
+      <text>线上微课 · 艺术小讲堂</text>
+    </view>
+  </view>
+</scroll-view>

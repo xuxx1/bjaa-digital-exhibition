@@ -1,0 +1,133 @@
+<scroll-view class="booking-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="booking-page" wx:if="{{!submitted}}">
+    <custom-navbar title="{{bookingTitle}}" theme="dark" rightType="logo" />
+
+    <!-- 选中项目时显示 hero -->
+    <view class="exhibition-hero" wx:if="{{exhibition && selectedItemId}}">
+      <image src="{{exhibition.image}}" mode="aspectFill"></image>
+      <view class="hero-shade"></view>
+      <view class="hero-copy">
+        <text class="hero-kicker">{{bookingKicker}}</text>
+        <text class="hero-title">{{exhibition.title}}</text>
+        <text class="hero-location">{{exhibition.location}}</text>
+      </view>
+    </view>
+
+    <view class="booking-form">
+      <!-- 步骤 00：选择预约项目（当有多个可选项且未选中时显示） -->
+      <view class="step-head"><text class="step-no">01</text><text class="step-title">选择预约项目</text></view>
+      <view wx:if="{{!selectedItemId && hasItems}}" class="item-picker">
+        <view class="item-card {{selectedItemId === item.id ? 'active' : ''}}" wx:for="{{reservableItems}}" wx:key="id" bindtap="onSelectItem" data-id="{{item.id}}" data-kind="{{item.kind}}">
+          <image class="item-card-image" src="{{item.image}}" mode="aspectFill"></image>
+          <view class="item-card-body">
+            <view class="item-card-kind {{item.kind === '展览预约' ? 'kind-exh' : item.kind === '讲座预约' ? 'kind-lecture' : 'kind-activity'}}">{{item.kind}}</view>
+            <text class="item-card-title">{{item.title}}</text>
+            <text class="item-card-location">{{item.location}}</text>
+          </view>
+        </view>
+      </view>
+      <view wx:elif="{{!selectedItemId && !hasItems}}" class="item-empty">
+        <text>暂无可预约项目</text>
+        <text>敬请期待新一期展览/讲座/活动</text>
+      </view>
+      <!-- 已选中时显示切换提示 -->
+      <view wx:if="{{selectedItemId && reservableItems.length > 1}}" class="item-switch" bindtap="onSwitchItem">
+        <text>切换预约项目</text>
+      </view>
+      <!-- 切换面板 -->
+      <view wx:if="{{showItemPicker}}" class="item-picker item-picker-inline">
+        <view class="item-card {{selectedItemId === item.id ? 'active' : ''}}" wx:for="{{reservableItems}}" wx:key="id" bindtap="onSelectItem" data-id="{{item.id}}" data-kind="{{item.kind}}">
+          <image class="item-card-image" src="{{item.image}}" mode="aspectFill"></image>
+          <view class="item-card-body">
+            <view class="item-card-kind {{item.kind === '展览预约' ? 'kind-exh' : item.kind === '讲座预约' ? 'kind-lecture' : 'kind-activity'}}">{{item.kind}}</view>
+            <text class="item-card-title">{{item.title}}</text>
+            <text class="item-card-location">{{item.location}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 步骤 01：选择日期 -->
+      <view class="step-head"><text class="step-no">02</text><text class="step-title">{{dateStepTitle}}</text></view>
+      <view wx:if="{{selectedDateFull}}" class="full-notice">
+        <text>该日期预约已满（{{selectedDateBooked}}/{{bookingQuota}}），请选择其他日期</text>
+      </view>
+      <scroll-view class="date-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+        <view class="date-row">
+          <view class="date-card {{selectedDate === index ? 'active' : ''}} {{item.isMonday ? 'closed' : ''}} {{item.isFull ? 'full' : ''}}" wx:for="{{dates}}" wx:key="day" bindtap="{{item.isMonday || item.isFull ? '' : 'chooseDate'}}" data-index="{{index}}">
+            <text class="date-month">{{item.month}}</text>
+            <text class="date-day">{{item.day}}</text>
+            <text class="date-week">{{item.isMonday ? '闭馆' : item.isFull ? '已满' : item.week}}</text>
+            <text wx:if="{{!item.isMonday && item.booked > 0 && !item.isFull}}" class="date-booked">已约{{item.booked}}人</text>
+          </view>
+        </view>
+      </scroll-view>
+
+      <view class="step-head time-head"><text class="step-no">03</text><text class="step-title">选择入场时段</text></view>
+      <view class="time-grid">
+        <view class="time-card {{selectedTime === index ? 'active' : ''}}" wx:for="{{times}}" wx:key="*this" bindtap="chooseTime" data-index="{{index}}">
+          <text class="time-label">{{item}}</text>
+        </view>
+      </view>
+
+      <view class="step-head"><text class="step-no">04</text><text class="step-title">{{peopleStepTitle}}</text></view>
+      <view class="quota-info">每日限约{{bookingQuota}}人，已约{{selectedDateBooked}}人</view>
+      <view class="visitor-control">
+          <text>预约人数</text>
+        <view class="counter">
+          <view class="counter-button" bindtap="decreaseVisitors">−</view>
+          <text>{{visitors}}</text>
+          <view class="counter-button" bindtap="increaseVisitors">＋</view>
+        </view>
+      </view>
+      <text class="visitor-note">每个手机号单次最多预约 5 人</text>
+      <view wx:if="{{visitorsExceedQuota}}" class="full-notice">
+        <text>已约{{selectedDateBooked}}人 + 本次{{visitors}}人 超出每日上限（{{bookingQuota}}人），请减少人数或换日期</text>
+      </view>
+
+      <view class="step-head contact-head"><text class="step-no">05</text><text class="step-title">参观人信息</text></view>
+      <view class="visitor-section" wx:for="{{visitorList}}" wx:key="index">
+        <view class="visitor-label">
+          <text class="visitor-index">{{index + 1}}</text>
+          <text class="visitor-label-text">{{index === 0 ? '主要联系人' : '参观人 ' + (index + 1)}}</text>
+        </view>
+        <view class="contact-field">
+          <text>姓名</text>
+          <input placeholder="请输入姓名" placeholder-class="form-placeholder" value="{{item.name}}" bindinput="onVisitorNameInput" data-index="{{index}}" />
+        </view>
+        <view class="contact-field">
+          <text>手机号</text>
+          <input type="number" maxlength="11" placeholder="用于接收预约通知" placeholder-class="form-placeholder" value="{{item.phone}}" bindinput="onVisitorPhoneInput" data-index="{{index}}" />
+        </view>
+      </view>
+
+      <view class="booking-agreement" bindtap="toggleAgreement">
+        <view class="agreement-check {{agreed ? 'checked' : ''}}">{{agreed ? '✓' : ''}}</view>
+        <text>我已阅读预约须知，并确认以上参观信息</text>
+      </view>
+
+      <button class="submit-booking" bindtap="submitBooking">确认预约</button>
+      <text class="submit-note">提交后可在账户中心查看预约凭证</text>
+    </view>
+  </view>
+
+  <view class="success-page" wx:else>
+    <view class="success-mark">✓</view>
+    <text class="success-kicker">RESERVATION CONFIRMED</text>
+    <text class="success-title">预约成功</text>
+      <text class="success-subtitle">您的预约席位已保留</text>
+    <view class="success-ticket">
+      <image src="{{exhibition.image}}" mode="aspectFill"></image>
+      <view class="ticket-body">
+        <text class="ticket-title">{{exhibition.title}}</text>
+        <view class="ticket-row"><text>日期</text><text>2026年{{dates[selectedDate].month}}{{dates[selectedDate].day}}日 · {{dates[selectedDate].week}}</text></view>
+        <view class="ticket-row"><text>时段</text><text>{{times[selectedTime]}}</text></view>
+        <view class="ticket-row"><text>人数</text><text>{{visitors}} 人</text></view>
+        <view class="ticket-row" wx:if="{{visitorList.length}}"><text>联系人</text><text>{{visitorList[0].name}} · {{visitorList[0].phone}}</text></view>
+        <view class="ticket-row"><text>预约号</text><text>{{bookingNo}}</text></view>
+      </view>
+      <view class="ticket-cut cut-left"></view><view class="ticket-cut cut-right"></view>
+    </view>
+    <button class="finish-button" bindtap="finishBooking">完成</button>
+    <text class="success-note">请在入场时向工作人员出示此预约信息</text>
+  </view>
+</scroll-view>

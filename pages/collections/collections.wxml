@@ -1,0 +1,100 @@
+<scroll-view class="collections-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+  <view class="page-shell collections-page">
+    <view class="top-row">
+      <view>
+        <text class="eyebrow">THE COLLECTION</text>
+        <text class="page-title">藏品一览</text>
+      </view>
+    </view>
+
+    <!-- 画展一隅入口 -->
+    <view class="curator-entry" bindtap="openCurator">
+      <view class="curator-entry-bg">
+        <image class="curator-entry-img" src="../../assets/artworks/qi-150.jpg" mode="aspectFill"></image>
+        <view class="curator-entry-shade"></view>
+      </view>
+      <view class="curator-entry-content">
+        <text class="curator-eyebrow">CURATE YOUR EXHIBITION</text>
+        <text class="curator-title">画展一隅</text>
+        <text class="curator-desc">从馆藏中挑选心仪之作，自拟主题、写展言、选字体、加贴纸、署上你的名字——亲手策一场属于自己的微展览</text>
+        <view class="curator-action">
+          <text>开始策展</text>
+          <text class="curator-arrow">→</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 线上微课 / 艺术小讲堂入口 -->
+    <view class="curator-entry course-entry" bindtap="openCourses">
+      <view class="curator-entry-bg">
+        <image class="curator-entry-img course-entry-img" src="../../assets/artworks/qi-110.jpg" mode="aspectFill"></image>
+        <view class="curator-entry-shade"></view>
+      </view>
+      <view class="curator-entry-content">
+        <text class="curator-eyebrow">ONLINE CLASSES</text>
+        <text class="curator-title">线上微课</text>
+        <text class="curator-desc">艺术小讲堂 · 国画基础知识与齐白石艺术科普，短视频与图文专栏随时上新</text>
+        <view class="curator-action">
+          <text>进入课堂</text>
+          <text class="curator-arrow">→</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="search-bar">
+      <text class="search-bar-icon">⌕</text>
+      <input class="search-bar-input" placeholder="搜索作者或作品名称…" placeholder-class="search-bar-placeholder" value="{{searchKeyword}}" bindinput="onSearchInput" confirm-type="search" />
+      <text class="search-bar-clear" wx:if="{{searchKeyword}}" bindtap="clearKeyword">×</text>
+    </view>
+    <view class="search-tags" wx:if="{{!searchKeyword}}">
+      <text class="search-tag" bindtap="tapHintTag" data-tag="齐白石">齐白石</text>
+      <text class="search-tag" bindtap="tapHintTag" data-tag="徐悲鸿">徐悲鸿</text>
+      <text class="search-tag" bindtap="tapHintTag" data-tag="虾">虾</text>
+      <text class="search-tag" bindtap="tapHintTag" data-tag="马">马</text>
+      <text class="search-tag" bindtap="tapHintTag" data-tag="山水">山水</text>
+    </view>
+
+    <view class="collection-summary">
+      <text>数据馆藏</text>
+      <text class="collection-number">301</text>
+      <text class="collection-note">收录 22 位中国近现代艺术家作品，首批精选 16 件上线展出</text>
+    </view>
+
+    <view class="category-row" wx:if="{{!searchKeyword}}">
+      <view class="category {{activeCategory === item.name ? 'active' : ''}}" wx:for="{{categories}}" wx:key="name" bindtap="chooseCategory" data-category="{{item.name}}">
+        <text class="category-name">{{item.name}}</text>
+        <text class="category-caption">{{item.caption}}</text>
+      </view>
+    </view>
+
+    <view class="result-row">
+      <text wx:if="{{searchKeyword}}">搜索结果</text>
+      <text wx:else>{{activeCategory}}</text>
+      <text class="result-count">{{searchKeyword ? searchResults.length : visibleArtworks.length}} 件精选</text>
+    </view>
+
+    <view class="art-grid">
+      <view class="art-card" wx:for="{{searchKeyword ? searchResults : visibleArtworks}}" wx:key="id" bindtap="openArtwork" data-id="{{item.id}}">
+        <view class="art-visual">
+          <image class="art-image" src="{{item.image}}" mode="aspectFill" lazy-load></image>
+          <view class="category-tag">{{item.category}}</view>
+          <view class="view-detail">查看作品 ↗</view>
+        </view>
+        <view class="art-info">
+          <view class="art-copy">
+            <text class="art-title">{{item.title}}</text>
+            <text class="art-artist">{{item.artist}} · {{item.birth}}</text>
+            <text class="art-size">{{item.size}}</text>
+          </view>
+          <view class="like {{item.liked ? 'liked' : ''}}" catchtap="toggleLike" data-id="{{item.id}}">{{item.liked ? '♥' : '♡'}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="search-empty-inline" wx:if="{{searchKeyword && !searchResults.length}}">
+      <text class="search-empty-inline-icon">⌕</text>
+      <text class="search-empty-inline-title">未找到相关作品</text>
+      <text class="search-empty-inline-hint">试试其他作者名或作品名</text>
+    </view>
+  </view>
+</scroll-view>

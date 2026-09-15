@@ -1,0 +1,13 @@
+{
+  "name": "huazhan-demo",
+  "version": "1.0.0",
+  "description": "画展demo微信小程序",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "devDependencies": {
+    "miniprogram-api-typings": "^2.8.3-1",
+    "typescript": "^7.0.2"
+  }
+}

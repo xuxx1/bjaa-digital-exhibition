@@ -1,0 +1,48 @@
+.operations-scroll { height: 100vh; background: #ECE8DF; }
+.operations-page { min-height: 100vh; }
+.operations-hero { position: relative; overflow: hidden; padding: 37rpx 35rpx 43rpx; background: #20231F; color: #F3EDE2; }
+.hero-grid { position: absolute; background: rgba(255,255,255,.06); }
+.grid-one { top: 0; left: 35%; width: 1rpx; height: 100%; }.grid-two { top: 52%; left: 0; width: 100%; height: 1rpx; }
+.hero-topline { position: relative; display: flex; align-items: center; justify-content: space-between; color: rgba(255,255,255,.35); font-size: 13rpx; letter-spacing: 2rpx; }
+.system-live { display: flex; align-items: center; color: #71B482; }.system-live view { width: 9rpx; height: 9rpx; margin-right: 10rpx; border-radius: 50%; background: #71B482; box-shadow: 0 0 0 6rpx rgba(113,180,130,.12); }
+.hero-kicker { position: relative; display: block; margin-top: 57rpx; color: #B85C48; font-size: 15rpx; letter-spacing: 4rpx; }
+.hero-title { position: relative; display: block; margin-top: 13rpx; font-family: "Songti SC", serif; font-size: 52rpx; }
+.hero-subtitle { position: relative; display: block; margin-top: 13rpx; color: rgba(255,255,255,.54); font-size: 20rpx; }
+.hero-summary { position: relative; display: flex; margin-top: 55rpx; border-top: 1rpx solid rgba(255,255,255,.13); }
+.hero-summary > view { display: flex; width: 33.33%; box-sizing: border-box; flex-direction: column; padding: 23rpx 8rpx 0 0; border-right: 1rpx solid rgba(255,255,255,.1); }
+.hero-summary > view:last-child { padding-left: 20rpx; border-right: 0; }.hero-summary > view:nth-child(2) { padding-left: 20rpx; }
+.hero-summary text:first-child { color: rgba(255,255,255,.42); font-size: 14rpx; }.hero-summary text:nth-child(2) { margin-top: 9rpx; font-family: Georgia, serif; font-size: 34rpx; }.hero-summary text:last-child { margin-top: 6rpx; color: #74B584; font-size: 13rpx; }
+.operations-content { padding: 52rpx 35rpx 85rpx; }
+.section-head { display: flex; align-items: center; justify-content: space-between; margin: 55rpx 0 21rpx; }.section-head:first-child { margin-top: 0; }
+.section-head > view { display: flex; align-items: center; }.section-no { margin-right: 18rpx; color: #A64334; font-size: 15rpx; letter-spacing: 2rpx; }.section-title { font-family: "Songti SC", serif; font-size: 29rpx; }.section-caption { color: #928F87; font-size: 15rpx; }
+.traffic-card { padding: 26rpx 23rpx 22rpx; border-radius: 6rpx; background: #F7F3EA; }
+.traffic-summary { display: flex; align-items: baseline; justify-content: space-between; color: #7E7C75; font-size: 17rpx; }.traffic-summary > text:last-child { color: #292C28; font-family: Georgia, serif; font-size: 35rpx; }.traffic-summary .traffic-unit { color: #929088; font-family: sans-serif; font-size: 14rpx; }
+.bar-chart { display: flex; align-items: flex-end; justify-content: space-between; height: 245rpx; margin-top: 20rpx; padding-top: 25rpx; border-bottom: 1rpx solid rgba(29,32,29,.13); }
+.bar-item { display: flex; width: 10%; height: 100%; flex-direction: column; align-items: center; justify-content: flex-end; }.bar-count { margin-bottom: 8rpx; color: #9A978F; font-size: 11rpx; }.bar-track { display: flex; width: 28rpx; height: 165rpx; align-items: flex-end; }.bar-fill { width: 100%; min-height: 4rpx; border-radius: 3rpx 3rpx 0 0; background: #757E72; }.bar-fill.peak { background: #A64334; }.bar-time { margin-top: 9rpx; color: #88867F; font-size: 13rpx; }
+.chart-note { display: flex; align-items: center; margin-top: 17rpx; color: #8C8982; font-size: 14rpx; }.chart-note view { width: 9rpx; height: 9rpx; margin-right: 9rpx; border-radius: 50%; background: #A64334; }
+.popular-list { border-top: 1rpx solid rgba(29,32,29,.13); }
+.popular-item { display: flex; align-items: center; padding: 23rpx 0; border-bottom: 1rpx solid rgba(29,32,29,.11); }.popular-rank { width: 58rpx; color: #A64334; font-family: Georgia, serif; font-size: 18rpx; }.popular-copy { display: flex; min-width: 0; flex: 1; flex-direction: column; }.popular-copy text:first-child { font-family: "Songti SC", serif; font-size: 24rpx; }.popular-copy text:last-child { margin-top: 7rpx; color: #96938B; font-size: 14rpx; }.popular-heat { width: 150rpx; text-align: right; }.popular-heat > text { color: #555750; font-family: Georgia, serif; font-size: 17rpx; }.popular-heat > view { height: 6rpx; margin-top: 8rpx; overflow: hidden; border-radius: 6rpx; background: #D2CEC4; }.popular-heat > view > view { height: 100%; border-radius: 6rpx; background: #A64334; }
+.all-normal { color: #65A878; font-size: 15rpx; }.all-normal view { width: 9rpx; height: 9rpx; margin-right: 9rpx; border-radius: 50%; background: #65A878; }
+.environment-grid { display: flex; justify-content: space-between; }.environment-card { width: 48.5%; box-sizing: border-box; padding: 24rpx 22rpx; border-radius: 6rpx; background: #29312B; color: white; }.humidity-card { background: #283237; }.environment-label { color: rgba(255,255,255,.4); font-size: 12rpx; letter-spacing: 2rpx; }.environment-value { display: flex; align-items: baseline; margin-top: 15rpx; }.environment-value text:first-child { font-family: Georgia, serif; font-size: 45rpx; }.environment-value text:last-child { margin-left: 5rpx; color: rgba(255,255,255,.5); font-size: 15rpx; }.environment-target { display: block; margin-top: 13rpx; color: rgba(255,255,255,.42); font-size: 13rpx; }
+.device-detail-list { margin-top: 14rpx; }.device-detail { margin-bottom: 10rpx; padding: 20rpx 21rpx; border-radius: 5rpx; background: #F7F3EA; }.device-detail-top { display: flex; justify-content: space-between; }.device-detail-top > view:first-child { display: flex; flex-direction: column; }.device-code { color: #9A978F; font-size: 11rpx; letter-spacing: 2rpx; }.device-title { margin-top: 5rpx; font-size: 20rpx; }.device-status { display: flex; align-items: center; color: #5B9A6C; font-size: 14rpx; }.device-status view { width: 8rpx; height: 8rpx; margin-right: 7rpx; border-radius: 50%; background: #66A978; }.device-progress { height: 6rpx; margin-top: 17rpx; overflow: hidden; border-radius: 6rpx; background: #DAD6CC; }.device-progress view { height: 100%; border-radius: 6rpx; background: #6A8B71; }.device-description { display: block; margin-top: 8rpx; color: #96938B; font-size: 13rpx; }
+.log-list { padding: 5rpx 0; }.log-item { display: flex; min-height: 83rpx; align-items: flex-start; }.log-time { width: 75rpx; padding-top: 2rpx; color: #85837C; font-family: Georgia, serif; font-size: 17rpx; }.log-line { position: relative; width: 30rpx; min-height: 83rpx; }.log-line::after { content: ''; position: absolute; top: 11rpx; bottom: -1rpx; left: 6rpx; width: 1rpx; background: #C9C5BC; }.log-item:last-child .log-line::after { display: none; }.log-line view { position: relative; z-index: 1; width: 13rpx; height: 13rpx; margin-top: 5rpx; border: 3rpx solid #ECE8DF; border-radius: 50%; background: #9D4436; }.log-copy { display: flex; flex: 1; flex-direction: column; }.log-copy text:first-child { font-size: 20rpx; }.log-copy text:last-child { margin-top: 6rpx; color: #939087; font-size: 14rpx; }.log-check { color: #62A273; font-size: 20rpx; }
+.operations-footer { display: flex; flex-direction: column; margin-top: 55rpx; padding: 25rpx 0; border-top: 1rpx solid rgba(29,32,29,.13); color: #99968F; font-size: 14rpx; line-height: 1.9; letter-spacing: 1rpx; }
+
+/* 浅色展馆主题 */
+.operations-nav { border-bottom: 1rpx solid rgba(29,32,29,.12); background: #F2EFE8; color: #252824; }
+.back, .refresh { border-color: rgba(29,32,29,.2); }
+.operations-hero { background: #E3DDD2; color: #252824; }
+.hero-grid { background: rgba(29,32,29,.07); }
+.hero-topline { color: #8C8981; }
+.hero-kicker { color: #A64334; }
+.hero-subtitle { color: #716F68; }
+.hero-summary { border-top-color: rgba(29,32,29,.14); }
+.hero-summary > view { border-right-color: rgba(29,32,29,.1); }
+.hero-summary text:first-child { color: #85827A; }
+.hero-summary text:last-child { color: #538A61; }
+.traffic-card, .device-detail { border: 1rpx solid rgba(29,32,29,.08); background: #F7F3EA; box-shadow: 0 12rpx 32rpx rgba(48,46,40,.04); }
+.environment-card { border: 1rpx solid rgba(29,32,29,.11); background: #E1E5DC; color: #292C28; }
+.humidity-card { background: #DDE5E6; }
+.environment-label { color: #74766F; }
+.environment-value text:last-child { color: #73756E; }
+.environment-target { color: #85877F; }

@@ -1,0 +1,97 @@
+.login-scroll { height: 100vh; }
+.login-page { min-height: 100vh; background: #F2EFE8; }
+.login-art { position: relative; height: 560rpx; overflow: hidden; background: #D9D6CC; color: #F8F3E9; }
+.login-art-image { width: 100%; height: 100%; }
+.login-art-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(28,31,27,.04) 25%, rgba(28,31,27,.72) 100%); }
+.login-logo { position: absolute; top: calc(env(safe-area-inset-top) + 28rpx); left: 36rpx; width: 58rpx; height: 58rpx; border: 8rpx solid rgba(248,243,233,.9); background: rgba(248,243,233,.9); }
+.art-word { position: absolute; bottom: 39rpx; left: 36rpx; font-family: Georgia, serif; font-size: 33rpx; line-height: 1.02; letter-spacing: 3rpx; }
+.art-index { position: absolute; right: 30rpx; bottom: 38rpx; color: rgba(248,243,233,.7); font-size: 14rpx; letter-spacing: 2rpx; writing-mode: vertical-rl; }
+.login-panel { padding: 60rpx 36rpx 80rpx; }
+.login-title { display: block; margin-top: 14rpx; font-family: "Songti SC", serif; font-size: 56rpx; }
+.login-subtitle { display: block; width: 580rpx; margin-top: 18rpx; color: #7D7A73; font-size: 22rpx; line-height: 1.7; }
+.form { margin-top: 55rpx; }
+.field { padding: 24rpx 0 18rpx; border-bottom: 1rpx solid rgba(29,32,29,.2); }
+.field-label { display: block; margin-bottom: 10rpx; color: #676761; font-size: 19rpx; }
+.field-input { height: 54rpx; font-size: 27rpx; }
+.placeholder { color: #B0ADA6; }
+.code-field { display: flex; align-items: flex-end; justify-content: space-between; }
+.code-input-wrap { flex: 1; }
+.code-button { display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 178rpx; height: 64rpx; margin: 0; padding: 0; border: 1rpx solid rgba(29,32,29,.25); border-radius: 4rpx; background: transparent; color: #343632; font-size: 19rpx; line-height: 1; text-align: center; }
+.login-button { display: flex; align-items: center; justify-content: center; box-sizing: border-box; margin-top: 46rpx; padding: 0; line-height: 1; text-align: center; }
+.divider { display: flex; align-items: center; margin: 34rpx 0; color: #A3A098; font-size: 18rpx; }
+.divider view { flex: 1; height: 1rpx; background: rgba(29,32,29,.12); }
+.divider text { padding: 0 22rpx; }
+.wechat-button { display: flex; align-items: center; justify-content: center; height: 94rpx; border: 1rpx solid rgba(29,32,29,.2); border-radius: 8rpx; background: transparent; color: #1D201D; font-size: 24rpx; }
+.wechat-icon { display: flex; align-items: center; justify-content: center; width: 42rpx; height: 42rpx; margin-right: 18rpx; border-radius: 50%; background: #2DAD67; color: white; font-size: 27rpx; line-height: 1; text-align: center; }
+.agreement { display: flex; align-items: flex-start; margin-top: 28rpx; color: #8A877F; font-size: 18rpx; line-height: 1.6; }
+.check { display: flex; flex: none; align-items: center; justify-content: center; width: 28rpx; height: 28rpx; margin: 1rpx 14rpx 0 0; border: 1rpx solid #8E8A82; border-radius: 2rpx; line-height: 1; text-align: center; }
+.check.checked { border-color: #9A3D2F; background: #9A3D2F; color: white; }
+.member-benefits { margin-top: 75rpx; padding-top: 30rpx; border-top: 1rpx solid rgba(29,32,29,.14); }
+.benefit { display: flex; align-items: center; padding: 18rpx 0; color: #4E504B; font-family: "Songti SC", serif; font-size: 24rpx; }
+.benefit-no { width: 70rpx; color: #A64234; font-family: sans-serif; font-size: 17rpx; letter-spacing: 2rpx; }
+.member-scroll { height: 100vh; background: #F2EFE8; }
+.member-page { min-height: 100vh; }
+.member-hero { position: relative; height: 610rpx; overflow: hidden; color: #F8F3E9; }
+.member-hero-image { width: 100%; height: 100%; }
+.member-hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(29,31,27,.28), rgba(29,31,27,.08) 35%, rgba(29,31,27,.82)); }
+.member-nav { position: absolute; top: calc(env(safe-area-inset-top) + 24rpx); right: 34rpx; left: 34rpx; display: flex; align-items: center; justify-content: space-between; }
+.member-brand { display: flex; align-items: center; font-size: 22rpx; letter-spacing: 3rpx; }
+.member-brand image { width: 48rpx; height: 48rpx; margin-right: 14rpx; border: 5rpx solid rgba(255,255,255,.9); background: rgba(255,255,255,.9); }
+.member-welcome { position: absolute; right: 36rpx; bottom: 45rpx; left: 36rpx; }
+.member-kicker { display: block; color: rgba(255,255,255,.66); font-size: 16rpx; letter-spacing: 3rpx; }
+.member-title-row { display: flex; align-items: center; margin-top: 14rpx; }
+.member-title { display: block; font-family: "Songti SC", serif; font-size: 50rpx; }
+
+/* 用户反馈入口（铅笔） */
+.feedback-entry { display: flex; align-items: center; margin-left: 24rpx; padding: 10rpx 14rpx 10rpx 20rpx; border: 1rpx solid rgba(255,255,255,.4); border-radius: 40rpx; background: rgba(255,255,255,.08); }
+.feedback-entry:active { background: rgba(255,255,255,.18); }
+.feedback-entry-hint { margin-right: 10rpx; color: rgba(255,255,255,.72); font-size: 16rpx; letter-spacing: 1rpx; }
+.feedback-pencil { display: flex; align-items: center; justify-content: center; width: 42rpx; height: 42rpx; border-radius: 50%; background: #A64334; color: white; }
+.feedback-pencil-icon { font-size: 27rpx; line-height: 1; }
+.member-phone { display: block; margin-top: 9rpx; color: rgba(255,255,255,.7); font-size: 19rpx; letter-spacing: 2rpx; }
+.member-body { padding: 0 36rpx 85rpx; }
+.member-pass { position: relative; z-index: 2; margin-top: -28rpx; padding: 30rpx; border-radius: 9rpx; background: #242722; color: #F5EFE4; box-shadow: 0 20rpx 50rpx rgba(34,36,31,.17); }
+.pass-top { display: flex; align-items: flex-start; justify-content: space-between; }
+.pass-label { display: block; color: #BB7A68; font-size: 15rpx; letter-spacing: 3rpx; }
+.pass-level { display: block; margin-top: 13rpx; font-family: "Songti SC", serif; font-size: 28rpx; }
+.pass-logo { width: 59rpx; height: 59rpx; border: 6rpx solid #F3EDE1; background: #F3EDE1; }
+.pass-bottom { display: flex; justify-content: space-between; margin-top: 42rpx; padding-top: 20rpx; border-top: 1rpx solid rgba(255,255,255,.14); color: rgba(255,255,255,.49); font-size: 15rpx; letter-spacing: 1rpx; }
+.member-section-head { display: flex; align-items: flex-end; justify-content: space-between; margin: 76rpx 0 27rpx; }
+.member-section-title { display: block; margin-top: 10rpx; font-family: "Songti SC", serif; font-size: 43rpx; }
+.member-section-no { padding-bottom: 5rpx; color: #97948C; font-size: 16rpx; letter-spacing: 2rpx; }
+.booking-entry { position: relative; height: 570rpx; overflow: hidden; border-radius: 7rpx; color: white; box-shadow: 0 20rpx 45rpx rgba(47,47,41,.12); }
+.booking-cover { width: 100%; height: 100%; }
+.booking-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,21,18,.08), rgba(20,21,18,.12) 38%, rgba(20,21,18,.88)); }
+.booking-tag { position: absolute; top: 25rpx; left: 25rpx; padding: 11rpx 17rpx; border-radius: 40rpx; background: #A94334; font-size: 17rpx; letter-spacing: 2rpx; }
+.booking-copy { position: absolute; right: 28rpx; bottom: 27rpx; left: 28rpx; }
+.booking-overline { display: block; color: rgba(255,255,255,.57); font-size: 15rpx; letter-spacing: 3rpx; }
+.booking-title { display: block; margin-top: 10rpx; font-family: "Songti SC", serif; font-size: 42rpx; }
+.booking-exhibition { display: block; margin-top: 10rpx; color: rgba(255,255,255,.72); font-size: 20rpx; }
+.booking-action { display: flex; align-items: center; justify-content: space-between; margin-top: 23rpx; padding-top: 20rpx; border-top: 1rpx solid rgba(255,255,255,.23); font-size: 19rpx; }
+.booking-arrow { display: flex; align-items: center; justify-content: center; width: 52rpx; height: 52rpx; border: 1rpx solid rgba(255,255,255,.45); border-radius: 50%; line-height: 1; text-align: center; }
+.member-tools { display: flex; justify-content: space-between; margin-top: 19rpx; }
+.member-tool { position: relative; width: 48.5%; box-sizing: border-box; padding: 25rpx 22rpx 29rpx; border: 1rpx solid rgba(29,32,29,.14); border-radius: 6rpx; }
+.tool-no { display: block; color: #A64334; font-size: 16rpx; letter-spacing: 2rpx; }
+.tool-title { display: block; margin-top: 31rpx; font-family: "Songti SC", serif; font-size: 27rpx; }
+.tool-caption { display: block; margin-top: 9rpx; color: #949188; font-size: 17rpx; }
+.tool-arrow { position: absolute; top: 22rpx; right: 21rpx; font-size: 25rpx; }
+.history-section { margin-top: 76rpx; }
+.history-heading { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 26rpx; }
+.history-title { display: block; margin-top: 10rpx; font-family: "Songti SC", serif; font-size: 42rpx; }
+.history-count { padding-bottom: 5rpx; color: #96938B; font-size: 16rpx; }
+.history-card { display: flex; margin-bottom: 16rpx; overflow: hidden; border-radius: 6rpx; background: #E7E1D6; }
+.history-image { flex: none; width: 220rpx; min-height: 220rpx; background: #D5D0C6; }
+.history-content { display: flex; min-width: 0; flex: 1; box-sizing: border-box; flex-direction: column; padding: 22rpx 21rpx; }
+.history-status { display: flex; align-items: center; color: #568A63; font-size: 15rpx; }
+.history-status view { width: 9rpx; height: 9rpx; margin-right: 8rpx; border-radius: 50%; background: #65A675; }
+.history-name { display: -webkit-box; overflow: hidden; margin-top: 17rpx; font-family: "Songti SC", serif; font-size: 25rpx; line-height: 1.45; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.history-meta { margin-top: auto; color: #8D8A82; font-size: 15rpx; line-height: 1.5; }
+.history-link { display: flex; align-items: center; min-height: 30rpx; margin-top: 8rpx; color: #9D4134; font-size: 15rpx; line-height: 1; }
+.history-card:active { transform: scale(.994); opacity: .92; }
+.member-footer { display: flex; flex-direction: column; margin-top: 75rpx; padding: 27rpx 0; border-top: 1rpx solid rgba(29,32,29,.13); color: #9A978E; font-size: 15rpx; line-height: 1.9; letter-spacing: 1rpx; }
+
+/* 底部退出登录入口 */
+.logout-entry { display: flex; align-items: center; justify-content: center; margin-top: 85rpx; padding: 17rpx 0 5rpx; color: #77746B; font-size: 19rpx; letter-spacing: 2rpx; }
+.logout-entry::before { content: '·'; margin-right: 16rpx; color: #B9B5AB; font-size: 26rpx; line-height: 1; }
+.logout-entry::after { content: '·'; margin-left: 16rpx; color: #B9B5AB; font-size: 26rpx; line-height: 1; }
+.logout-entry:active { color: #A64334; }

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "线上征集",
+  "usingComponents": {
+    "custom-navbar": "/components/custom-navbar/custom-navbar"
+  }
+}

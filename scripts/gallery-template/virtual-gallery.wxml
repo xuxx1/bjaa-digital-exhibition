@@ -1,0 +1,156 @@
+<view class="gallery-page">
+  <view class="gallery-nav">
+    <view class="back-button" bindtap="goBack">←</view>
+    <view class="nav-title">
+      <text>北京画院 · 数字展览</text>
+      <text>VIRTUAL GALLERY</text>
+    </view>
+    <text class="scene-index">{{currentScene.number}} / {{group.totalScenes}}</text>
+  </view>
+
+  <view class="panorama-wrap">
+    <scroll-view
+      class="panorama-scroll"
+      scroll-x
+      enhanced
+      show-scrollbar="{{false}}"
+      scroll-left="{{panoramaScrollLeft}}"
+      bindscroll="onPanoramaScroll"
+    >
+      <view class="panorama-strip" style="width: {{panoramaStripWidth}}px; height: {{panoramaViewportHeight}}px;">
+        <view
+          class="panorama-copy"
+          wx:for="{{panoramaCopies}}"
+          wx:for-item="copy"
+          wx:key="*this"
+          style="width: {{panoramaWidth}}px; height: {{panoramaViewportHeight}}px;"
+        >
+          <image
+            class="panorama-image"
+            src="{{currentScene.panorama}}"
+            mode="scaleToFill"
+            style="width: {{panoramaWidth}}px; height: {{panoramaHeight}}px; top: {{panoramaTop}}px;"
+            bindload="onPanoramaLoaded"
+            binderror="onPanoramaError"
+          ></image>
+          <view
+            class="artwork-hotspot"
+            wx:for="{{panoramaArtworks}}"
+            wx:for-item="artwork"
+            wx:key="id"
+            style="left: {{artwork.leftPercent}}%; top: {{artwork.topPx}}px;"
+            bindtap="openArtwork"
+            data-id="{{artwork.id}}"
+          >
+            <view class="hotspot-pulse"></view>
+            <text>i</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="panorama-shade"></view>
+
+    <view class="loading-state" wx:if="{{panoramaLoading}}">
+      <view class="loading-ring"></view>
+      <text>正在加载全景场景</text>
+    </view>
+
+    <view class="panorama-error" wx:if="{{panoramaError}}">
+      <text>全景图片加载失败，请切换场景后重试</text>
+    </view>
+
+    <view class="viewer-tip" wx:if="{{!panoramaLoading}}">
+      <text class="viewer-icon">↔</text>
+      <text>拖动环视 · 金色锚点查看作品</text>
+    </view>
+
+    <view class="scene-caption">
+      <text class="scene-kicker">SCENE {{currentScene.number}}</text>
+      <text class="scene-name">{{currentScene.name}}</text>
+    </view>
+  </view>
+
+  <scroll-view class="gallery-content" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="exhibition-summary">
+      <text class="summary-kicker">360° DIGITAL EXHIBITION</text>
+      <text class="summary-title">{{exhibition.title}}</text>
+      <text class="summary-time">{{exhibition.time}}</text>
+      <text class="summary-intro">{{exhibition.intro}}</text>
+    </view>
+
+    <view class="scene-section">
+      <view class="section-heading">
+        <view><text>展厅场景</text><text class="loading-group">加载分组 {{group.groupNumber}} / {{group.groupCount}}</text></view>
+        <view class="all-scenes-link" bindtap="openSceneDirectory">查看全部 {{group.totalScenes}} 个 →</view>
+      </view>
+      <scroll-view class="scene-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+        <view class="scene-row">
+          <view class="scene-chip {{item.id === currentScene.id ? 'active' : ''}}" wx:for="{{group.scenes}}" wx:key="id" bindtap="selectScene" data-index="{{index}}">
+            <text>{{item.number}}</text>
+            <text>{{item.name}}</text>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="scene-navigation">
+        <button class="scene-nav-button {{!group.previousUrl && currentSceneIndex === 0 ? 'disabled' : ''}}" bindtap="previousScene" disabled="{{!group.previousUrl && currentSceneIndex === 0}}">← 上一场景</button>
+        <text>{{currentScene.number}} / {{group.totalScenes}}</text>
+        <button class="scene-nav-button {{!group.nextUrl && currentSceneIndex === group.scenes.length - 1 ? 'disabled' : ''}}" bindtap="nextScene" disabled="{{!group.nextUrl && currentSceneIndex === group.scenes.length - 1}}">下一场景 →</button>
+      </view>
+    </view>
+
+    <view class="artwork-section">
+      <view class="section-heading"><text>本场景作品</text><text>点击热点或作品卡片查看</text></view>
+      <view class="artwork-grid">
+        <view class="artwork-card" wx:for="{{currentScene.artworks}}" wx:key="id" bindtap="openArtwork" data-id="{{item.id}}">
+          <image src="{{item.image}}" mode="aspectFill" lazy-load></image>
+          <view class="artwork-copy">
+            <text class="artwork-title">{{item.title}}</text>
+            <text class="artwork-artist">{{item.images.length}} 张作品资料</text>
+            <text class="artwork-note">{{item.note}} ↗</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<view class="scene-directory-mask" wx:if="{{showSceneDirectory}}" bindtap="closeSceneDirectory">
+  <view class="scene-directory" catchtap="preventTap">
+    <view class="directory-head">
+      <view><text>完整展厅目录</text><text>{{group.totalScenes}} PANORAMA SCENES</text></view>
+      <view class="directory-close" bindtap="closeSceneDirectory">×</view>
+    </view>
+    <scroll-view class="directory-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+      <view
+        class="directory-item {{item.id === currentScene.id ? 'active' : ''}}"
+        wx:for="{{group.allScenes}}"
+        wx:key="id"
+        bindtap="selectGlobalScene"
+        data-id="{{item.id}}"
+        data-package="{{item.packageName}}"
+      >
+        <text>{{item.number}}</text>
+        <text>{{item.name}}</text>
+        <text>{{item.id === currentScene.id ? '当前' : '进入 →'}}</text>
+      </view>
+      <view class="directory-bottom">已收录全部 {{group.totalScenes}} 个全景场景</view>
+    </scroll-view>
+  </view>
+</view>
+
+<view class="artwork-modal-mask" wx:if="{{selectedArtwork}}" bindtap="closeArtwork">
+  <view class="artwork-modal" catchtap="preventTap">
+    <view class="artwork-modal-close" bindtap="closeArtwork">×</view>
+    <swiper class="artwork-modal-swiper" indicator-dots="{{selectedArtwork.images.length > 1}}" circular="{{selectedArtwork.images.length > 1}}">
+      <swiper-item wx:for="{{selectedArtwork.images}}" wx:key="*this">
+        <image class="artwork-modal-image" src="{{item}}" mode="aspectFit" bindtap="previewArtwork"></image>
+      </swiper-item>
+    </swiper>
+    <view class="artwork-modal-copy">
+      <text class="artwork-modal-label">SCENE ARTWORK</text>
+      <text class="artwork-modal-title">{{selectedArtwork.title}}</text>
+      <text class="artwork-modal-meta">{{selectedArtwork.note}} · 共 {{selectedArtwork.images.length}} 张</text>
+      <text class="artwork-modal-tip">点击图片可查看大图</text>
+    </view>
+  </view>
+</view>

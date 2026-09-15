@@ -1,0 +1,122 @@
+{
+  "pages": [
+    "pages/exhibitions/exhibitions",
+    "pages/collections/collections",
+    "pages/profile/profile",
+    "pages/artwork-detail/artwork-detail",
+    "pages/booking/booking",
+    "pages/favorites/favorites",
+    "pages/exhibition-detail/exhibition-detail",
+    "pages/news/news",
+    "pages/news-detail/news-detail",
+    "pages/daily-sign/daily-sign",
+    "pages/curator-edit/curator-edit",
+    "pages/curator-poster/curator-poster",
+    "pages/courses/courses",
+    "pages/course-detail/course-detail",
+    "pages/submissions/submissions",
+    "pages/submission-submit/submission-submit",
+    "pages/feedback/feedback",
+    "pages/web-gallery/web-gallery"
+  ],
+  "subPackages": [
+    {
+      "root": "subpackage/gallery01",
+      "name": "gallery01",
+      "pages": [
+        "pages/gallery/virtual-gallery"
+      ]
+    },
+    {
+      "root": "subpackage/gallery02",
+      "name": "gallery02",
+      "pages": [
+        "pages/gallery/virtual-gallery"
+      ]
+    },
+    {
+      "root": "subpackage/gallery03",
+      "name": "gallery03",
+      "pages": [
+        "pages/gallery/virtual-gallery"
+      ]
+    },
+    {
+      "root": "subpackage/gallery04",
+      "name": "gallery04",
+      "pages": [
+        "pages/gallery/virtual-gallery"
+      ]
+    },
+    {
+      "root": "subpackage/gallery05",
+      "name": "gallery05",
+      "pages": [
+        "pages/gallery/virtual-gallery"
+      ]
+    },
+    {
+      "root": "subpackage/gallery06",
+      "name": "gallery06",
+      "pages": [
+        "pages/gallery/virtual-gallery"
+      ]
+    },
+    {
+      "root": "subpackage/gallery07",
+      "name": "gallery07",
+      "pages": [
+        "pages/gallery/virtual-gallery"
+      ]
+    },
+    {
+      "root": "subpackage/gallery08",
+      "name": "gallery08",
+      "pages": [
+        "pages/gallery/virtual-gallery"
+      ]
+    }
+  ],
+  "preloadRule": {
+    "pages/exhibitions/exhibitions": {
+      "network": "all",
+      "packages": [
+        "gallery01"
+      ]
+    }
+  },
+  "window": {
+    "navigationStyle": "custom",
+    "navigationBarTitleText": "画展demo",
+    "backgroundColor": "#F2EFE8",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#8B8982",
+    "selectedColor": "#1E211E",
+    "backgroundColor": "#F8F5EE",
+    "borderStyle": "white",
+    "position": "bottom",
+    "list": [
+      {
+        "pagePath": "pages/exhibitions/exhibitions",
+        "text": "展览"
+      },
+      {
+        "pagePath": "pages/collections/collections",
+        "text": "藏品"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "登录"
+      }
+    ]
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "lazyCodeLoading": "requiredComponents",
+  "usingComponents": {
+    "custom-navbar": "/components/custom-navbar/custom-navbar",
+    "panorama-viewer": "/components/panorama-viewer/panorama-viewer"
+  }
+}

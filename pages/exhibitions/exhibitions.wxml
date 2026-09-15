@@ -1,0 +1,487 @@
+<scroll-view class="page-scroll" scroll-y enhanced show-scrollbar="{{false}}" scroll-into-view="{{scrollTarget}}" scroll-with-animation>
+  <view class="page-shell exhibitions-page">
+    <view class="masthead">
+      <view class="brand">
+        <image class="brand-logo" src="/logo1.png" mode="aspectFit"></image>
+        <text class="brand-name">北京画院</text>
+      </view>
+      <view class="date-chip">2026 · EXHIBITION</view>
+    </view>
+
+    <!-- 公告栏 -->
+    <view class="announcement-bar" wx:if="{{announcements.length}}">
+      <view class="announcement-track">
+        <view class="announcement-tag {{announcements[announcementIndex].urgent ? 'urgent' : ''}}">{{announcements[announcementIndex].urgent ? '紧急' : '公告'}}</view>
+        <swiper class="announcement-swiper" autoplay="{{announcements.length > 1}}" interval="4000" duration="500" circular="{{announcements.length > 1}}" current="{{announcementIndex}}" bindchange="onAnnouncementChange">
+          <swiper-item wx:for="{{announcements}}" wx:key="id">
+            <view class="announcement-text" bindtap="openAnnouncement" data-id="{{item.id}}">{{item.title}}</view>
+          </swiper-item>
+        </swiper>
+        <text class="announcement-more" catchtap="openAnnouncement" data-id="{{announcements[announcementIndex].id}}">详情 ›</text>
+      </view>
+      <view class="announcement-dots" wx:if="{{announcements.length > 1}}">
+        <view class="announcement-dot {{announcementIndex === index ? 'active' : ''}}" wx:for="{{announcements}}" wx:for-index="index" wx:key="id"></view>
+      </view>
+    </view>
+
+    <!-- 快捷入口 -->
+    <view class="quick-nav">
+      <view class="quick-item" bindtap="quickJump" data-target="exhibition">
+        <view class="quick-icon">展</view>
+        <text class="quick-label">展览</text>
+      </view>
+      <view class="quick-item" bindtap="quickJump" data-target="lecture">
+        <view class="quick-icon">讲</view>
+        <text class="quick-label">讲座</text>
+      </view>
+      <view class="quick-item" bindtap="quickJump" data-target="activity">
+        <view class="quick-icon">活</view>
+        <text class="quick-label">活动</text>
+      </view>
+      <view class="quick-item" bindtap="quickJump" data-target="digital">
+        <view class="quick-icon">360</view>
+        <text class="quick-label">数字展厅</text>
+      </view>
+      <view class="quick-item" bindtap="quickJump" data-target="submission">
+        <view class="quick-icon">集</view>
+        <text class="quick-label">大众征集</text>
+      </view>
+    </view>
+
+    <view class="search-bar" bindtap="openSearch">
+      <text class="search-icon">⌕</text>
+      <text class="search-placeholder">搜索展览、讲座、活动…</text>
+    </view>
+
+    <!-- 搜索面板 -->
+    <view class="search-panel" wx:if="{{searchActive}}" catchtouchmove="preventMove">
+      <view class="search-panel-header">
+        <text class="search-cancel" bindtap="closeSearch">←</text>
+        <view class="search-input-wrap">
+          <text class="search-icon-inner">⌕</text>
+          <input class="search-input" placeholder="搜索展览、讲座、活动…" placeholder-class="search-input-placeholder" focus="{{searchActive}}" value="{{searchKeyword}}" bindinput="onSearchInput" confirm-type="search" />
+        </view>
+      </view>
+      <view class="search-tabs">
+        <view class="search-tab {{searchTab === 'exhibition' ? 'active' : ''}}" bindtap="switchSearchTab" data-tab="exhibition">
+          <text>展览</text>
+          <text class="search-tab-count" wx:if="{{searchResultsExhibition.length}}">{{searchResultsExhibition.length}}</text>
+        </view>
+        <view class="search-tab {{searchTab === 'lecture' ? 'active' : ''}}" bindtap="switchSearchTab" data-tab="lecture">
+          <text>讲座</text>
+          <text class="search-tab-count" wx:if="{{searchResultsLecture.length}}">{{searchResultsLecture.length}}</text>
+        </view>
+        <view class="search-tab {{searchTab === 'activity' ? 'active' : ''}}" bindtap="switchSearchTab" data-tab="activity">
+          <text>活动</text>
+          <text class="search-tab-count" wx:if="{{searchResultsActivity.length}}">{{searchResultsActivity.length}}</text>
+        </view>
+      </view>
+
+      <scroll-view class="search-results" scroll-y enhanced show-scrollbar="{{false}}" wx:if="{{searchKeyword}}">
+        <!-- 展览搜索结果 -->
+        <view wx:if="{{searchTab === 'exhibition'}}">
+          <view class="search-empty" wx:if="{{!searchResultsExhibition.length}}">
+            <text>未找到相关展览</text><text>换个关键词试试</text>
+          </view>
+          <view class="search-result-card" wx:for="{{searchResultsExhibition}}" wx:key="id" bindtap="openSearchExhibition" data-id="{{item.id}}">
+            <image class="search-result-image" src="{{item.image}}" mode="aspectFill" lazy-load></image>
+            <view class="search-result-copy">
+              <view class="search-result-tag {{item.type === '当前展览' ? 'current' : 'archive'}}">{{item.type}}</view>
+              <text class="search-result-title">{{item.title}}</text>
+              <text class="search-result-meta">{{item.time}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 讲座搜索结果 -->
+        <view wx:if="{{searchTab === 'lecture'}}">
+          <view class="search-empty" wx:if="{{!searchResultsLecture.length}}">
+            <text>未找到相关讲座</text><text>换个关键词试试</text>
+          </view>
+          <view class="search-result-card" wx:for="{{searchResultsLecture}}" wx:key="id" bindtap="openSearchProgram" data-id="{{item.id}}">
+            <image class="search-result-image" src="{{item.image}}" mode="aspectFill" lazy-load></image>
+            <view class="search-result-copy">
+              <view class="search-result-tag lecture">{{item.kind}}</view>
+              <text class="search-result-title">{{item.title}}</text>
+              <text class="search-result-meta" wx:if="{{item.speaker}}">主讲人 {{item.speaker}}</text>
+              <text class="search-result-meta" wx:if="{{item.time}}">{{item.time}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 活动搜索结果 -->
+        <view wx:if="{{searchTab === 'activity'}}">
+          <view class="search-empty" wx:if="{{!searchResultsActivity.length}}">
+            <text>未找到相关活动</text><text>换个关键词试试</text>
+          </view>
+          <view class="search-result-card" wx:for="{{searchResultsActivity}}" wx:key="id" bindtap="openSearchProgram" data-id="{{item.id}}">
+            <image class="search-result-image" src="{{item.image}}" mode="aspectFill" lazy-load></image>
+            <view class="search-result-copy">
+              <view class="search-result-tag activity">{{item.kind}}</view>
+              <text class="search-result-title">{{item.title}}</text>
+              <text class="search-result-meta" wx:if="{{item.time}}">{{item.time}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+
+      <view class="search-hint" wx:if="{{!searchKeyword}}">
+        <text class="search-hint-icon">⌕</text>
+        <text>输入关键词搜索展览、讲座或活动</text>
+      </view>
+    </view>
+
+    <!-- 每日一画 -->
+    <view class="daily-painting-section">
+      <view class="daily-painting-heading">
+        <view>
+          <text class="eyebrow">DAILY PAINTING</text>
+          <text class="daily-painting-title">每日一画</text>
+        </view>
+        <text class="daily-painting-date">{{todayDate}}</text>
+      </view>
+      <scroll-view class="daily-painting-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+        <view class="daily-painting-row">
+          <view class="daily-painting-card" wx:for="{{dailyPaintings}}" wx:key="id" bindtap="openDailyPainting" data-index="{{index}}">
+            <image class="daily-painting-image" src="{{item.image}}" mode="aspectFill" lazy-load></image>
+            <view class="daily-painting-overlay"></view>
+            <view class="daily-painting-info">
+              <text class="daily-painting-name">{{item.title}}</text>
+              <text class="daily-painting-artist">{{item.artist}} {{item.birth ? '· ' + item.birth : ''}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="intro" id="sec-exhibition">
+      <text class="eyebrow">NOW SHOWING</text>
+      <text class="page-title">当前展览</text>
+      <text class="intro-copy">从真实展览出发，在观看中进入艺术家的精神现场。</text>
+    </view>
+
+    <swiper class="current-swiper" wx:if="{{currentExhibitions.length > 0}}" current="{{currentExhibitionIndex}}" bindchange="onCurrentExhibitionChange" duration="400" easing-function="easeOutCubic">
+      <swiper-item wx:for="{{currentExhibitions}}" wx:key="id">
+        <view class="current-card">
+          <view class="current-image-wrap" bindtap="openCurrent">
+            <image class="current-image" src="{{item.image}}" mode="aspectFill"></image>
+            <view class="image-shade"></view>
+            <view class="status-badge"><view class="status-dot"></view>正在展出</view>
+            <view class="image-caption">
+              <text>CURRENT · {{index < 9 ? '0' : ''}}{{index + 1}}</text>
+              <text>查看完整展览 ↗</text>
+            </view>
+          </view>
+          <view class="current-content">
+            <text class="current-title">{{item.title}}</text>
+            <text class="current-intro">{{item.intro}}</text>
+            <view class="info-table">
+              <view class="info-row">
+                <text class="info-label">展期</text>
+                <text class="info-value">{{item.time}}</text>
+              </view>
+              <view class="info-row">
+                <text class="info-label">地点</text>
+                <text class="info-value">{{item.location}}</text>
+              </view>
+              <view class="info-row">
+                <text class="info-label">主办</text>
+                <text class="info-value">{{item.organizer}}</text>
+              </view>
+            </view>
+            <view class="current-reservation">
+              <text>今日已预约 {{todayBookings}} 人</text>
+              <button catchtap="reserveCurrent">预约参观</button>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <view class="current-indicators" wx:if="{{currentExhibitions.length > 1}}">
+      <view class="current-indicator {{currentExhibitionIndex === index ? 'active' : ''}}" wx:for="{{currentExhibitions}}" wx:key="id"></view>
+    </view>
+
+    <view class="program-section exhibition-review-section">
+      <view class="program-heading">
+        <view><text class="eyebrow">PAST EXHIBITIONS</text><text class="program-title">展览回顾</text></view>
+        <view class="unified-section-status">
+          <text class="program-count">05 ARCHIVES</text>
+          <text class="review-page-no">{{reviewPage}} / {{totalReviewPages}}</text>
+        </view>
+      </view>
+
+      <view class="program-list unified-review-list">
+        <view class="program-card unified-review-card" wx:for="{{pagedReviews}}" wx:key="id" bindtap="openReview" data-id="{{item.id}}">
+          <view class="unified-review-image-wrap">
+            <image src="{{item.image}}" mode="aspectFill" lazy-load></image>
+            <view class="review-favorite {{item.liked ? 'liked' : ''}}" catchtap="toggleReviewFavorite" data-id="{{item.id}}">{{item.liked ? '♥' : '♡'}}</view>
+            <text class="review-index">{{item.displayIndex}}</text>
+          </view>
+          <view class="program-card-copy unified-review-copy">
+            <view class="program-status archive">展览档案</view>
+            <text class="program-card-title">{{item.title}}</text>
+            <text class="program-meta">{{item.time || '展览回顾'}}</text>
+            <text class="program-summary">{{item.intro}}</text>
+            <text class="unified-detail-link">查看详情 →</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="review-pagination unified-pagination">
+        <button class="page-button {{reviewPage === 1 ? 'disabled' : ''}}" bindtap="previousReviews" disabled="{{reviewPage === 1}}">← 上一页</button>
+        <view class="page-dots">
+          <view class="page-dot {{reviewPage === 1 ? 'active' : ''}}"></view>
+          <view class="page-dot {{reviewPage === 2 ? 'active' : ''}}"></view>
+        </view>
+        <button class="page-button {{reviewPage === totalReviewPages ? 'disabled' : ''}}" bindtap="nextReviews" disabled="{{reviewPage === totalReviewPages}}">下一页 →</button>
+      </view>
+    </view>
+
+    <view class="program-section preview-section">
+      <view class="program-heading">
+        <view><text class="eyebrow">COMING SOON</text><text class="program-title">展览预告</text></view>
+        <text class="program-count">{{exhibitionPreviews.length ? exhibitionPreviews.length + ' UPCOMING' : '0 UPCOMING'}}</text>
+      </view>
+      <view wx:if="{{exhibitionPreviews.length}}">
+        <view class="preview-card" wx:for="{{exhibitionPreviews}}" wx:key="id" bindtap="openProgram" data-id="{{item.id}}">
+          <image src="{{item.image}}" mode="aspectFill" lazy-load></image>
+          <view class="preview-copy">
+            <view class="program-status upcoming">{{item.statusText}}</view>
+            <text class="preview-title">{{item.title}}</text>
+            <text class="program-meta">{{item.time}} · {{item.location}}</text>
+            <text class="program-summary">{{item.intro}}</text>
+            <view class="program-card-bottom">
+              <text class="today-count" wx:if="{{item.reservable}}">今日预约 {{item.todayBookings || 0}} 人</text>
+              <button class="program-button" catchtap="reserveProgram" data-id="{{item.id}}">预约参观</button>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="program-empty" wx:else><text>暂无展览预告</text><text>敬请期待</text></view>
+    </view>
+
+    <view class="program-section" id="sec-lecture">
+      <view class="program-heading">
+        <view><text class="eyebrow">LECTURES</text><text class="program-title">讲座预约</text></view>
+        <text class="program-count">PUBLIC PROGRAM</text>
+      </view>
+      <view class="program-empty compact" wx:if="{{!hasUpcomingLecture}}"><text>暂无可预约讲座</text><text>新一期讲座敬请期待</text></view>
+      <view class="program-list">
+        <view class="program-card" wx:for="{{lectureReservations}}" wx:key="id" bindtap="openProgram" data-id="{{item.id}}">
+          <image src="{{item.image}}" mode="aspectFill" lazy-load></image>
+          <view class="program-card-copy">
+            <view class="program-status ended">{{item.statusText}}</view>
+            <text class="program-card-title">{{item.title}}</text>
+            <text class="program-meta">主讲人 {{item.speaker}}</text>
+            <text class="program-meta">{{item.time}}</text>
+            <view class="program-card-bottom">
+              <text class="today-count" wx:if="{{item.reservable}}">今日预约 {{item.todayBookings || 0}} 人</text>
+              <button class="program-button {{item.reservable ? '' : 'disabled'}}" catchtap="reserveProgram" data-id="{{item.id}}">{{item.reservable ? '立即预约' : '本期已结束'}}</button>
+              <view class="program-favorite-btn {{item.liked ? 'liked' : ''}}" catchtap="toggleProgramFavorite" data-id="{{item.id}}">{{item.liked ? '♥' : '♡'}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="subsection-head"><text>讲座回顾</text><text>02 ARCHIVES</text></view>
+      <view class="lecture-review-grid">
+        <view class="lecture-review-card" wx:for="{{lectureReviews}}" wx:key="id" bindtap="openProgram" data-id="{{item.id}}">
+          <image src="{{item.image}}" mode="aspectFill" lazy-load></image>
+          <view class="lecture-review-favorite {{item.liked ? 'liked' : ''}}" catchtap="toggleProgramFavorite" data-id="{{item.id}}">{{item.liked ? '♥' : '♡'}}</view>
+          <text class="lecture-review-speaker">{{item.speaker}} · {{item.publishDate}}</text>
+          <text class="lecture-review-title">{{item.title}}</text>
+          <text class="lecture-review-link">查看回顾 →</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="program-section" id="sec-activity">
+      <view class="program-heading">
+        <view><text class="eyebrow">ACTIVITIES</text><text class="program-title">活动预约</text></view>
+        <text class="program-count">ART EDUCATION</text>
+      </view>
+      <view class="program-empty compact" wx:if="{{!hasUpcomingActivity}}"><text>暂无可预约活动</text><text>敬请期待</text></view>
+      <scroll-view class="activity-scroll" wx:if="{{hasUpcomingActivity}}" scroll-x enhanced show-scrollbar="{{false}}">
+        <view class="activity-row">
+          <view class="activity-card" wx:for="{{activityReservations}}" wx:key="id" bindtap="openProgram" data-id="{{item.id}}">
+            <image src="{{item.image}}" mode="aspectFill" lazy-load></image>
+            <view class="activity-copy">
+              <text class="activity-date">{{item.publishDate}} · {{item.statusText}}</text>
+              <text class="activity-title">{{item.title}}</text>
+              <text class="program-meta">{{item.time}}</text>
+              <view class="activity-card-bottom">
+                <text class="today-count" wx:if="{{item.reservable}}">今日预约 {{item.todayBookings || 0}} 人</text>
+                <button class="program-button {{item.reservable ? '' : 'disabled'}}" catchtap="reserveProgram" data-id="{{item.id}}">{{item.reservable ? '立即预约' : '报名已结束'}}</button>
+                <view class="program-favorite-btn {{item.liked ? 'liked' : ''}}" catchtap="toggleProgramFavorite" data-id="{{item.id}}">{{item.liked ? '♥' : '♡'}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+
+      <view class="subsection-head"><text>活动回顾</text><text>{{activityReviews.length || 0}} ARCHIVES</text></view>
+      <view class="lecture-review-grid" wx:if="{{activityReviews.length}}">
+        <view class="lecture-review-card" wx:for="{{activityReviews}}" wx:key="id" bindtap="openProgram" data-id="{{item.id}}">
+          <image src="{{item.image}}" mode="aspectFill" lazy-load></image>
+          <view class="lecture-review-favorite {{item.liked ? 'liked' : ''}}" catchtap="toggleProgramFavorite" data-id="{{item.id}}">{{item.liked ? '♥' : '♡'}}</view>
+          <text class="lecture-review-speaker">{{item.publishDate}}</text>
+          <text class="lecture-review-title">{{item.title}}</text>
+          <text class="lecture-review-link">查看回顾 →</text>
+        </view>
+      </view>
+      <view class="program-empty compact" wx:else><text>暂无活动回顾</text></view>
+    </view>
+
+    <view class="digital-heading" id="sec-digital">
+      <view>
+        <text class="eyebrow">VIRTUAL GALLERY</text>
+        <text class="digital-title">数字展览</text>
+      </view>
+      <text class="digital-count">{{digitalGalleries.length < 10 ? '0' : ''}}{{digitalGalleries.length}} ONLINE</text>
+    </view>
+
+    <swiper class="digital-swiper" wx:if="{{digitalGalleries.length > 0}}" current="{{digitalGalleryIndex}}" bindchange="onDigitalGalleryChange" duration="400" easing-function="easeOutCubic">
+      <swiper-item wx:for="{{digitalGalleries}}" wx:key="id">
+        <view class="digital-card" bindtap="openVirtualGallery" data-index="{{index}}">
+          <image class="digital-cover" src="{{item.cover}}" mode="aspectFill"></image>
+          <view class="digital-shade"></view>
+          <view class="digital-badge"><text>360°</text><text>全景展厅</text></view>
+          <view class="digital-content">
+            <text class="digital-card-kicker">DIGITAL EXHIBITION · 0{{index + 1}}</text>
+            <text class="digital-card-title">{{item.title}}</text>
+            <text class="digital-card-desc" wx:if="{{item.description}}">{{item.description}}</text>
+            <view class="digital-meta">
+              <text>在线全景展厅</text>
+              <text>进入展厅 →</text>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+    <view class="current-indicators" wx:if="{{digitalGalleries.length > 1}}">
+      <view class="current-indicator {{digitalGalleryIndex === index ? 'active' : ''}}" wx:for="{{digitalGalleries}}" wx:key="id"></view>
+    </view>
+
+    <!-- 线上征集活动 -->
+    <view class="submission-section" id="sec-submission">
+      <view class="submission-heading">
+        <view>
+          <text class="eyebrow">CALL FOR ART</text>
+          <text class="submission-title">线上征集</text>
+        </view>
+        <text class="submission-count">大众书画投稿</text>
+      </view>
+
+      <view class="submission-card" bindtap="openSubmissions">
+        <view class="submission-card-bg">
+          <image class="submission-card-img" src="../../assets/artworks/qi-90.jpg" mode="aspectFill"></image>
+          <view class="submission-card-shade"></view>
+        </view>
+        <view class="submission-card-content">
+          <text class="submission-card-eyebrow">SUBMIT YOUR WORK</text>
+          <text class="submission-card-title">大众书画投稿</text>
+          <text class="submission-card-desc">以笔墨记录生活之美。提交您的原创书画作品，经审核后在线上展厅展示。</text>
+          <view class="submission-card-action">
+            <text>查看作品与投稿</text>
+            <text class="submission-card-arrow">→</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="dataset-note">
+      <text>EXHIBITION DATASET · 2026</text>
+      <text>展览、讲座与活动资料已按官网来源整理至项目本地数据集</text>
+    </view>
+  </view>
+</scroll-view>
+
+<view class="modal-mask" wx:if="{{selectedProgram}}" bindtap="closeProgram" catchtouchmove="preventMove">
+  <view class="program-modal" catchtap="preventMove">
+    <image class="program-modal-image" src="{{selectedProgram.image}}" mode="aspectFill" bindtap="previewProgramImage"></image>
+    <view class="program-modal-body">
+      <view class="modal-topline">
+        <view class="modal-close" bindtap="closeProgram">←</view>
+        <text class="modal-topline-label">{{selectedProgram.kind}} · {{selectedProgram.publishDate}}</text>
+        <view class="modal-actions">
+          <view class="modal-favorite {{selectedProgram.liked ? 'liked' : ''}}" catchtap="toggleProgramFavorite" data-id="{{selectedProgram.id}}">{{selectedProgram.liked ? '♥' : '♡'}}</view>
+        </view>
+      </view>
+      <text class="modal-title">{{selectedProgram.title}}</text>
+      <text class="program-modal-meta" wx:if="{{selectedProgram.speaker}}">主讲人：{{selectedProgram.speaker}}</text>
+      <text class="program-modal-meta" wx:if="{{selectedProgram.time}}">时间：{{selectedProgram.time}}</text>
+      <text class="program-modal-meta" wx:if="{{selectedProgram.location}}">地点：{{selectedProgram.location}}</text>
+      <text class="program-modal-meta" wx:if="{{selectedProgram.audience}}">参与对象：{{selectedProgram.audience}}</text>
+      <text class="program-modal-summary">{{selectedProgram.summary}}</text>
+      <button class="modal-program-button {{selectedProgram.reservable ? '' : 'disabled'}}" wx:if="{{selectedProgram.kind !== '讲座回顾'}}" catchtap="reserveProgram" data-id="{{selectedProgram.id}}">{{selectedProgram.reservable ? '登录后预约' : selectedProgram.statusText}}</button>
+    </view>
+  </view>
+</view>
+
+<view class="modal-mask" wx:if="{{selectedExhibition}}" bindtap="closeExhibition" catchtouchmove="preventMove">
+  <view class="review-modal" catchtap="preventMove">
+    <view class="modal-image-wrap" bindtap="previewExhibitionImage">
+      <image class="modal-image" src="{{selectedExhibition.image}}" mode="aspectFill"></image>
+      <view class="modal-image-tip">查看大图 ↗</view>
+    </view>
+    <view class="modal-body">
+      <view class="modal-topline">
+        <view class="modal-close" bindtap="closeExhibition">←</view>
+        <view class="modal-actions">
+          <view class="modal-favorite {{selectedExhibition.liked ? 'liked' : ''}}" catchtap="toggleReviewFavorite" data-id="{{selectedExhibition.id}}" wx:if="{{selectedExhibition.type === '展览回顾' || selectedExhibition.type === '展览预告'}}">{{selectedExhibition.liked ? '♥' : '♡'}}</view>
+        </view>
+      </view>
+      <view class="modal-topline-info">
+        <text>{{selectedExhibition.type}}</text>
+      </view>
+      <text class="modal-title">{{selectedExhibition.title}}</text>
+      <view class="modal-meta" wx:if="{{selectedExhibition.time || selectedExhibition.location}}">
+        <text wx:if="{{selectedExhibition.time}}">{{selectedExhibition.time}}</text>
+        <text wx:if="{{selectedExhibition.location}}">{{selectedExhibition.location}}</text>
+      </view>
+      <view class="modal-status-badge" wx:if="{{selectedExhibition.type === '展览预告'}}">
+        <text class="program-status upcoming">{{selectedExhibition.statusText || '即将开展'}}</text>
+      </view>
+      <scroll-view class="modal-scroll" scroll-y>
+        <text class="modal-intro">{{selectedExhibition.intro}}</text>
+        <button class="modal-program-button" wx:if="{{selectedExhibition.type === '展览预告' && selectedExhibition.reservable}}" catchtap="reserveProgram" data-id="{{selectedExhibition.id}}">预约参观</button>
+        <button class="modal-digital-button" wx:if="{{selectedExhibition.id === 'review-1'}}" bindtap="openVirtualGallery" data-index="0">进入 360° 数字展厅 →</button>
+        <view class="modal-organizer" wx:if="{{selectedExhibition.organizer}}">
+          <text>主办单位</text>
+          <text>{{selectedExhibition.organizer}}</text>
+        </view>
+        <view class="modal-artworks" wx:if="{{selectedExhibition.artworks.length}}">
+          <view class="modal-artworks-head"><text>展览作品</text><text>{{selectedExhibition.artworks.length}} 件精选</text></view>
+          <scroll-view class="modal-artwork-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+            <view class="modal-artwork-row">
+              <view class="modal-artwork-card" wx:for="{{selectedExhibition.artworks}}" wx:key="id" bindtap="previewExhibitionArtwork" data-id="{{item.id}}">
+                <image src="{{item.image}}" mode="aspectFill"></image>
+                <text class="modal-artwork-title">{{item.title}}</text>
+                <text class="modal-artwork-meta">{{item.artist}} · {{item.year}}</text>
+                <text class="modal-artwork-size">{{item.material}} · {{item.size}}</text>
+              </view>
+            </view>
+          </scroll-view>
+        </view>
+        <view class="modal-artworks-empty" wx:else>
+          <text>展览作品</text><text>当前数据集暂未提供该展览的作品资料</text>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+
+<!-- 公告弹窗 -->
+<view class="modal-mask" wx:if="{{popupAnnouncement}}" bindtap="closePopupAnnouncement" catchtouchmove="preventMove">
+  <view class="announcement-modal" catchtap="preventMove">
+    <view class="announcement-modal-head">
+      <view class="modal-close" bindtap="closePopupAnnouncement">←</view>
+      <text class="announcement-modal-tag {{popupAnnouncement.urgent ? 'urgent' : ''}}">{{popupAnnouncement.urgent ? '紧急公告' : '公告'}}</text>
+    </view>
+    <text class="announcement-modal-title">{{popupAnnouncement.title}}</text>
+    <scroll-view class="announcement-modal-scroll" scroll-y>
+      <text class="announcement-modal-content">{{popupAnnouncement.content}}</text>
+    </scroll-view>
+    <button class="modal-program-button" bindtap="closePopupAnnouncement">我知道了</button>
+  </view>
+</view>

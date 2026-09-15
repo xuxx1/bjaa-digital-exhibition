@@ -1,0 +1,16 @@
+<scroll-view class="detail-scroll" scroll-y enhanced show-scrollbar="{{false}}" wx:if="{{news}}">
+  <view class="detail-page">
+    <custom-navbar title="新闻详情" theme="light" rightType="logo" borderBottom />
+    <view class="news-cover" bindtap="previewImage" wx:if="{{news.image}}"><image src="{{news.image}}" mode="aspectFill"></image><view class="cover-tip">查看大图 ↗</view></view>
+    <view class="notice-cover" wx:else><image src="/logo1.png" mode="aspectFit"></image><text>BEIJING FINE ART ACADEMY</text><text>NEWS &amp; NOTICE</text></view>
+    <view class="article">
+      <view class="article-meta"><text>{{news.type}}</text><text>{{news.date}}</text></view>
+      <text class="article-title">{{news.title}}</text>
+      <text class="article-summary">{{news.summary}}</text>
+      <view class="article-divider"><view></view><text>正文</text><view></view></view>
+      <view class="paragraphs"><text wx:for="{{news.content}}" wx:key="*this">{{item}}</text></view>
+      <view class="source-note"><text>资料来源</text><text>项目本地 dataset/news 新闻数据</text></view>
+      <view class="article-footer"><image src="/logo1.png" mode="aspectFit"></image><view><text>北京画院</text><text>BEIJING FINE ART ACADEMY</text></view></view>
+    </view>
+  </view>
+</scroll-view>

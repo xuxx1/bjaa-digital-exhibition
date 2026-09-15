@@ -1,0 +1,110 @@
+<scroll-view class="detail-scroll" scroll-y enhanced show-scrollbar="{{false}}" wx:if="{{exhibition}}">
+  <view class="detail-page">
+    <custom-navbar title="展览详情" theme="light" rightType="favorite" liked="{{liked}}" bind:favoritetap="toggleLike" wx:if="{{exhibition.type === '展览回顾'}}" />
+    <custom-navbar title="展览详情" theme="light" rightType="none" wx:else />
+
+    <view class="detail-hero" bindtap="previewImage">
+      <image src="{{exhibition.image}}" mode="aspectFill"></image>
+      <view class="hero-shade"></view>
+      <view class="history-badge" wx:if="{{fromHistory}}"><view></view><text>已观展</text></view>
+      <view class="image-tip">轻触查看大图 ↗</view>
+    </view>
+
+    <view class="detail-content">
+      <text class="eyebrow">EXHIBITION ARCHIVE</text>
+      <text class="detail-title">{{exhibition.title}}</text>
+      <view class="type-line">
+        <text>{{exhibition.type}}</text>
+        <text wx:if="{{fromHistory}}">VISITED</text>
+      </view>
+
+      <view class="detail-metadata">
+        <view class="metadata-row">
+          <text>展期</text>
+          <text>{{exhibition.time || '历史展览档案'}}</text>
+        </view>
+        <view class="metadata-row" wx:if="{{exhibition.location}}">
+          <text>地点</text>
+          <text>{{exhibition.location}}</text>
+        </view>
+        <view class="metadata-row" wx:if="{{exhibition.organizer}}">
+          <text>主办</text>
+          <text>{{exhibition.organizer}}</text>
+        </view>
+      </view>
+
+      <view class="intro-section">
+        <view class="section-heading"><text>展览介绍</text><text>ABOUT</text></view>
+        <text class="intro-text">{{exhibition.intro}}</text>
+      </view>
+
+      <view class="visited-note" wx:if="{{fromHistory}}">
+        <view class="visited-icon">✓</view>
+        <view><text>观展记录已保存</text><text>该展览已收录在你的“观展足迹”中</text></view>
+      </view>
+
+      <view class="artworks-section" wx:if="{{exhibition.artworks.length}}">
+        <view class="section-heading"><text>展览作品</text><text>{{exhibition.artworks.length}} WORKS</text></view>
+        <view class="artworks-grid">
+          <view class="artwork-card" wx:for="{{exhibition.artworks}}" wx:key="id" bindtap="previewArtwork" data-id="{{item.id}}">
+            <image src="{{item.image}}" mode="aspectFill"></image>
+            <text class="artwork-title">{{item.title}}</text>
+            <text class="artwork-artist">{{item.artist}} · {{item.year}}</text>
+            <text class="artwork-meta">{{item.material}} · {{item.size}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="artworks-empty" wx:else>
+        <text>展览作品</text><text>当前数据集暂未提供该展览的作品资料</text>
+      </view>
+
+      <view class="diary-section" wx:if="{{fromHistory}}">
+        <view class="section-heading"><text>观展日记</text><text>DIARY</text></view>
+
+        <view class="diary-editor" wx:if="{{diaryEditing}}">
+          <textarea class="diary-textarea" placeholder="记录你的观展感受…" placeholder-class="diary-placeholder" value="{{diaryText}}" bindinput="onDiaryInput" maxlength="500" auto-height />
+          <view class="diary-photo-grid">
+            <view class="diary-photo-item" wx:for="{{diaryPhotos}}" wx:key="index">
+              <image src="{{item}}" mode="aspectFill" bindtap="previewDiaryPhoto" data-index="{{index}}"></image>
+              <view class="diary-photo-remove" bindtap="removeDiaryPhoto" data-index="{{index}}">×</view>
+            </view>
+            <view class="diary-photo-add" bindtap="addDiaryPhoto" wx:if="{{diaryPhotos.length < 3}}">
+              <text class="diary-photo-add-icon">+</text>
+              <text class="diary-photo-add-text">添加照片</text>
+            </view>
+          </view>
+          <view class="diary-actions">
+            <text class="diary-photo-count">{{diaryPhotos.length}}/3 张照片</text>
+            <button class="diary-save-btn" bindtap="finishDiaryEdit">完成编辑</button>
+          </view>
+        </view>
+
+        <view class="diary-display" wx:else>
+          <view class="diary-empty" wx:if="{{!diaryText && !diaryPhotos.length}}">
+            <text class="diary-empty-icon">✎</text>
+            <text class="diary-empty-text">还没有写观展日记</text>
+            <button class="diary-start-btn" bindtap="startDiaryEdit">写日记</button>
+          </view>
+          <view class="diary-content" wx:else>
+            <text class="diary-text" wx:if="{{diaryText}}">{{diaryText}}</text>
+            <view class="diary-photo-grid" wx:if="{{diaryPhotos.length}}">
+              <view class="diary-photo-item diary-photo-item-static" wx:for="{{diaryPhotos}}" wx:key="index" bindtap="previewDiaryPhoto" data-index="{{index}}">
+                <image src="{{item}}" mode="aspectFill"></image>
+              </view>
+            </view>
+            <button class="diary-edit-btn" bindtap="startDiaryEdit">编辑日记</button>
+          </view>
+        </view>
+      </view>
+
+      <button class="favorite-button {{liked ? 'liked' : ''}}" bindtap="toggleLike" wx:if="{{exhibition.type === '展览回顾'}}">
+        {{liked ? '已收藏此展览' : '收藏此展览'}}
+      </button>
+
+      <view class="archive-footer">
+        <text>BEIJING FINE ART ACADEMY</text>
+        <text>EXHIBITION ARCHIVE · 2026</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>
